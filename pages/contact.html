@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BestGift - Contact</title>
+  <link rel="shortcut icon" href="../assets/images/favicon.png" type="image/x-icon" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f8f9fa;
+    }
+    header {
+      background-color: #3498db;
+      padding: 15px 0;
+    }
+    header .navbar-brand {
+      display: flex;
+      align-items: center;
+      color: #fff;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    header .navbar-brand img {
+      height: 40px;
+      margin-right: 10px;
+    }
+    header .nav-link {
+      color: #fff !important;
+    }
+    header .nav-item.active .nav-link {
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      border-radius: 6px;
+      padding: 6px 12px;
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+    .contact-section {
+      padding: 60px 15px;
+      background-color: #fff;
+    }
+    .contact-section h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #2c3e50;
+    }
+    .contact-section form {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .contact-section input, 
+    .contact-section textarea {
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    .contact-section button {
+      background-color: #3498db;
+      color: white;
+      font-weight: bold;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .contact-section button:hover {
+      background-color: #2980b9;
+    }
+    footer {
+      background-color: #343a40;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Menu identique à index.html -->
+  <header>
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+          <img src="../assets/images/favicon.png" alt="Logo EasyGift" />
+          <span>BestGift</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+            <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+            <li class="nav-item"><a class="nav-link" href="shop.html">Notre Catalogue</a></li>
+            <li class="nav-item"><a class="nav-link" href="why.html">Pourquoi BestGift ?</a></li>
+            <li class="nav-item active"><a class="nav-link" href="#">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Section Contact -->
+  <section class="contact-section">
+    <div class="container">
+      <h2>Contactez-nous</h2>
+      <div class="row">
+        <div class="col-md-6">
+          <iframe 
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA0s1a7phLN0iaD6-UE7m4qP-z21pH0eSc&q=Eiffel+Tower+Paris+France"
+            width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen>
+          </iframe>
+        </div>
+        <div class="col-md-6">
+          <form action="#">
+            <input type="text" placeholder="Nom" required />
+            <input type="email" placeholder="Email" required />
+            <input type="text" placeholder="Téléphone" />
+            <textarea rows="4" placeholder="Message" required></textarea>
+            <button type="submit">Envoyer</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>© 2025 BestGift. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

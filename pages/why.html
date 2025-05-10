@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BestGift - Témoignages</title>
+  <link rel="shortcut icon" href="../assets/images/favicon.png" type="image/x-icon" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f8f9fa;
+    }
+    header {
+      background-color: #3498db;
+      padding: 15px 0;
+    }
+    header .navbar-brand {
+      display: flex;
+      align-items: center;
+      color: #fff;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    header .navbar-brand img {
+      height: 40px;
+      margin-right: 10px;
+    }
+    header .nav-link {
+      color: #fff !important;
+    }
+    header .nav-item.active .nav-link {
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      border-radius: 6px;
+      padding: 6px 12px;
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .testimonial-section {
+      padding: 60px 15px;
+      background: #fff;
+    }
+    .testimonial-section h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+    .testimonial-section p.lead {
+      text-align: center;
+      margin-bottom: 40px;
+      color: #555;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .carousel-item {
+      text-align: center;
+      padding: 20px;
+    }
+    .carousel-item .box {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      padding: 30px;
+      max-width: 800px;
+      margin: auto;
+    }
+    .carousel-item h5 {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #3498db;
+    }
+    .carousel-item small {
+      color: #777;
+    }
+    .carousel-item i {
+      font-size: 24px;
+      color: #3498db;
+      margin-bottom: 15px;
+    }
+
+    .carousel-control-prev, .carousel-control-next {
+      width: 5%;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+      background-color: rgba(52, 152, 219, 0.7);
+      background-size: 100% 100%;
+      border-radius: 50%;
+      padding: 20px;
+    }
+
+    footer {
+      background-color: #343a40;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="../assets/images/favicon.png" alt="Logo EasyGift" />
+        <span>BestGift</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="shop.html">Notre Catalogue</a></li>
+          <li class="nav-item active"><a class="nav-link" href="#">Pourquoi BestGift ?</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<section class="testimonial-section">
+  <div class="container">
+    <h2>Valeur ajoutée de BestGift</h2>
+    <p class="lead">
+      BestGift vous aide à trouver le cadeau idéal en un clin d'œil grâce à un moteur intelligent qui analyse vos besoins,
+      vos préférences et votre budget. Grâce à une sélection variée de marchands partenaires, nous vous proposons des idées originales
+      et personnalisées provenant de sources fiables et diversifiées.
+    </p>
+
+    <h2>Ce qu’ils pensent de nous</h2>
+    <div id="testimonialCarousel" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="box">
+            <i class="fa fa-quote-left"></i>
+            <p>J’ai trouvé un cadeau parfait en moins de 2 minutes ! Le moteur de suggestion est intelligent et rapide.</p>
+            <h5>Morijorch</h5>
+            <small>Client régulier</small>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="box">
+            <i class="fa fa-quote-left"></i>
+            <p>Très bonne expérience, les produits proposés sont variés et bien adaptés aux profils.</p>
+            <h5>Rochak</h5>
+            <small>Utilisateur occasionnel</small>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="box">
+            <i class="fa fa-quote-left"></i>
+            <p>BestGift m’a sauvé la mise pour l’anniversaire de mon frère. J’ai trouvé une idée à laquelle je n’aurais jamais pensé seul !</p>
+            <h5>Brad Johns</h5>
+            <small>Fan de cadeaux originaux</small>
+          </div>
+        </div>
+      </div>
+
+      <a class="carousel-control-prev" href="#testimonialCarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Précédent</span>
+      </a>
+      <a class="carousel-control-next" href="#testimonialCarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Suivant</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© 2025 BestGift. Tous droits réservés.</p>
+  </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

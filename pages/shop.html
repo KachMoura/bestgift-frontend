@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BestGift - Catalogue</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f8f9fa;
+    }
+    header {
+      background-color: #3498db;
+      padding: 15px 0;
+    }
+    header .navbar-brand {
+      display: flex;
+      align-items: center;
+      color: #fff;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    header .navbar-brand img {
+      height: 40px;
+      margin-right: 10px;
+    }
+    header .nav-link {
+      color: #fff !important;
+    }
+    header .nav-item.active .nav-link {
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      border-radius: 6px;
+      padding: 6px 12px;
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+    .shop-section {
+      padding: 60px 0;
+    }
+    .shop-section h2 {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .box {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+      background: white;
+      margin-bottom: 30px;
+      transition: transform 0.2s ease;
+    }
+    .box:hover {
+      transform: scale(1.02);
+    }
+    .box img {
+      width: 100%;
+      height: auto;
+    }
+    .box .detail-box {
+      padding: 15px;
+      text-align: center;
+    }
+    .box .new {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: #3498db;
+      color: white;
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+    footer {
+      background-color: #343a40;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="../assets/images/favicon.png" alt="Logo cadeau" />
+        <span>BestGift</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item active"><a class="nav-link" href="shop.html">Notre Catalogue</a></li>
+          <li class="nav-item"><a class="nav-link" href="why.html">Pourquoi BestGift ?</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<section class="shop-section">
+  <div class="container">
+    <h2>Notre Catalogue de Cadeaux</h2>
+    <div class="row">
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="box">
+          <img src="../assets/images/p1.png" alt="Produit 1">
+          <div class="detail-box">
+            <h6>Anneau en argent</h6>
+            <p>Prix : 200 €</p>
+          </div>
+          <div class="new">New</div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="box">
+          <img src="../assets/images/p8.png" alt="Produit 2">
+          <div class="detail-box">
+            <h6>Montre connectée</h6>
+            <p>Prix : 300 €</p>
+          </div>
+          <div class="new">New</div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="box">
+          <img src="../assets/images/p3.png" alt="Produit 2">
+          <div class="detail-box">
+            <h6>Montre connectée</h6>
+            <p>Prix : 100 €</p>
+          </div>
+          <div class="new">New</div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="box">
+          <img src="../assets/images/p4.png" alt="Produit 2">
+          <div class="detail-box">
+            <h6>Montre connectée</h6>
+            <p>Prix : 50 €</p>
+          </div>
+          <div class="new">New</div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="box">
+          <img src="../assets/images/p5.png" alt="Produit 2">
+          <div class="detail-box">
+            <h6>Montre connectée</h6>
+            <p>Prix : 300 €</p>
+          </div>
+          <div class="new">New</div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="box">
+          <img src="../assets/images/p6.png" alt="Produit 2">
+          <div class="detail-box">
+            <h6>Montre connectée</h6>
+            <p>Prix : 70 €</p>
+          </div>
+          <div class="new">New</div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="box">
+          <img src="../assets/images/p7.png" alt="Produit 2">
+          <div class="detail-box">
+            <h6>Montre connectée</h6>
+            <p>Prix : 30 €</p>
+          </div>
+          <div class="new">New</div>
+        </div>
+      </div>
+      <!-- Ajoute d'autres produits ici -->
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© 2025 BestGift. Tous droits réservés.</p>
+  </div>
+</footer>
+
+<!-- JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -5,13 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BestGift - Trouvez le cadeau parfait</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
   <link rel="stylesheet" href="../assets/css/quiz.css" />
+  <style>
+    .mode-selector {
+      display: flex;
+      justify-content: center;
+      margin: 30px 0 10px;
+    }
+    .mode-btn {
+      border: none;
+      padding: 10px 20px;
+      font-weight: bold;
+      border-radius: 5px;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+    .mode-btn.active {
+      background-color: #3498db;
+      color: white;
+    }
+    .mode-btn.inactive {
+      background-color: #e0e0e0;
+      color: #444;
+    }
+    #aiBlock, #quizBlock {
+      display: none;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-
-<!-- HEADER NAVBAR -->
-<!-- MENU NAVBAR FIXE -->
 <header class="menu-header">
   <div class="menu-container">
     <a href="index.html" class="logo-link">
@@ -24,92 +48,125 @@
       <a href="shop.html">Notre catalogue</a>
       <a href="why.html">Pourquoi BestGift ?</a>
       <a href="contact.html">Contact</a>
-      
     </nav>
   </div>
 </header>
-<!-- TITRE -->
-<h1>Moteur à cadeaux BestGift</h1>
 
-<!-- FORMULAIRE -->
-<form id="quizForm">
-  <label>Pour qui ?</label>
-  <select name="gender" required>
-    <option value="Elle">Elle</option>
-    <option value="Lui">Lui</option>
-    <option value="Enfant">Enfant</option>
-  </select>
+<h1 class="text-center">Moteur à cadeaux BestGift</h1>
 
-  <label>Pour quel profil ?</label>
-  <select name="interests" required>
-    <option value="tech">Passionné(e) de tech</option>
-    <option value="sport">Sportif(ve)</option>
-    <option value="book">Lecteur(trice)</option>
-    <option value="maison">Cocooning</option>
-    <option value="game">Joueur(se)</option>
-    <option value="music">Amateur(trice) de musique</option>
-    <option value="beauty">Beauty lover</option>
-  </select>
-
-  <label for="budget">Budget Max ?</label>
-  <div class="budget-container">
-    <output id="budgetOutput"><strong>30 €</strong></output>
-    <input type="range" id="budget" name="budget" min="0" max="500" step="5" value="30" oninput="updateBudgetOutput(this.value)">
-  </div>
-
-  <label>Produits déjà offerts à exclure</label>
-  <input type="text" name="excludedGifts" placeholder="ex : montre, bougie, parfum..." />
-
-  <div class="preferences-box">
-    <h3>Préférences :</h3>
-    <label><input type="checkbox" name="preferences" value="promo"> En promotion</label>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="preferences" value="compact"> Petit format</label>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="preferences" value="fast_delivery"> Livraison rapide</label>
-  </div>
-
-  <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-    <div style="flex: 1;">
-      <h4>Classez vos marchands favoris</h4>
-      <ul id="merchantPool" ondragover="allowDrop(event)" ondrop="drop(event)" class="merchant-zone">
-        <li draggable="true" ondragstart="drag(event)" id="eBay">eBay</li>
-        <li draggable="true" ondragstart="drag(event)" id="AliExpress">AliExpress</li>
-        <li draggable="true" ondragstart="drag(event)" id="Rakuten">Rakuten</li>
-        <li draggable="true" ondragstart="drag(event)" id="Decathlon">Decathlon</li>
-        <li draggable="true" ondragstart="drag(event)" id="EasyGift">Catalogue BestGift</li>
-        <li draggable="true" ondragstart="drag(event)" id="FakeStore">Fake Store</li>
-      </ul>
-    </div>
-    <div style="flex: 1;">
-      <center><h4>Top</h4></center>
-      <ul id="topMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
-      <center><h4>Pourquoi pas</h4></center>
-      <ul id="maybeMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
-      <center><h4>À éviter</h4></center>
-      <ul id="avoidMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
-    </div>
-  </div>
-  
- 
-  <div class="button-wrapper">
-   
-    <button type="submit" class="btn btn-primary">Lancer la recherche</button>
-    <div class="button-group">
-      
-      <button type="button" class="btn btn-secondary" onclick="window.location.href='index.html'">Retour</button>
-      <button type="button" id="resetBtn" class="btn btn-secondary">Réinitialiser</button>
-    </div>
-
-  </div>
-
-</form>
-
-<div id="loader" style="display:none; text-align:center; font-weight:bold; color:#3498db; margin-top:20px;">
-  Chargement en cours...
+<div class="mode-selector">
+  <button id="btnQuiz" class="mode-btn active" onclick="switchMode('quiz')">Quiz</button>
+  <button id="btnAI" class="mode-btn inactive" onclick="switchMode('ai')">IA</button>
 </div>
-<div id="messageBox" style="text-align:center; font-weight:bold; color:#e74c3c; margin-top:20px;"></div>
-<div id="suggestionsContainer" class="suggestions"></div>
 
-<!-- SCRIPTS -->
+<!-- BLOC QUIZ -->
+<div id="quizBlock">
+  <form id="quizForm" class="container">
+    <label>Pour qui ?</label>
+    <select name="gender" required>
+      <option value="Elle">Elle</option>
+      <option value="Lui">Lui</option>
+      <option value="Enfant">Enfant</option>
+    </select>
+    <label>Pour quel profil ?</label>
+    <select name="interests" required>
+      <option value="tech">Passionné(e) de tech</option>
+      <option value="sport">Sportif(ve)</option>
+      <option value="book">Lecteur(trice)</option>
+      <option value="maison">Cocooning</option>
+      <option value="game">Joueur(se)</option>
+      <option value="music">Amateur(trice) de musique</option>
+      <option value="beauty">Beauty addict</option>
+    </select>
+    <label for="budget">Budget Max ?</label>
+    <div class="budget-container">
+      <output id="budgetOutput"><strong>30 €</strong></output>
+      <input type="range" id="budget" name="budget" min="0" max="500" step="5" value="30" oninput="updateBudgetOutput(this.value)">
+    </div>
+    <label>Produits déjà offerts à exclure</label>
+    <input type="text" name="excludedGifts" placeholder="ex : montre, bougie, parfum..." />
+    <div class="preferences-box">
+      <h3>Préférences :</h3>
+      <label><input type="checkbox" name="preferences" value="promo"> En promotion</label>
+      <label><input type="checkbox" name="preferences" value="compact"> Petit format</label>
+      <label><input type="checkbox" name="preferences" value="fast_delivery"> Livraison rapide</label>
+    </div>
+
+    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+      <div style="flex: 1;">
+        <h4>Classez vos marchands favoris</h4>
+        <ul id="merchantPool" ondragover="allowDrop(event)" ondrop="drop(event)" class="merchant-zone">
+          <li draggable="true" ondragstart="drag(event)" id="eBay">eBay</li>
+          <li draggable="true" ondragstart="drag(event)" id="AliExpress">AliExpress</li>
+          <li draggable="true" ondragstart="drag(event)" id="Rakuten">Rakuten</li>
+          <li draggable="true" ondragstart="drag(event)" id="Decathlon">Decathlon</li>
+          <li draggable="true" ondragstart="drag(event)" id="EasyGift">Catalogue BestGift</li>
+          <li draggable="true" ondragstart="drag(event)" id="FakeStore">Fake Store</li>
+        </ul>
+      </div>
+      <div style="flex: 1;">
+        <center><h4>Top</h4></center>
+        <ul id="topMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
+        <center><h4>Pourquoi pas</h4></center>
+        <ul id="maybeMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
+        <center><h4>À éviter</h4></center>
+        <ul id="avoidMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
+      </div>
+    </div>
+
+    <div class="button-wrapper mt-3">
+      <button type="submit" class="btn btn-primary">Lancer la recherche</button>
+      <div class="button-group mt-2">
+        <button type="button" class="btn btn-secondary" onclick="window.location.href='index.html'">Retour</button>
+        <button type="button" id="resetBtn" class="btn btn-secondary">Réinitialiser</button>
+      </div>
+    </div>
+  </form>
+
+  <div id="loader" style="display:none; text-align:center; font-weight:bold; color:#3498db; margin-top:20px;">
+    Chargement en cours...
+  </div>
+  <div id="messageBox" style="text-align:center; font-weight:bold; color:#e74c3c; margin-top:20px;"></div>
+  <div id="suggestionsContainer" class="suggestions"></div>
+</div>
+
+<!-- BLOC IA -->
+<div id="aiBlock" style="display:none;">
+  <div class="container">
+    <label for="iaInput">Décrivez la personne et l’occasion :</label>
+    <textarea id="iaInput" class="form-control" rows="5" placeholder="Exemple : Je cherche un cadeau pour un homme de 30 ans fan de sport et de gadgets..."></textarea>
+    <div class="text-center mt-3">
+      <button class="btn btn-primary">Lancer la recherche IA</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function switchMode(mode) {
+    const btnQuiz = document.getElementById("btnQuiz");
+    const btnAI = document.getElementById("btnAI");
+    const quizBlock = document.getElementById("quizBlock");
+    const aiBlock = document.getElementById("aiBlock");
+
+    if (mode === "quiz") {
+      btnQuiz.classList.add("active");
+      btnQuiz.classList.remove("inactive");
+      btnAI.classList.remove("active");
+      btnAI.classList.add("inactive");
+      quizBlock.style.display = "block";
+      aiBlock.style.display = "none";
+    } else {
+      btnAI.classList.add("active");
+      btnAI.classList.remove("inactive");
+      btnQuiz.classList.remove("active");
+      btnQuiz.classList.add("inactive");
+      quizBlock.style.display = "none";
+      aiBlock.style.display = "block";
+    }
+  }
+
+  window.onload = () => switchMode('quiz');
+</script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/js/quiz.js"></script>

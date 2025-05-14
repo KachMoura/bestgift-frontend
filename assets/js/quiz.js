@@ -1,10 +1,6 @@
 // Drag & drop
-function allowDrop(ev) {
-  ev.preventDefault();
-}
-function drag(ev) {
-  ev.dataTransfer.setData("text", ev.target.id);
-}
+function allowDrop(ev) { ev.preventDefault(); }
+function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
 function drop(ev) {
   ev.preventDefault();
   const data = ev.dataTransfer.getData("text");
@@ -52,7 +48,6 @@ form.addEventListener("submit", function (e) {
   }
 
   const preferences = Array.from(document.querySelectorAll('input[name="preferences"]:checked')).map(el => el.value);
-
   const data = {
     interests: [form.interests.value],
     budget: parseFloat(form.budget.value),
@@ -94,7 +89,6 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
   suggestionsContainer.innerHTML = "";
   const order = [...merchantRanking.top, ...merchantRanking.maybe];
   let anyProductFound = false;
-
   order.forEach(merchant => {
     const products = suggestions[merchant];
     if (products && products.length > 0) {
@@ -105,10 +99,8 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
       const merchantName = merchant === "EasyGift" ? "Catalogue BestGift" : merchant;
       title.textContent = `Suggestions ${merchantName}`;
       section.appendChild(title);
-
       const carousel = document.createElement("div");
       carousel.className = "card-carousel";
-
       products.forEach(product => {
         const score = product.matchingScore || 30;
         const card = document.createElement("div");
@@ -129,12 +121,10 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
         card.querySelector(".compare-btn").addEventListener("click", () => handleCompareClick(card));
         carousel.appendChild(card);
       });
-
       section.appendChild(carousel);
       suggestionsContainer.appendChild(section);
     }
   });
-
   if (!anyProductFound) {
     messageBox.textContent = "Aucun cadeau ne correspond à vos critères.";
   }
@@ -155,14 +145,9 @@ function handleCompareClick(card) {
     link: card.dataset.link,
     description: card.dataset.description || ""
   });
-
   const summary = document.createElement("div");
-  summary.innerHTML = `
-    <strong>${card.dataset.title}</strong><br>
-    ${card.dataset.price} €<br><br>
-  `;
+  summary.innerHTML = `<strong>${card.dataset.title}</strong><br>${card.dataset.price} €<br><br>`;
   compareList.appendChild(summary);
-
   if (selectedProductsForCompare.length === 2) {
     compareBtn.disabled = false;
   }
@@ -171,28 +156,24 @@ function handleCompareClick(card) {
 compareBtn.addEventListener("click", async () => {
   compareBtn.disabled = true;
   aiResultBox.innerHTML = `<p style="color:#3498db">Analyse en cours...</p>`;
-
   try {
     const response = await fetch(`${apiBaseUrl}/api/compare`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ products: selectedProductsForCompare })
     });
-
     const result = await response.json();
-
     if (result.analysis) {
       const lines = result.analysis.split('\n');
       const tableLines = [];
       const recommendationLines = [];
       let inRecommendation = false;
-
       for (const line of lines) {
         if (
           line.toLowerCase().includes("je vous recommande") ||
           line.toLowerCase().includes("si vous cherchez") ||
-          line.toLowerCase().startsWith(">") ||
-          line.toLowerCase().includes("en revanche")
+          line.toLowerCase().includes("en revanche") ||
+          line.toLowerCase().includes("meilleur choix")
         ) {
           inRecommendation = true;
         }
@@ -202,17 +183,15 @@ compareBtn.addEventListener("click", async () => {
           tableLines.push(line);
         }
       }
-
       aiResultBox.innerHTML = `
-  <div style="width: 100%; max-width: 1000px; margin: auto; padding: 20px; background: #f9f9f9; border-radius: 10px; border: 1px solid #ccc; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-    <h4 style="color: #2c3e50; margin-bottom: 15px;">Comparaison détaillée des deux produits</h4>
-    <div style="white-space: pre-wrap; font-family: 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.6;">${tableLines.join('\n')}</div>
-  </div>
-  <div style="width: 100%; max-width: 1000px; margin: 30px auto 0; padding: 20px; background: #eafaf1; border-left: 6px solid #2ecc71; border-radius: 8px;">
-    <h5 style="margin-top: 0; color: #27ae60;">Recommandation IA</h5>
-    <p style="margin: 0; font-size: 15px; font-family: 'Segoe UI', sans-serif; line-height: 1.6;">${recommendationLines.join('<br>')}</p>
-  </div>
-`;
+<div style="width: 100%; max-width: 1000px; margin: auto; padding: 20px; background: #f9f9f9; border-radius: 10px; border: 1px solid #ccc; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+  <h4 style="color: #2c3e50; margin-bottom: 15px;">Comparaison détaillée des deux produits</h4>
+  <div style="white-space: pre-wrap; font-family: 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.6;">${tableLines.join('\n')}</div>
+</div>
+<div style="width: 100%; max-width: 1000px; margin: 30px auto 0; padding: 20px; background: #eafaf1; border-left: 6px solid #2ecc71; border-radius: 8px;">
+  <h5 style="margin-top: 0; color: #27ae60;">Recommandation IA</h5>
+  <p style="margin: 0; font-size: 15px; font-family: 'Segoe UI', sans-serif; line-height: 1.6;">${recommendationLines.join('<br>')}</p>
+</div>`;
       aiResultBox.scrollIntoView({ behavior: "smooth" });
     } else {
       aiResultBox.innerHTML = `<p style="color:#e74c3c">Erreur lors de l'analyse.</p>`;

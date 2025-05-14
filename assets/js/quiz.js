@@ -26,9 +26,10 @@ const compareList = document.getElementById("compareList");
 const compareBtn = document.getElementById("compareBtn");
 const aiResultBox = document.getElementById("aiComparisonResult");
 
-const apiBaseUrl = window.location.hostname.includes("localhost")
-  ? "http://localhost:3000"
-  : "https://bestgift-backend.onrender.com";
+const apiBaseUrl = window.location.hostname.includes("localhost") ? "http://localhost:3000" : "https://bestgift-backend.onrender.com";
+
+
+  
 
 let selectedProductsForCompare = [];
 
@@ -170,6 +171,7 @@ compareBtn.addEventListener("click", async () => {
   compareBtn.disabled = true;
   aiResultBox.innerHTML = `<p style="color:#3498db">Analyse en cours...</p>`;
   try {
+    console.log("payload IA envoyé :", payload);
     const response = await fetch(`${apiBaseUrl}/api/compare`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

@@ -99,10 +99,8 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
     const products = suggestions[merchant];
     if (products && products.length > 0) {
       anyProductFound = true;
-
       const section = document.createElement("div");
       section.className = "merchant-section";
-
       const title = document.createElement("h2");
       const merchantName = merchant === "EasyGift" ? "Catalogue BestGift" : merchant;
       title.textContent = `Suggestions ${merchantName}`;
@@ -147,11 +145,9 @@ function handleCompareClick(card) {
     alert("Vous ne pouvez comparer que 2 produits.");
     return;
   }
-
   if (!compareSection.style.display || compareSection.style.display === "none") {
     compareSection.style.display = "block";
   }
-
   selectedProductsForCompare.push({
     title: card.dataset.title,
     price: card.dataset.price,
@@ -175,15 +171,48 @@ function handleCompareClick(card) {
 compareBtn.addEventListener("click", async () => {
   compareBtn.disabled = true;
   aiResultBox.innerHTML = `<p style="color:#3498db">Analyse en cours...</p>`;
+
   try {
     const response = await fetch(`${apiBaseUrl}/api/compare`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ products: selectedProductsForCompare })
     });
+
     const result = await response.json();
+
     if (result.analysis) {
-      aiResultBox.innerHTML = `<div style="white-space:pre-wrap; border:1px solid #ddd; padding:10px;">${result.analysis}</div>`;
+      const lines = result.analysis.split('\n');
+      const tableLines = [];
+      const recommendationLines = [];
+      let inRecommendation = false;
+
+      for (const line of lines) {
+        if (
+          line.toLowerCase().includes("je vous recommande") ||
+          line.toLowerCase().includes("si vous cherchez") ||
+          line.toLowerCase().startsWith(">") ||
+          line.toLowerCase().includes("en revanche")
+        ) {
+          inRecommendation = true;
+        }
+        if (inRecommendation) {
+          recommendationLines.push(line);
+        } else {
+          tableLines.push(line);
+        }
+      }
+
+      aiResultBox.innerHTML = `
+        <div class="card" style="padding: 20px; background: #f9f9f9; border: 1px solid #ccc; margin-bottom: 20px;">
+          <h5 style="color: #3498db;">Comparaison des deux produits</h5>
+          <div style="white-space: pre-wrap;">${tableLines.join('\n')}</div>
+        </div>
+        <div class="card" style="padding: 15px; background: #e8f8f5; border-left: 5px solid #1abc9c;">
+          <h6 style="margin-top: 0;">Recommandation IA</h6>
+          <p style="margin-bottom: 0;">${recommendationLines.join('<br>')}</p>
+        </div>
+      `;
       aiResultBox.scrollIntoView({ behavior: "smooth" });
     } else {
       aiResultBox.innerHTML = `<p style="color:#e74c3c">Erreur lors de l'analyse.</p>`;
@@ -205,7 +234,6 @@ document.getElementById("resetBtn").addEventListener("click", function () {
     const zone = document.getElementById(zoneId);
     if (zone) zone.innerHTML = "";
   });
-
   const marchands = ["eBay", "AliExpress", "Rakuten", "Decathlon", "Catalogue EasyGift", "Fake Store"];
   const pool = document.getElementById("merchantPool");
   marchands.forEach(id => {
@@ -216,7 +244,6 @@ document.getElementById("resetBtn").addEventListener("click", function () {
     li.addEventListener("dragstart", drag);
     pool.appendChild(li);
   });
-
   document.getElementById("budgetOutput").innerHTML = "<strong>30 €</strong>";
   document.getElementById("budget").value = 30;
 });

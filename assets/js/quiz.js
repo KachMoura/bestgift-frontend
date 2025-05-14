@@ -26,7 +26,9 @@ const compareList = document.getElementById("compareList");
 const compareBtn = document.getElementById("compareBtn");
 const aiResultBox = document.getElementById("aiComparisonResult");
 
-const apiBaseUrl = window.location.hostname.includes("localhost") ? "http://localhost:3000" : "https://bestgift-backend.onrender.com";
+const apiBaseUrl = window.location.hostname.includes("localhost")
+  ? "http://localhost:3000"
+  : "https://bestgift-backend.onrender.com";
 
 
   

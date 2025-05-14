@@ -204,15 +204,15 @@ compareBtn.addEventListener("click", async () => {
       }
 
       aiResultBox.innerHTML = `
-        <div class="card" style="padding: 20px; background: #f9f9f9; border: 1px solid #ccc; margin-bottom: 20px;">
-          <h5 style="color: #3498db;">Comparaison des deux produits</h5>
-          <div style="white-space: pre-wrap;">${tableLines.join('\n')}</div>
-        </div>
-        <div class="card" style="padding: 15px; background: #e8f8f5; border-left: 5px solid #1abc9c;">
-          <h6 style="margin-top: 0;">Recommandation IA</h6>
-          <p style="margin-bottom: 0;">${recommendationLines.join('<br>')}</p>
-        </div>
-      `;
+  <div style="width: 100%; max-width: 1000px; margin: auto; padding: 20px; background: #f9f9f9; border-radius: 10px; border: 1px solid #ccc; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+    <h4 style="color: #2c3e50; margin-bottom: 15px;">Comparaison détaillée des deux produits</h4>
+    <div style="white-space: pre-wrap; font-family: 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.6;">${tableLines.join('\n')}</div>
+  </div>
+  <div style="width: 100%; max-width: 1000px; margin: 30px auto 0; padding: 20px; background: #eafaf1; border-left: 6px solid #2ecc71; border-radius: 8px;">
+    <h5 style="margin-top: 0; color: #27ae60;">Recommandation IA</h5>
+    <p style="margin: 0; font-size: 15px; font-family: 'Segoe UI', sans-serif; line-height: 1.6;">${recommendationLines.join('<br>')}</p>
+  </div>
+`;
       aiResultBox.scrollIntoView({ behavior: "smooth" });
     } else {
       aiResultBox.innerHTML = `<p style="color:#e74c3c">Erreur lors de l'analyse.</p>`;

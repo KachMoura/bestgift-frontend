@@ -16,7 +16,6 @@ function drop(ev) {
 function getMerchantList(id) {
   return Array.from(document.querySelectorAll(`#${id} li`)).map(li => li.id);
 }
-
 const form = document.getElementById("quizForm");
 const suggestionsContainer = document.getElementById("suggestionsContainer");
 const loader = document.getElementById("loader");
@@ -25,16 +24,11 @@ const compareSection = document.getElementById("compareSection");
 const compareList = document.getElementById("compareList");
 const compareBtn = document.getElementById("compareBtn");
 const aiResultBox = document.getElementById("aiComparisonResult");
-
 const apiBaseUrl = window.location.hostname.includes("localhost")
   ? "http://localhost:3000"
   : "https://bestgift-backend.onrender.com";
 
-
-  
-
 let selectedProductsForCompare = [];
-
 form.addEventListener("submit", function (e) {
   e.preventDefault();
   suggestionsContainer.innerHTML = "";
@@ -44,7 +38,6 @@ form.addEventListener("submit", function (e) {
   compareSection.style.display = "none";
   messageBox.textContent = "";
   loader.style.display = "block";
-
   const topMerchants = getMerchantList("topMerchants");
   const maybeMerchants = getMerchantList("maybeMerchants");
   if (topMerchants.length === 0 && maybeMerchants.length === 0) {
@@ -52,7 +45,6 @@ form.addEventListener("submit", function (e) {
     messageBox.textContent = "Veuillez sélectionner au moins un marchand.";
     return;
   }
-
   const preferences = Array.from(document.querySelectorAll('input[name="preferences"]:checked')).map(el => el.value);
   const data = {
     interests: [form.interests.value],
@@ -65,7 +57,6 @@ form.addEventListener("submit", function (e) {
       maybe: maybeMerchants
     }
   };
-
   fetch(`${apiBaseUrl}/api/suggestions`, {
     method: "POST",
     headers: {
@@ -105,10 +96,8 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
       const merchantName = merchant === "EasyGift" ? "Catalogue BestGift" : merchant;
       title.textContent = `Suggestions ${merchantName}`;
       section.appendChild(title);
-
       const carousel = document.createElement("div");
       carousel.className = "card-carousel";
-
       products.forEach(product => {
         const score = product.matchingScore || 30;
         const card = document.createElement("div");
@@ -121,27 +110,22 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
           <a href="${product.link}" target="_blank">Acheter</a><br>
           <button class="btn btn-sm btn-outline-primary mt-2 compare-btn">Comparer</button>
         `;
-        // Stockage
         card.dataset.title = product.title;
         card.dataset.link = product.link;
         card.dataset.image = product.image;
         card.dataset.price = product.price;
-
         card.querySelector(".compare-btn").addEventListener("click", () => handleCompareClick(card));
         carousel.appendChild(card);
       });
-
       section.appendChild(carousel);
       suggestionsContainer.appendChild(section);
     }
   });
-
   if (!anyProductFound) {
     messageBox.textContent = "Aucun cadeau ne correspond à vos critères.";
   }
 }
 
-// Sélection IA
 function handleCompareClick(card) {
   if (selectedProductsForCompare.length >= 2) {
     alert("Vous ne pouvez comparer que 2 produits.");
@@ -156,14 +140,12 @@ function handleCompareClick(card) {
     image: card.dataset.image,
     link: card.dataset.link
   });
-
   const summary = document.createElement("div");
   summary.innerHTML = `
     <strong>${card.dataset.title}</strong><br>
     ${card.dataset.price} €<br><br>
   `;
   compareList.appendChild(summary);
-
   if (selectedProductsForCompare.length === 2) {
     compareBtn.disabled = false;
   }
@@ -173,7 +155,6 @@ compareBtn.addEventListener("click", async () => {
   compareBtn.disabled = true;
   aiResultBox.innerHTML = `<p style="color:#3498db">Analyse en cours...</p>`;
   try {
-    console.log("payload IA envoyé :", payload);
     const response = await fetch(`${apiBaseUrl}/api/compare`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -190,13 +171,11 @@ compareBtn.addEventListener("click", async () => {
   }
 });
 
-// Budget live display
 function updateBudgetOutput(val) {
   const output = document.getElementById("budgetOutput");
   output.innerHTML = `<strong>${val} €</strong>`;
 }
 
-// Reset
 document.getElementById("resetBtn").addEventListener("click", function () {
   document.getElementById("quizForm").reset();
   const zones = ["topMerchants", "maybeMerchants", "avoidMerchants", "merchantPool"];

@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BestGift - Trouvez le cadeau parfait</title>
+
+  <!-- STYLES CORRIGÉS (sans crochets) -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <link rel="stylesheet" href="../assets/css/quiz.css" />
 </head>
 <body>
 
-<!-- HEADER NAVBAR -->
-<!-- MENU NAVBAR FIXE -->
 <header class="menu-header">
   <div class="menu-container">
     <a href="index.html" class="logo-link">
@@ -24,106 +24,99 @@
       <a href="shop.html">Notre catalogue</a>
       <a href="why.html">Pourquoi BestGift ?</a>
       <a href="contact.html">Contact</a>
-      
     </nav>
   </div>
 </header>
-<!-- TITRE -->
-<h1>Moteur à cadeaux BestGift</h1>
 
-<!-- FORMULAIRE -->
-<form id="quizForm">
-  <label>Pour qui ?</label>
-  <select name="gender" required>
-    <option value="Elle">Elle</option>
-    <option value="Lui">Lui</option>
-    <option value="Enfant">Enfant</option>
-  </select>
+<main class="container mt-5">
+  <h1>Moteur à cadeaux BestGift</h1>
 
-  <label>Pour quel profil ?</label>
-  <select name="interests" required>
-    <option value="tech">Passionné(e) de tech</option>
-    <option value="sport">Sportif(ve)</option>
-    <option value="book">Lecteur(trice)</option>
-    <option value="maison">Cocooning</option>
-    <option value="game">Joueur(se)</option>
-    <option value="music">Amateur(trice) de musique</option>
-    <option value="beauty">Beauty</option>
-  </select>
+  <form id="quizForm">
+    <label>Pour qui ?</label>
+    <select name="gender" required>
+      <option value="Elle">Elle</option>
+      <option value="Lui">Lui</option>
+      <option value="Enfant">Enfant</option>
+    </select>
 
-  <label for="budget">Budget Max ?</label>
-  <div class="budget-container">
-    <output id="budgetOutput"><strong>30 €</strong></output>
-    <input type="range" id="budget" name="budget" min="0" max="500" step="5" value="30" oninput="updateBudgetOutput(this.value)">
-  </div>
+    <label>Pour quel profil ?</label>
+    <select name="interests" required>
+      <option value="tech">Passionné(e) de tech</option>
+      <option value="sport">Sportif(ve)</option>
+      <option value="book">Lecteur(trice)</option>
+      <option value="maison">Cocooning</option>
+      <option value="game">Joueur(se)</option>
+      <option value="music">Amateur(trice) de musique</option>
+      <option value="beauty">Beauty</option>
+    </select>
 
-  <label>Produits déjà offerts à exclure</label>
-  <input type="text" name="excludedGifts" placeholder="ex : montre, bougie, parfum..." />
-
-  <div class="preferences-box">
-    <h3>Préférences :</h3>
-    <label><input type="checkbox" name="preferences" value="promo"> En promotion</label>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="preferences" value="compact"> Petit format</label>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="preferences" value="fast_delivery"> Livraison rapide</label>
-  </div>
-
-  <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-    <div style="flex: 1;">
-      <h4>Classez vos marchands favoris</h4>
-      <ul id="merchantPool" ondragover="allowDrop(event)" ondrop="drop(event)" class="merchant-zone">
-        <li draggable="true" ondragstart="drag(event)" id="eBay">eBay</li>
-        <li draggable="true" ondragstart="drag(event)" id="AliExpress">AliExpress</li>
-        <li draggable="true" ondragstart="drag(event)" id="Rakuten">Rakuten</li>
-        <li draggable="true" ondragstart="drag(event)" id="Decathlon">Decathlon</li>
-        <li draggable="true" ondragstart="drag(event)" id="EasyGift">Catalogue BestGift</li>
-        <li draggable="true" ondragstart="drag(event)" id="FakeStore">Fake Store</li>
-      </ul>
+    <label for="budget">Budget Max ?</label>
+    <div class="budget-container">
+      <output id="budgetOutput"><strong>30 €</strong></output>
+      <input type="range" id="budget" name="budget" min="0" max="500" step="5" value="30" oninput="updateBudgetOutput(this.value)">
     </div>
-    <div style="flex: 1;">
-      <center><h4>Top</h4></center>
-      <ul id="topMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
-      <center><h4>Pourquoi pas</h4></center>
-      <ul id="maybeMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
-      <center><h4>À éviter</h4></center>
-      <ul id="avoidMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
+
+    <label>Produits déjà offerts à exclure</label>
+    <input type="text" name="excludedGifts" placeholder="ex : montre, bougie, parfum..." />
+
+    <div class="preferences-box">
+      <h3>Préférences :</h3>
+      <label><input type="checkbox" name="preferences" value="promo"> En promotion</label>
+      <label><input type="checkbox" name="preferences" value="compact"> Petit format</label>
+      <label><input type="checkbox" name="preferences" value="fast_delivery"> Livraison rapide</label>
     </div>
-  </div>
-  
- 
-  <div class="button-wrapper">
-   
-    <button type="submit" class="btn btn-primary">Lancer la recherche</button>
-    <div class="button-group">
-      
+
+    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+      <div style="flex: 1;">
+        <h4>Classez vos marchands favoris</h4>
+        <ul id="merchantPool" ondragover="allowDrop(event)" ondrop="drop(event)" class="merchant-zone">
+          <li draggable="true" ondragstart="drag(event)" id="eBay">eBay</li>
+          <li draggable="true" ondragstart="drag(event)" id="AliExpress">AliExpress</li>
+          <li draggable="true" ondragstart="drag(event)" id="Rakuten">Rakuten</li>
+          <li draggable="true" ondragstart="drag(event)" id="Decathlon">Decathlon</li>
+          <li draggable="true" ondragstart="drag(event)" id="EasyGift">Catalogue BestGift</li>
+          <li draggable="true" ondragstart="drag(event)" id="FakeStore">Fake Store</li>
+        </ul>
+      </div>
+      <div style="flex: 1;">
+        <center><h4>Top</h4></center>
+        <ul id="topMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
+        <center><h4>Pourquoi pas</h4></center>
+        <ul id="maybeMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
+        <center><h4>À éviter</h4></center>
+        <ul id="avoidMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
+      </div>
+    </div>
+
+    <div class="button-wrapper mt-3">
+      <button type="submit" class="btn btn-primary">Lancer la recherche</button>
       <button type="button" class="btn btn-secondary" onclick="window.location.href='index.html'">Retour</button>
       <button type="button" id="resetBtn" class="btn btn-secondary">Réinitialiser</button>
     </div>
+  </form>
 
+  <div id="loader" style="display:none; text-align:center; font-weight:bold; color:#3498db; margin-top:20px;">
+    Chargement en cours...
   </div>
 
-</form>
+  <div id="messageBox" style="text-align:center; font-weight:bold; color:#e74c3c; margin-top:20px;"></div>
 
-<div id="loader" style="display:none; text-align:center; font-weight:bold; color:#3498db; margin-top:20px;">
-  Chargement en cours...
-</div>
-<div id="messageBox" style="text-align:center; font-weight:bold; color:#e74c3c; margin-top:20px;"></div>
-<div id="suggestionsContainer" class="suggestions"></div>
-<!-- Zone de comparaison IA -->
-<div id="compareSection" style="margin-top: 40px; display: none;">
-  <h3>Comparer des produits avec l'IA</h3>
-  <p>Sélectionnez deux produits dans les résultats ci-dessus :</p>
-  <div id="compareList" style="display:flex; flex-wrap:wrap; gap:20px;"></div>
-  <button id="compareBtn" class="btn btn-info" disabled>Analyser avec l'IA</button>
-</div>
-<div id="aiComparisonResult" style="margin-top: 30px;"></div>
+  <div id="suggestionsContainer" class="suggestions"></div>
+
+  <!-- Zone de comparaison IA -->
+  <div id="compareSection" style="margin-top: 40px; display: none;">
+    <h3>Comparer des produits avec l'IA</h3>
+    <p>Sélectionnez deux produits dans les résultats ci-dessus :</p>
+    <div id="compareList" style="display:flex; flex-wrap:wrap; gap:20px;"></div>
+    <button id="compareBtn" class="btn btn-info" disabled>Analyser avec l'IA</button>
+  </div>
+
+  <div id="aiComparisonResult" style="margin-top: 30px;"></div>
+</main>
 
 <!-- SCRIPTS -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/js/quiz.js"></script>
-
-
 </body>
-
-
 </html>

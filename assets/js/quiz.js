@@ -1,3 +1,4 @@
+// Drag & drop
 function allowDrop(ev) {
   ev.preventDefault();
 }
@@ -20,20 +21,29 @@ const form = document.getElementById("quizForm");
 const suggestionsContainer = document.getElementById("suggestionsContainer");
 const loader = document.getElementById("loader");
 const messageBox = document.getElementById("messageBox");
+const compareSection = document.getElementById("compareSection");
+const compareList = document.getElementById("compareList");
+const compareBtn = document.getElementById("compareBtn");
+const aiResultBox = document.getElementById("aiComparisonResult");
 
 const apiBaseUrl = window.location.hostname.includes("localhost")
   ? "http://localhost:3000"
   : "https://bestgift-backend.onrender.com";
 
+let selectedProductsForCompare = [];
+
 form.addEventListener("submit", function (e) {
   e.preventDefault();
   suggestionsContainer.innerHTML = "";
+  aiResultBox.innerHTML = "";
+  compareList.innerHTML = "";
+  selectedProductsForCompare = [];
+  compareSection.style.display = "none";
   messageBox.textContent = "";
   loader.style.display = "block";
 
   const topMerchants = getMerchantList("topMerchants");
   const maybeMerchants = getMerchantList("maybeMerchants");
-
   if (topMerchants.length === 0 && maybeMerchants.length === 0) {
     loader.style.display = "none";
     messageBox.textContent = "Veuillez sélectionner au moins un marchand.";
@@ -82,7 +92,6 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
   suggestionsContainer.innerHTML = "";
   const order = [...merchantRanking.top, ...merchantRanking.maybe];
   let anyProductFound = false;
-
   order.forEach(merchant => {
     const products = suggestions[merchant];
     if (products && products.length > 0) {
@@ -103,11 +112,19 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
         card.className = "card";
         card.innerHTML = `
           <div class="score-badge">Matching : ${Math.round(score)}%</div>
-          <img src="${product.image || 'https://via.placeholder.com/150'}" alt="${product.title}">
+          <img src="${product.image}" alt="${product.title}">
           <h3>${product.title}</h3>
           <p><strong>${product.price} €</strong></p>
-          <a href="${product.link}" target="_blank">Acheter</a>
+          <a href="${product.link}" target="_blank">Acheter</a><br>
+          <button class="btn btn-sm btn-outline-primary mt-2 compare-btn">Comparer</button>
         `;
+        // Stockage
+        card.dataset.title = product.title;
+        card.dataset.link = product.link;
+        card.dataset.image = product.image;
+        card.dataset.price = product.price;
+
+        card.querySelector(".compare-btn").addEventListener("click", () => handleCompareClick(card));
         carousel.appendChild(card);
       });
 
@@ -117,24 +134,72 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
   });
 
   if (!anyProductFound) {
-    messageBox.textContent = "Aucun cadeau ne correspond à vos critères pour le moment.";
+    messageBox.textContent = "Aucun cadeau ne correspond à vos critères.";
   }
 }
 
+// Sélection IA
+function handleCompareClick(card) {
+  if (selectedProductsForCompare.length >= 2) {
+    alert("Vous ne pouvez comparer que 2 produits.");
+    return;
+  }
+  if (!compareSection.style.display || compareSection.style.display === "none") {
+    compareSection.style.display = "block";
+  }
+  selectedProductsForCompare.push({
+    title: card.dataset.title,
+    price: card.dataset.price,
+    image: card.dataset.image,
+    link: card.dataset.link
+  });
+
+  const summary = document.createElement("div");
+  summary.innerHTML = `
+    <strong>${card.dataset.title}</strong><br>
+    ${card.dataset.price} €<br><br>
+  `;
+  compareList.appendChild(summary);
+
+  if (selectedProductsForCompare.length === 2) {
+    compareBtn.disabled = false;
+  }
+}
+
+compareBtn.addEventListener("click", async () => {
+  compareBtn.disabled = true;
+  aiResultBox.innerHTML = `<p style="color:#3498db">Analyse en cours...</p>`;
+  try {
+    const response = await fetch(`${apiBaseUrl}/api/compare`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ products: selectedProductsForCompare })
+    });
+    const result = await response.json();
+    if (result.analysis) {
+      aiResultBox.innerHTML = `<div style="white-space:pre-wrap; border:1px solid #ddd; padding:10px;">${result.analysis}</div>`;
+    } else {
+      aiResultBox.innerHTML = `<p style="color:#e74c3c">Erreur lors de l'analyse.</p>`;
+    }
+  } catch (e) {
+    aiResultBox.innerHTML = `<p style="color:#e74c3c">Erreur : ${e.message}</p>`;
+  }
+});
+
+// Budget live display
 function updateBudgetOutput(val) {
   const output = document.getElementById("budgetOutput");
   output.innerHTML = `<strong>${val} €</strong>`;
 }
 
+// Reset
 document.getElementById("resetBtn").addEventListener("click", function () {
   document.getElementById("quizForm").reset();
-
   const zones = ["topMerchants", "maybeMerchants", "avoidMerchants", "merchantPool"];
   zones.forEach(zoneId => {
     const zone = document.getElementById(zoneId);
     if (zone) zone.innerHTML = "";
   });
-
   const marchands = ["eBay", "AliExpress", "Rakuten", "Decathlon", "Catalogue EasyGift", "Fake Store"];
   const pool = document.getElementById("merchantPool");
   marchands.forEach(id => {
@@ -145,7 +210,6 @@ document.getElementById("resetBtn").addEventListener("click", function () {
     li.addEventListener("dragstart", drag);
     pool.appendChild(li);
   });
-
   document.getElementById("budgetOutput").innerHTML = "<strong>30 €</strong>";
   document.getElementById("budget").value = 30;
 });

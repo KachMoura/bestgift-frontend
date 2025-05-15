@@ -145,9 +145,20 @@ function handleCompareClick(card) {
     link: card.dataset.link,
     description: card.dataset.description || ""
   });
+  
   const summary = document.createElement("div");
-  summary.innerHTML = `<strong>${card.dataset.title}</strong><br>${card.dataset.price} €<br><br>`;
-  compareList.appendChild(summary);
+summary.className = "compare-card";
+summary.innerHTML = `
+  <div class="compare-card-inner">
+    <img src="${card.dataset.image}" alt="${card.dataset.title}" class="compare-img"/>
+    <div class="compare-info">
+      <h5>${card.dataset.title}</h5>
+      <p><strong>${card.dataset.price} €</strong></p>
+    </div>
+  </div>
+`;
+compareList.appendChild(summary);
+
   if (selectedProductsForCompare.length === 2) {
     compareBtn.disabled = false;
   }

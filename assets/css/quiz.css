@@ -334,4 +334,43 @@ header .nav-item.active .nav-link {
   background: #f4f9ff;
 }
 
+.compare-card {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  width: 300px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
 
+.compare-card + .compare-card {
+  margin-left: 20px;
+}
+
+.compare-card-inner {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.compare-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.compare-info h5 {
+  font-size: 16px;
+  margin: 0;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.compare-info p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  color: #555;
+}

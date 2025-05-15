@@ -168,6 +168,11 @@ function markdownToHTMLTable(lines) {
   `;
 }
 
+function updateBudgetOutput(val) {
+  const output = document.getElementById("budgetOutput");
+  output.innerHTML = `<strong>${val} €</strong>`;
+}
+
 compareBtn.addEventListener("click", async () => {
   compareBtn.disabled = true;
   aiResultBox.innerHTML = `<p style="color:#3498db">Analyse en cours...</p>`;

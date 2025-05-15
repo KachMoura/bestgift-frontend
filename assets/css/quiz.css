@@ -394,6 +394,10 @@ header .nav-item.active .nav-link {
   font-size: 14px;
   min-width: auto;
 }
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f8f9fa;
+}
 header {
   background-color: #3498db;
   padding: 15px 0;
@@ -417,4 +421,37 @@ header .nav-item.active .nav-link {
   border-radius: 6px;
   padding: 6px 12px;
   background-color: rgba(255, 255, 255, 0.15);
+}
+
+.hero {
+  padding: 60px 0;
+  background: white;
+  text-align: center;
+}
+.hero h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+.hero .btn-primary {
+  background-color: #3498db;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.1rem;
+}
+.why-section {
+  padding: 60px 0;
+}
+.why-section h2 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+footer {
+  background-color: #343a40;
+  color: white;
+  padding: 20px 0;
+  text-align: center;
 }

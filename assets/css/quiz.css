@@ -162,6 +162,21 @@ li {
   font-weight: bold;
 }
 
+.score-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #27ae60;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transform: rotate(20deg);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  z-index: 1;
+}
+
 
 
 /* NAVBAR PERSONNALISÉE */

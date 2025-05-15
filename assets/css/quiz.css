@@ -282,6 +282,47 @@ header .nav-item.active .nav-link {
   font-weight: bold;
   border-radius: 6px;
 }
-
+.ai-analysis-box {
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.ai-reco-box {
+  width: 100%;
+  max-width: 1000px;
+  margin: 30px auto 0;
+  padding: 20px;
+  background: #eafaf1;
+  border-left: 6px solid #2ecc71;
+  border-radius: 8px;
+}
+.ai-reco-box h5 {
+  margin-top: 0;
+  color: #27ae60;
+}
+.ai-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+.ai-table th {
+  background-color: #3498db;
+  color: white;
+  padding: 10px;
+  text-align: left;
+}
+.ai-table td {
+  background: #fdfdfd;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+.ai-table tr:nth-child(even) td {
+  background: #f4f9ff;
+}
 
 

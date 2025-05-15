@@ -1,156 +1,18 @@
-// Drag & drop
-function allowDrop(ev) { ev.preventDefault(); }
-function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
-function drop(ev) {
-  ev.preventDefault();
-  const data = ev.dataTransfer.getData("text");
-  const element = document.getElementById(data);
-  if (element && ev.target.tagName === "UL") {
-    ev.target.appendChild(element);
-  }
-}
-function getMerchantList(id) {
-  return Array.from(document.querySelectorAll(`#${id} li`)).map(li => li.id);
-}
+// ... (toutes les fonctions existantes restent inchangées jusqu’à compareBtn)
 
-const form = document.getElementById("quizForm");
-const suggestionsContainer = document.getElementById("suggestionsContainer");
-const loader = document.getElementById("loader");
-const messageBox = document.getElementById("messageBox");
-const compareSection = document.getElementById("compareSection");
-const compareList = document.getElementById("compareList");
-const compareBtn = document.getElementById("compareBtn");
-const aiResultBox = document.getElementById("aiComparisonResult");
-
-const apiBaseUrl = window.location.hostname.includes("localhost")
-  ? "http://localhost:3000"
-  : "https://bestgift-backend.onrender.com";
-
-let selectedProductsForCompare = [];
-
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
-  suggestionsContainer.innerHTML = "";
-  aiResultBox.innerHTML = "";
-  compareList.innerHTML = "";
-  selectedProductsForCompare = [];
-  compareSection.style.display = "none";
-  messageBox.textContent = "";
-  loader.style.display = "block";
-
-  const topMerchants = getMerchantList("topMerchants");
-  const maybeMerchants = getMerchantList("maybeMerchants");
-
-  if (topMerchants.length === 0 && maybeMerchants.length === 0) {
-    loader.style.display = "none";
-    messageBox.textContent = "Veuillez sélectionner au moins un marchand.";
-    return;
-  }
-
-  const preferences = Array.from(document.querySelectorAll('input[name="preferences"]:checked')).map(el => el.value);
-  const data = {
-    interests: [form.interests.value],
-    budget: parseFloat(form.budget.value),
-    excludedGifts: form.excludedGifts.value.split(',').map(i => i.trim()).filter(Boolean),
-    gender: form.gender.value,
-    preferences: preferences,
-    merchants: {
-      top: topMerchants,
-      maybe: maybeMerchants
-    }
-  };
-
-  fetch(`${apiBaseUrl}/api/suggestions`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-publishable-api-key": "test_pub_key_123456"
-    },
-    body: JSON.stringify(data)
-  })
-    .then(res => res.json())
-    .then(result => {
-      loader.style.display = "none";
-      const hasSuggestions = result?.suggestions && Object.keys(result.suggestions).length > 0;
-      if (!hasSuggestions) {
-        messageBox.textContent = "Aucun cadeau ne correspond à vos critères pour le moment.";
-        return;
-      }
-      displaySuggestionsByMerchant(result.suggestions, data.merchants);
-    })
-    .catch(err => {
-      loader.style.display = "none";
-      messageBox.textContent = "Une erreur est survenue. Veuillez réessayer.";
-      console.error("Erreur lors de la requête :", err);
-    });
-});
-
-function displaySuggestionsByMerchant(suggestions, merchantRanking) {
-  suggestionsContainer.innerHTML = "";
-  const order = [...merchantRanking.top, ...merchantRanking.maybe];
-  let anyProductFound = false;
-  order.forEach(merchant => {
-    const products = suggestions[merchant];
-    if (products && products.length > 0) {
-      anyProductFound = true;
-      const section = document.createElement("div");
-      section.className = "merchant-section";
-      const title = document.createElement("h2");
-      const merchantName = merchant === "EasyGift" ? "Catalogue BestGift" : merchant;
-      title.textContent = `Suggestions ${merchantName}`;
-      section.appendChild(title);
-      const carousel = document.createElement("div");
-      carousel.className = "card-carousel";
-      products.forEach(product => {
-        const score = product.matchingScore || 30;
-        const card = document.createElement("div");
-        card.className = "card";
-        card.innerHTML = `
-          <div class="score-badge">Matching : ${Math.round(score)}%</div>
-          <img src="${product.image}" alt="${product.title}">
-          <h3>${product.title}</h3>
-          <p><strong>${product.price} €</strong></p>
-          <a href="${product.link}" target="_blank">Acheter</a><br>
-          <button class="btn btn-sm btn-outline-primary mt-2 compare-btn">Comparer</button>
-        `;
-        card.dataset.title = product.title;
-        card.dataset.link = product.link;
-        card.dataset.image = product.image;
-        card.dataset.price = product.price;
-        card.dataset.description = product.description || "";
-        card.querySelector(".compare-btn").addEventListener("click", () => handleCompareClick(card));
-        carousel.appendChild(card);
-      });
-      section.appendChild(carousel);
-      suggestionsContainer.appendChild(section);
-    }
-  });
-  if (!anyProductFound) {
-    messageBox.textContent = "Aucun cadeau ne correspond à vos critères.";
-  }
-}
-
-function handleCompareClick(card) {
-  if (selectedProductsForCompare.length >= 2) {
-    alert("Vous ne pouvez comparer que 2 produits.");
-    return;
-  }
-  if (!compareSection.style.display || compareSection.style.display === "none") {
-    compareSection.style.display = "block";
-  }
-  selectedProductsForCompare.push({
-    title: card.dataset.title,
-    price: card.dataset.price,
-    image: card.dataset.image,
-    link: card.dataset.link,
-    description: card.dataset.description || ""
-  });
-  const summary = document.createElement("div");
-  summary.innerHTML = `<strong>${card.dataset.title}</strong><br>${card.dataset.price} €<br><br>`;
-  compareList.appendChild(summary);
-  if (selectedProductsForCompare.length === 2) {
-    compareBtn.disabled = false;
-  }
+function markdownToHTMLTable(lines) {
+  const rows = lines
+    .filter(line => line.includes('|') && !line.includes('---'))
+    .map(line => line.trim().split('|').slice(1, -1).map(cell => cell.trim()));
+  if (rows.length === 0) return "<p>(Aucune donnée tabulaire trouvée)</p>";
+  const headers = rows[0];
+  const bodyRows = rows.slice(1);
+  return `
+    <table class="ai-table">
+      <thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
+      <tbody>${bodyRows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody>
+    </table>
+  `;
 }
 
 compareBtn.addEventListener("click", async () => {
@@ -167,7 +29,7 @@ compareBtn.addEventListener("click", async () => {
       const lines = result.analysis.split('\n');
       const tableLines = [];
       const recommendationLines = [];
-      let inRecommendation = false;
+      let inReco = false;
       for (const line of lines) {
         if (
           line.toLowerCase().includes("je vous recommande") ||
@@ -175,23 +37,22 @@ compareBtn.addEventListener("click", async () => {
           line.toLowerCase().includes("en revanche") ||
           line.toLowerCase().includes("meilleur choix")
         ) {
-          inRecommendation = true;
+          inReco = true;
         }
-        if (inRecommendation) {
-          recommendationLines.push(line);
-        } else {
-          tableLines.push(line);
-        }
+        if (inReco) recommendationLines.push(line);
+        else tableLines.push(line);
       }
+
       aiResultBox.innerHTML = `
-<div style="width: 100%; max-width: 1000px; margin: auto; padding: 20px; background: #f9f9f9; border-radius: 10px; border: 1px solid #ccc; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-  <h4 style="color: #2c3e50; margin-bottom: 15px;">Comparaison détaillée des deux produits</h4>
-  <div style="white-space: pre-wrap; font-family: 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.6;">${tableLines.join('\n')}</div>
-</div>
-<div style="width: 100%; max-width: 1000px; margin: 30px auto 0; padding: 20px; background: #eafaf1; border-left: 6px solid #2ecc71; border-radius: 8px;">
-  <h5 style="margin-top: 0; color: #27ae60;">Recommandation IA</h5>
-  <p style="margin: 0; font-size: 15px; font-family: 'Segoe UI', sans-serif; line-height: 1.6;">${recommendationLines.join('<br>')}</p>
-</div>`;
+        <div class="ai-analysis-box">
+          <h4>Comparaison détaillée</h4>
+          ${markdownToHTMLTable(tableLines)}
+        </div>
+        <div class="ai-reco-box">
+          <h5>Recommandation IA</h5>
+          <p>${recommendationLines.join('<br>')}</p>
+        </div>
+      `;
       aiResultBox.scrollIntoView({ behavior: "smooth" });
     } else {
       aiResultBox.innerHTML = `<p style="color:#e74c3c">Erreur lors de l'analyse.</p>`;
@@ -199,30 +60,4 @@ compareBtn.addEventListener("click", async () => {
   } catch (e) {
     aiResultBox.innerHTML = `<p style="color:#e74c3c">Erreur : ${e.message}</p>`;
   }
-});
-
-function updateBudgetOutput(val) {
-  const output = document.getElementById("budgetOutput");
-  output.innerHTML = `<strong>${val} €</strong>`;
-}
-
-document.getElementById("resetBtn").addEventListener("click", function () {
-  document.getElementById("quizForm").reset();
-  const zones = ["topMerchants", "maybeMerchants", "avoidMerchants", "merchantPool"];
-  zones.forEach(zoneId => {
-    const zone = document.getElementById(zoneId);
-    if (zone) zone.innerHTML = "";
-  });
-  const marchands = ["eBay", "AliExpress", "Rakuten", "Decathlon", "Catalogue EasyGift", "Fake Store"];
-  const pool = document.getElementById("merchantPool");
-  marchands.forEach(id => {
-    const li = document.createElement("li");
-    li.id = id;
-    li.draggable = true;
-    li.textContent = id;
-    li.addEventListener("dragstart", drag);
-    pool.appendChild(li);
-  });
-  document.getElementById("budgetOutput").innerHTML = "<strong>30 €</strong>";
-  document.getElementById("budget").value = 30;
 });

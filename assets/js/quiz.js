@@ -219,3 +219,9 @@ compareBtn.addEventListener("click", async () => {
     aiResultBox.innerHTML = `<p style="color:#e74c3c">Erreur : ${e.message}</p>`;
   }
 });
+document.getElementById("resetCompareBtn").addEventListener("click", function () {
+  selectedProductsForCompare = [];
+  compareList.innerHTML = "";
+  compareSection.style.display = "none";
+  compareBtn.disabled = true;
+});

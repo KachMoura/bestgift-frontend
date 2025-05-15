@@ -29,6 +29,69 @@
   <h1>Moteur à cadeaux BestGift</h1>
 
   <!-- Ton formulaire complet ici (inchangé) -->
+  <form id="quizForm">
+    <label>Pour qui ?</label>
+    <select name="gender" required>
+      <option value="Elle">Elle</option>
+      <option value="Lui">Lui</option>
+      <option value="Enfant">Enfant</option>
+    </select>
+
+    <label>Pour quel profil ?</label>
+    <select name="interests" required>
+      <option value="tech">Passionné(e) de tech</option>
+      <option value="sport">Sportif(ve)</option>
+      <option value="book">Lecteur(trice)</option>
+      <option value="maison">Cocooning</option>
+      <option value="game">Joueur(se)</option>
+      <option value="music">Amateur(trice) de musique</option>
+      <option value="beauty">Beauty</option>
+    </select>
+
+    <label for="budget">Budget Max ?</label>
+    <div class="budget-container">
+      <output id="budgetOutput"><strong>30 €</strong></output>
+      <input type="range" id="budget" name="budget" min="0" max="500" step="5" value="30" oninput="updateBudgetOutput(this.value)">
+    </div>
+
+    <label>Produits déjà offerts à exclure</label>
+    <input type="text" name="excludedGifts" placeholder="ex : montre, bougie, parfum..." />
+
+    <div class="preferences-box">
+      <h3>Préférences :</h3>
+      <label><input type="checkbox" name="preferences" value="promo"> En promotion</label>
+      <label><input type="checkbox" name="preferences" value="compact"> Petit format</label>
+      <label><input type="checkbox" name="preferences" value="fast_delivery"> Livraison rapide</label>
+    </div>
+
+    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+      <div style="flex: 1;">
+        <h4>Classez vos marchands favoris</h4>
+        <ul id="merchantPool" ondragover="allowDrop(event)" ondrop="drop(event)" class="merchant-zone">
+          <li draggable="true" ondragstart="drag(event)" id="eBay">eBay</li>
+          <li draggable="true" ondragstart="drag(event)" id="AliExpress">AliExpress</li>
+          <li draggable="true" ondragstart="drag(event)" id="Rakuten">Rakuten</li>
+          <li draggable="true" ondragstart="drag(event)" id="Decathlon">Decathlon</li>
+          <li draggable="true" ondragstart="drag(event)" id="EasyGift">Catalogue BestGift</li>
+          <li draggable="true" ondragstart="drag(event)" id="FakeStore">Fake Store</li>
+        </ul>
+      </div>
+      <div style="flex: 1;">
+        <center><h4>Top</h4></center>
+        <ul id="topMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
+        <center><h4>Pourquoi pas</h4></center>
+        <ul id="maybeMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
+        <center><h4>À éviter</h4></center>
+        <ul id="avoidMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
+      </div>
+    </div>
+
+    <div class="button-wrapper mt-3">
+      <button type="submit" class="btn btn-primary">Lancer la recherche</button>
+      <button type="button" class="btn btn-secondary" onclick="window.location.href='index.html'">Retour</button>
+      <button type="button" id="resetBtn" class="btn btn-secondary">Réinitialiser</button>
+    </div>
+  </form>
 
   <div id="loader" style="display:none; text-align:center; font-weight:bold; color:#3498db; margin-top:20px;">
     Chargement en cours...

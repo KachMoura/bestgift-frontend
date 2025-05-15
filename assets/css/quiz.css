@@ -394,3 +394,27 @@ header .nav-item.active .nav-link {
   font-size: 14px;
   min-width: auto;
 }
+header {
+  background-color: #3498db;
+  padding: 15px 0;
+}
+header .navbar-brand {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+header .navbar-brand img {
+  height: 40px;
+  margin-right: 10px;
+}
+header .nav-link {
+  color: #fff !important;
+}
+header .nav-item.active .nav-link {
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 6px;
+  padding: 6px 12px;
+  background-color: rgba(255, 255, 255, 0.15);
+}

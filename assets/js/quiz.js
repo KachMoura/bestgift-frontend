@@ -249,3 +249,39 @@ document.getElementById("resetCompareBtn").addEventListener("click", function ()
     card.classList.remove("selected");
   });
 });
+document.getElementById("resetBtn").addEventListener("click", function () {
+  // Réinitialise les champs du formulaire
+  document.getElementById("quizForm").reset();
+
+  // Réinitialise le budget à 30 €
+  document.getElementById("budgetOutput").innerHTML = "<strong>30 €</strong>";
+  document.getElementById("budget").value = 30;
+
+  // Vide les zones des marchands
+  const zones = ["topMerchants", "maybeMerchants", "avoidMerchants", "merchantPool"];
+  zones.forEach(zoneId => {
+    const zone = document.getElementById(zoneId);
+    if (zone) zone.innerHTML = "";
+  });
+
+  // Remet tous les marchands dans le pool initial
+  const marchands = ["eBay", "AliExpress", "Rakuten", "Decathlon", "Catalogue BestGift", "Fake Store"];
+  const pool = document.getElementById("merchantPool");
+  marchands.forEach(id => {
+    const li = document.createElement("li");
+    li.id = id;
+    li.draggable = true;
+    li.textContent = id;
+    li.addEventListener("dragstart", drag);
+    pool.appendChild(li);
+  });
+
+  // Vide les résultats IA et suggestions
+  document.getElementById("suggestionsContainer").innerHTML = "";
+  document.getElementById("messageBox").textContent = "";
+  document.getElementById("aiComparisonResult").innerHTML = "";
+  document.getElementById("compareList").innerHTML = "";
+  document.getElementById("compareSection").style.display = "none";
+  selectedProductsForCompare = [];
+  compareBtn.disabled = true;
+});

@@ -187,6 +187,11 @@ li {
   padding: 6px 10px;
   margin-top: 8px;
 }
+.card.selected {
+  border: 2px solid #f39c12;
+  background-color: #fff8e1;
+}
+
 .score-badge {
   position: absolute;
   top: 10px;

@@ -135,9 +135,14 @@ function handleCompareClick(card) {
     alert("Vous ne pouvez comparer que 2 produits.");
     return;
   }
+
   if (!compareSection.style.display || compareSection.style.display === "none") {
     compareSection.style.display = "block";
   }
+
+  // Ajout visuel sur la carte sélectionnée
+  card.classList.add("selected");
+
   selectedProductsForCompare.push({
     title: card.dataset.title,
     price: card.dataset.price,
@@ -145,19 +150,10 @@ function handleCompareClick(card) {
     link: card.dataset.link,
     description: card.dataset.description || ""
   });
-  
+
   const summary = document.createElement("div");
-summary.className = "compare-card";
-summary.innerHTML = `
-  <div class="compare-card-inner">
-    <img src="${card.dataset.image}" alt="${card.dataset.title}" class="compare-img"/>
-    <div class="compare-info">
-      <h5>${card.dataset.title}</h5>
-      <p><strong>${card.dataset.price} €</strong></p>
-    </div>
-  </div>
-`;
-compareList.appendChild(summary);
+  summary.innerHTML = `<strong>${card.dataset.title}</strong><br>${card.dataset.price} €<br><br>`;
+  compareList.appendChild(summary);
 
   if (selectedProductsForCompare.length === 2) {
     compareBtn.disabled = false;
@@ -231,8 +227,20 @@ compareBtn.addEventListener("click", async () => {
   }
 });
 document.getElementById("resetCompareBtn").addEventListener("click", function () {
+  // Vider la sélection logique
   selectedProductsForCompare = [];
+
+  // Vider l'affichage de la liste des produits comparés
   compareList.innerHTML = "";
+
+  // Masquer la section de comparaison
   compareSection.style.display = "none";
+
+  // Réinitialiser le bouton d'analyse
   compareBtn.disabled = true;
+
+  // Supprimer la classe CSS de mise en surbrillance sur toutes les cartes sélectionnées
+  document.querySelectorAll(".card.selected").forEach(card => {
+    card.classList.remove("selected");
+  });
 });

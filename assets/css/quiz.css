@@ -156,11 +156,10 @@ li {
 }
 
 .card h3 {
-  min-height: 40px; /* assure une hauteur identique pour les titres */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  min-height: 360px;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 5px 0;
 }
 
 .card p {

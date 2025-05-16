@@ -142,7 +142,6 @@ function handleCompareClick(card) {
 
   // Ajout visuel sur la carte sélectionnée
   card.classList.add("selected");
-  card.dateset.selected ="true";
 
   selectedProductsForCompare.push({
     title: card.dataset.title,
@@ -153,14 +152,8 @@ function handleCompareClick(card) {
   });
 
   const summary = document.createElement("div");
-summary.className = "card";
-summary.style.width = "180px";
-summary.innerHTML = `
-  <img src="${product.image}" alt="${product.title}">
-  <h6 style="font-size: 14px;">${product.title}</h6>
-  <p style="font-weight: bold;">${product.price} €</p>
-`;
-compareList.appendChild(summary);
+  summary.innerHTML = `<strong>${card.dataset.title}</strong><br>${card.dataset.price} €<br><br>`;
+  compareList.appendChild(summary);
 
   if (selectedProductsForCompare.length === 2) {
     compareBtn.disabled = false;
@@ -234,21 +227,20 @@ compareBtn.addEventListener("click", async () => {
   }
 });
 document.getElementById("resetCompareBtn").addEventListener("click", function () {
-  // Vider la liste des produits sélectionnés
+  // Vider la sélection logique
   selectedProductsForCompare = [];
 
-  // Vider l'affichage des produits sélectionnés
+  // Vider l'affichage de la liste des produits comparés
   compareList.innerHTML = "";
 
   // Masquer la section de comparaison
   compareSection.style.display = "none";
 
-  // Désactiver le bouton d'analyse
+  // Réinitialiser le bouton d'analyse
   compareBtn.disabled = true;
 
-  // Supprimer la classe .selected sur les cartes visibles
+  // Supprimer la classe CSS de mise en surbrillance sur toutes les cartes sélectionnées
   document.querySelectorAll(".card.selected").forEach(card => {
     card.classList.remove("selected");
-    delete card.dataset.selected;
   });
 });

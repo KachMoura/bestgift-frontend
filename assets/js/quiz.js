@@ -132,7 +132,7 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
 
 function handleCompareClick(card) {
   if (selectedProductsForCompare.length >= 2) {
-    alert("Vous ne pouvez comparer que 2 produits.");
+    alert("Vous ne pouvez comparer que 2 produits. Utilisez le bouton Réinitialiser situé en bas si besoin !");
     return;
   }
 

@@ -9,6 +9,7 @@ function drop(ev) {
     ev.target.appendChild(element);
   }
 }
+
 function getMerchantList(id) {
   return Array.from(document.querySelectorAll(`#${id} li`)).map(li => li.id);
 }
@@ -48,6 +49,7 @@ form.addEventListener("submit", function (e) {
   }
 
   const preferences = Array.from(document.querySelectorAll('input[name="preferences"]:checked')).map(el => el.value);
+
   const data = {
     interests: [form.interests.value],
     budget: parseFloat(form.budget.value),
@@ -89,18 +91,22 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
   suggestionsContainer.innerHTML = "";
   const order = [...merchantRanking.top, ...merchantRanking.maybe];
   let anyProductFound = false;
+
   order.forEach(merchant => {
     const products = suggestions[merchant];
     if (products && products.length > 0) {
       anyProductFound = true;
       const section = document.createElement("div");
       section.className = "merchant-section";
+
       const title = document.createElement("h2");
       const merchantName = merchant === "EasyGift" ? "Catalogue BestGift" : merchant;
       title.textContent = `Suggestions ${merchantName}`;
       section.appendChild(title);
+
       const carousel = document.createElement("div");
       carousel.className = "card-carousel";
+
       products.forEach(product => {
         const score = product.matchingScore || 30;
         const card = document.createElement("div");
@@ -121,10 +127,12 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
         card.querySelector(".compare-btn").addEventListener("click", () => handleCompareClick(card));
         carousel.appendChild(card);
       });
+
       section.appendChild(carousel);
       suggestionsContainer.appendChild(section);
     }
   });
+
   if (!anyProductFound) {
     messageBox.textContent = "Aucun cadeau ne correspond à vos critères.";
   }
@@ -136,11 +144,7 @@ function handleCompareClick(card) {
     return;
   }
 
-  if (!compareSection.style.display || compareSection.style.display === "none") {
-    compareSection.style.display = "block";
-  }
-
-  // Ajout visuel sur la carte sélectionnée
+  compareSection.style.display = "block";
   card.classList.add("selected");
 
   selectedProductsForCompare.push({
@@ -151,9 +155,16 @@ function handleCompareClick(card) {
     description: card.dataset.description || ""
   });
 
-  const summary = document.createElement("div");
-  summary.innerHTML = `<strong>${card.dataset.title}</strong><br>${card.dataset.price} €<br><br>`;
-  compareList.appendChild(summary);
+  const miniCard = document.createElement("div");
+  miniCard.className = "compare-mini-card";
+  miniCard.innerHTML = `
+    <img src="${card.dataset.image}" alt="${card.dataset.title}" />
+    <div>
+      <strong>${card.dataset.title}</strong><br>
+      ${card.dataset.price} €
+    </div>
+  `;
+  compareList.appendChild(miniCard);
 
   if (selectedProductsForCompare.length === 2) {
     compareBtn.disabled = false;
@@ -175,14 +186,10 @@ function markdownToHTMLTable(lines) {
   `;
 }
 
-function updateBudgetOutput(val) {
-  const output = document.getElementById("budgetOutput");
-  output.innerHTML = `<strong>${val} €</strong>`;
-}
-
 compareBtn.addEventListener("click", async () => {
   compareBtn.disabled = true;
   aiResultBox.innerHTML = `<p style="color:#3498db">Analyse en cours...</p>`;
+
   try {
     const response = await fetch(`${apiBaseUrl}/api/compare`, {
       method: "POST",
@@ -190,11 +197,13 @@ compareBtn.addEventListener("click", async () => {
       body: JSON.stringify({ products: selectedProductsForCompare })
     });
     const result = await response.json();
+
     if (result.analysis) {
       const lines = result.analysis.split('\n');
       const tableLines = [];
       const recommendationLines = [];
       let inReco = false;
+
       for (const line of lines) {
         if (
           line.toLowerCase().includes("je vous recommande") ||
@@ -226,20 +235,12 @@ compareBtn.addEventListener("click", async () => {
     aiResultBox.innerHTML = `<p style="color:#e74c3c">Erreur : ${e.message}</p>`;
   }
 });
+
 document.getElementById("resetCompareBtn").addEventListener("click", function () {
-  // Vider la sélection logique
   selectedProductsForCompare = [];
-
-  // Vider l'affichage de la liste des produits comparés
   compareList.innerHTML = "";
-
-  // Masquer la section de comparaison
   compareSection.style.display = "none";
-
-  // Réinitialiser le bouton d'analyse
   compareBtn.disabled = true;
-
-  // Supprimer la classe CSS de mise en surbrillance sur toutes les cartes sélectionnées
   document.querySelectorAll(".card.selected").forEach(card => {
     card.classList.remove("selected");
   });

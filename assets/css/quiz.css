@@ -445,3 +445,20 @@ header .nav-item.active .nav-link {
   padding: 6px 12px;
   background-color: rgba(255, 255, 255, 0.15);
 }
+.compare-mini-card {
+  display: flex;
+  align-items: center;
+  background: #fefefe;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  gap: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  min-width: 200px;
+}
+.compare-mini-card img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  border-radius: 4px;
+}

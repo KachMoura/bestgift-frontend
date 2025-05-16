@@ -462,15 +462,3 @@ header .nav-item.active .nav-link {
   object-fit: contain;
   border-radius: 4px;
 }
-.button-wrapper {
-  display: flex;
-  justify-content: flex-end; /* aligné à droite */
-  flex-wrap: wrap;
-  gap: 15px;
-  margin-top: 30px;
-}
-@media (max-width: 768px) {
-  .button-wrapper {
-    justify-content: center; /* centré sur mobile */
-  }
-}

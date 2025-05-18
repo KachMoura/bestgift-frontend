@@ -93,14 +93,17 @@
     </div>
     
 
-    <div class="budget-container">
+    <div class="budget-range-wrapper">
       <label><strong>Quel est votre budget ?</strong></label>
-      <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 8px;">
+      <div class="budget-labels">
         <span>Min : <span id="minBudgetOutput">10€</span></span>
         <span>Max : <span id="maxBudgetOutput">100€</span></span>
       </div>
-      <input type="range" id="minBudget" name="minBudget" min="0" max="500" step="5" value="10" oninput="updateBudgetDisplay()" />
-      <input type="range" id="maxBudget" name="maxBudget" min="0" max="500" step="5" value="100" oninput="updateBudgetDisplay()" />
+      <div class="slider-container">
+        <input type="range" id="minBudget" name="minBudget" min="0" max="500" value="10" step="5" oninput="updateDoubleRange()">
+        <input type="range" id="maxBudget" name="maxBudget" min="0" max="500" value="100" step="5" oninput="updateDoubleRange()">
+        <div class="range-track" id="rangeTrack"></div>
+      </div>
     </div>
 
     <label>Produits déjà offerts à exclure</label>

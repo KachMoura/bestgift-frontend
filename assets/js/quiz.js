@@ -1,6 +1,11 @@
-// Drag & drop
-function allowDrop(ev) { ev.preventDefault(); }
-function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
 function drop(ev) {
   ev.preventDefault();
   const data = ev.dataTransfer.getData("text");
@@ -12,6 +17,23 @@ function drop(ev) {
 
 function getMerchantList(id) {
   return Array.from(document.querySelectorAll(`#${id} li`)).map(li => li.id);
+}
+
+function updateBudgetDisplay() {
+  const minVal = parseInt(document.getElementById("minBudget").value);
+  const maxVal = parseInt(document.getElementById("maxBudget").value);
+  const minOutput = document.getElementById("minBudgetOutput");
+  const maxOutput = document.getElementById("maxBudgetOutput");
+
+  if (minVal > maxVal) {
+    document.getElementById("minBudget").value = maxVal;
+    document.getElementById("maxBudget").value = minVal;
+    minOutput.textContent = maxVal + "€";
+    maxOutput.textContent = minVal + "€";
+  } else {
+    minOutput.textContent = minVal + "€";
+    maxOutput.textContent = maxVal + "€";
+  }
 }
 
 const form = document.getElementById("quizForm");
@@ -52,7 +74,8 @@ form.addEventListener("submit", function (e) {
 
   const data = {
     interests: [form.interests.value],
-    budget: parseFloat(form.budget.value),
+    minBudget: parseFloat(form.minBudget.value),
+    budget: parseFloat(form.maxBudget.value),
     excludedGifts: form.excludedGifts.value.split(',').map(i => i.trim()).filter(Boolean),
     gender: form.gender.value,
     preferences: preferences,
@@ -98,12 +121,10 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
       anyProductFound = true;
       const section = document.createElement("div");
       section.className = "merchant-section";
-
       const title = document.createElement("h2");
       const merchantName = merchant === "EasyGift" ? "Catalogue BestGift" : merchant;
       title.textContent = `Suggestions ${merchantName}`;
       section.appendChild(title);
-
       const carousel = document.createElement("div");
       carousel.className = "card-carousel";
 
@@ -140,7 +161,7 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
 
 function handleCompareClick(card) {
   if (selectedProductsForCompare.length >= 2) {
-    alert("Vous ne pouvez comparer que 2 produits. Utilisez le bouton Réinitialiser situé en bas si besoin !");
+    alert("Vous ne pouvez comparer que 2 produits.");
     return;
   }
 
@@ -164,6 +185,7 @@ function handleCompareClick(card) {
       ${card.dataset.price} €
     </div>
   `;
+
   compareList.appendChild(miniCard);
 
   if (selectedProductsForCompare.length === 2) {
@@ -171,25 +193,9 @@ function handleCompareClick(card) {
   }
 }
 
-function markdownToHTMLTable(lines) {
-  const rows = lines
-    .filter(line => line.includes('|') && !line.includes('---'))
-    .map(line => line.trim().split('|').slice(1, -1).map(cell => cell.trim()));
-  if (rows.length === 0) return "<p>(Aucune donnée tabulaire trouvée)</p>";
-  const headers = rows[0];
-  const bodyRows = rows.slice(1);
-  return `
-    <table class="ai-table">
-      <thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
-      <tbody>${bodyRows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody>
-    </table>
-  `;
-}
-
 compareBtn.addEventListener("click", async () => {
   compareBtn.disabled = true;
   aiResultBox.innerHTML = `<p style="color:#3498db">Analyse en cours...</p>`;
-
   try {
     const response = await fetch(`${apiBaseUrl}/api/compare`, {
       method: "POST",
@@ -197,7 +203,6 @@ compareBtn.addEventListener("click", async () => {
       body: JSON.stringify({ products: selectedProductsForCompare })
     });
     const result = await response.json();
-
     if (result.analysis) {
       const lines = result.analysis.split('\n');
       const tableLines = [];
@@ -220,14 +225,15 @@ compareBtn.addEventListener("click", async () => {
       aiResultBox.innerHTML = `
         <div class="ai-analysis-box">
           <h4>Comparaison détaillée</h4>
-          ${markdownToHTMLTable(tableLines)}
+          <table class="ai-table">
+            ${tableLines.map(l => `<tr><td>${l}</td></tr>`).join("")}
+          </table>
         </div>
         <div class="ai-reco-box">
           <h5>Recommandation IA</h5>
           <p>${recommendationLines.join('<br>')}</p>
         </div>
       `;
-      aiResultBox.scrollIntoView({ behavior: "smooth" });
     } else {
       aiResultBox.innerHTML = `<p style="color:#e74c3c">Erreur lors de l'analyse.</p>`;
     }
@@ -236,10 +242,6 @@ compareBtn.addEventListener("click", async () => {
   }
 });
 
-function updateBudgetOutput(val) {
-  const output = document.getElementById("budgetOutput");
-  output.innerHTML = `<strong>${val} €</strong>`;
-}
 document.getElementById("resetCompareBtn").addEventListener("click", function () {
   selectedProductsForCompare = [];
   compareList.innerHTML = "";
@@ -249,22 +251,20 @@ document.getElementById("resetCompareBtn").addEventListener("click", function ()
     card.classList.remove("selected");
   });
 });
+
 document.getElementById("resetBtn").addEventListener("click", function () {
-  // Réinitialise les champs du formulaire
   document.getElementById("quizForm").reset();
+  document.getElementById("minBudgetOutput").textContent = "0 €";
+  document.getElementById("maxBudgetOutput").textContent = "50 €";
+  document.getElementById("minBudget").value = 0;
+  document.getElementById("maxBudget").value = 50;
 
-  // Réinitialise le budget à 30 €
-  document.getElementById("budgetOutput").innerHTML = "<strong>30 €</strong>";
-  document.getElementById("budget").value = 30;
-
-  // Vide les zones des marchands
   const zones = ["topMerchants", "maybeMerchants", "avoidMerchants", "merchantPool"];
   zones.forEach(zoneId => {
     const zone = document.getElementById(zoneId);
     if (zone) zone.innerHTML = "";
   });
 
-  // Remet tous les marchands dans le pool initial
   const marchands = ["eBay", "AliExpress", "Rakuten", "Decathlon", "Catalogue BestGift", "Fake Store"];
   const pool = document.getElementById("merchantPool");
   marchands.forEach(id => {
@@ -276,12 +276,11 @@ document.getElementById("resetBtn").addEventListener("click", function () {
     pool.appendChild(li);
   });
 
-  // Vide les résultats IA et suggestions
-  document.getElementById("suggestionsContainer").innerHTML = "";
-  document.getElementById("messageBox").textContent = "";
-  document.getElementById("aiComparisonResult").innerHTML = "";
-  document.getElementById("compareList").innerHTML = "";
-  document.getElementById("compareSection").style.display = "none";
+  suggestionsContainer.innerHTML = "";
+  messageBox.textContent = "";
+  aiResultBox.innerHTML = "";
+  compareList.innerHTML = "";
+  compareSection.style.display = "none";
   selectedProductsForCompare = [];
   compareBtn.disabled = true;
 });

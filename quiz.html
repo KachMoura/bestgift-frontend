@@ -93,11 +93,15 @@
     </div>
     
 
-    <label for="budget">Budget Max ?</label>
-  <div class="budget-container">
-    <output id="budgetOutput"><strong>30 €</strong></output>
-    <input type="range" id="budget" name="budget" min="0" max="500" step="5" value="30" oninput="updateBudgetOutput(this.value)">
-  </div>
+    <div class="budget-container">
+      <label><strong>Quel est votre budget ?</strong></label>
+      <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 8px;">
+        <span>Min : <span id="minBudgetOutput">10€</span></span>
+        <span>Max : <span id="maxBudgetOutput">100€</span></span>
+      </div>
+      <input type="range" id="minBudget" name="minBudget" min="0" max="500" step="5" value="10" oninput="updateBudgetDisplay()" />
+      <input type="range" id="maxBudget" name="maxBudget" min="0" max="500" step="5" value="100" oninput="updateBudgetDisplay()" />
+    </div>
 
     <label>Produits déjà offerts à exclure</label>
     <input type="text" name="excludedGifts" placeholder="ex : montre, bougie, parfum..." />

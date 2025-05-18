@@ -597,3 +597,31 @@ header .nav-item.active .nav-link {
   z-index: 0;
   border-radius: 3px;
 }
+/* STYLE PRÉFÉRENCES CHECKÉES */
+.preferences-box input[type="checkbox"]:checked + label,
+.preferences-box label input:checked {
+  background-color: #eaf4fb;
+  border: 1px solid #3498db;
+  border-radius: 6px;
+  padding: 6px 10px;
+  color: #3498db;
+  font-weight: bold;
+}
+
+/* Pour gérer les labels correctement */
+.preferences-box label {
+  padding: 6px 10px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+/* STYLE MARCHANDS EN ZONE TOP OU MAYBE */
+#topMerchants li,
+#maybeMerchants li {
+  background-color: #eaf4fb !important;
+  border: 1px solid #3498db !important;
+  color: #3498db;
+  font-weight: bold;
+  border-radius: 5px;
+}

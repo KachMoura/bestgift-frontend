@@ -30,60 +30,90 @@
 
   <!-- Ton formulaire complet ici (inchangé) -->
   <form id="quizForm">
-    <div class="form-section mt-4">
-      <label><strong>Pour quel profil ?</strong></label>
-      <div class="profile-options">
-        <label class="card-group">
-          <input type="radio" name="interests" value="tech" required />
-          <div class="card-content">
-            <i class="fas fa-microchip"></i>
-            <span>Tech</span>
-          </div>
-        </label>
-        <label class="card-group">
-          <input type="radio" name="interests" value="sport" />
-          <div class="card-content">
-            <i class="fas fa-running"></i>
-            <span>Sport</span>
-          </div>
-        </label>
-        <label class="card-group">
-          <input type="radio" name="interests" value="maison" />
-          <div class="card-content">
-            <i class="fas fa-home"></i>
-            <span>Déco</span>
-          </div>
-        </label>
-        <label class="card-group">
-          <input type="radio" name="interests" value="game" />
-          <div class="card-content">
-            <i class="fas fa-gamepad"></i>
-            <span>Jeux</span>
-          </div>
-        </label>
-        <label class="card-group">
-          <input type="radio" name="interests" value="music" />
-          <div class="card-content">
-            <i class="fas fa-music"></i>
-            <span>Musique</span>
-          </div>
-        </label>
-        <label class="card-group">
-          <input type="radio" name="interests" value="beauty" />
-          <div class="card-content">
-            <i class="fas fa-magic"></i>
-            <span>Beauté</span>
-          </div>
-        </label>
-        <label class="card-group">
-          <input type="radio" name="interests" value="ecolo" />
-          <div class="card-content">
-            <i class="fas fa-seedling"></i>
-            <span>Écolo</span>
-          </div>
-        </label>
+    <!-- POUR QUI -->
+<div class="form-section">
+  <label><strong>Pour qui ?</strong></label>
+  <div class="gender-options">
+    <label class="gender-card">
+      <input type="radio" name="gender" value="Elle" required />
+      <div class="card-content">
+        <i class="fas fa-female"></i>
+        <span>Elle</span>
       </div>
-    </div>
+    </label>
+    <label class="gender-card">
+      <input type="radio" name="gender" value="Lui" />
+      <div class="card-content">
+        <i class="fas fa-male"></i>
+        <span>Lui</span>
+      </div>
+    </label>
+    <label class="gender-card">
+      <input type="radio" name="gender" value="Enfant" />
+      <div class="card-content">
+        <i class="fas fa-child"></i>
+        <span>Enfant</span>
+      </div>
+    </label>
+  </div>
+</div>
+
+<!-- POUR QUEL PROFIL -->
+<div class="form-section mt-4">
+  <label><strong>Pour quel profil ?</strong></label>
+  <div class="profile-options">
+    <label class="profile-card">
+      <input type="radio" name="interests" value="tech" required />
+      <div class="card-content">
+        <i class="fas fa-microchip"></i>
+        <span>Tech</span>
+      </div>
+    </label>
+    <label class="profile-card">
+      <input type="radio" name="interests" value="sport" />
+      <div class="card-content">
+        <i class="fas fa-running"></i>
+        <span>Sport</span>
+      </div>
+    </label>
+    <label class="profile-card">
+      <input type="radio" name="interests" value="maison" />
+      <div class="card-content">
+        <i class="fas fa-home"></i>
+        <span>Déco</span>
+      </div>
+    </label>
+    <label class="profile-card">
+      <input type="radio" name="interests" value="game" />
+      <div class="card-content">
+        <i class="fas fa-gamepad"></i>
+        <span>Jeux</span>
+      </div>
+    </label>
+    <label class="profile-card">
+      <input type="radio" name="interests" value="music" />
+      <div class="card-content">
+        <i class="fas fa-music"></i>
+        <span>Musique</span>
+      </div>
+    </label>
+    <label class="profile-card">
+      <input type="radio" name="interests" value="beauty" />
+      <div class="card-content">
+        <i class="fas fa-magic"></i>
+        <span>Beauté</span>
+      </div>
+    </label>
+    <label class="profile-card">
+      <input type="radio" name="interests" value="ecolo" />
+      <div class="card-content">
+        <i class="fas fa-seedling"></i>
+        <span>Écolo</span>
+      </div>
+    </label>
+  </div>
+</div>
+
     
 
     <label for="budget">Budget Max ?</label>

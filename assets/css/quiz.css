@@ -514,3 +514,38 @@ header .nav-item.active .nav-link {
 .profile-card input:checked + i {
   color: #3498db;
 }
+
+.range-slider-wrapper {
+  position: relative;
+  width: 100%;
+  padding: 20px 0;
+}
+
+.range-slider-wrapper input[type=range] {
+  width: 100%;
+  -webkit-appearance: none;
+  height: 6px;
+  border-radius: 3px;
+  background: #ddd;
+  outline: none;
+  position: absolute;
+  top: 12px;
+}
+
+.range-slider-wrapper input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #3498db;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+.range-slider-wrapper .slider-values {
+  text-align: center;
+  margin-top: 40px;
+  font-weight: bold;
+  color: #2c3e50;
+}

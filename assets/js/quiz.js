@@ -295,3 +295,7 @@ document.getElementById("resetBtn").addEventListener("click", function () {
   selectedProductsForCompare = [];
   compareBtn.disabled = true;
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  updateDoubleRange();
+});

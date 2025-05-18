@@ -106,22 +106,24 @@
       </div>
     </div>
 
-    <label>Produits déjà offerts à exclure</label>
-    <input type="text" name="excludedGifts" placeholder="ex : montre, bougie, parfum..." />
+    <div class="form-section">
+      <label for="excludedGifts"><strong>Produits déjà offerts à exclure</strong></label>
+      <input type="text" name="excludedGifts" placeholder="ex : montre, bougie, parfum..." class="styled-input" />
+    </div>
 
-    <div class="preferences-box">
+    <div class="form-section preferences-box">
       <h3>Préférences :</h3>
       <label class="preference-item">
         <input type="checkbox" name="preferences" value="promo" />
-        En promotion
+        <span>En promotion</span>
       </label>
       <label class="preference-item">
         <input type="checkbox" name="preferences" value="compact" />
-        Petit format
+        <span>Petit format</span>
       </label>
       <label class="preference-item">
         <input type="checkbox" name="preferences" value="fast_delivery" />
-        Livraison rapide
+        <span>Livraison rapide</span>
       </label>
     </div>
 

@@ -625,3 +625,12 @@ header .nav-item.active .nav-link {
   font-weight: bold;
   border-radius: 5px;
 }
+.preferences-box input[type="checkbox"]:checked + label,
+.preferences-box input[type="checkbox"]:checked {
+  background-color: #eaf4fb;
+  border: 1px solid #3498db;
+  border-radius: 6px;
+  color: #3498db;
+  padding: 6px 10px;
+  font-weight: bold;
+}

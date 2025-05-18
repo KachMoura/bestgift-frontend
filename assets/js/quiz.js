@@ -12,9 +12,11 @@ function drop(ev) {
     ev.target.appendChild(element);
   }
 }
+
 function getMerchantList(id) {
   return Array.from(document.querySelectorAll(`#${id} li`)).map(li => li.id);
 }
+
 function updateDoubleRange() {
   const minSlider = document.getElementById("minBudget");
   const maxSlider = document.getElementById("maxBudget");
@@ -71,8 +73,6 @@ form.addEventListener("submit", function (e) {
   const preferences = Array.from(document.querySelectorAll('input[name="preferences"]:checked')).map(el => el.value);
   const minBudget = parseFloat(document.getElementById("minBudget").value);
   const maxBudget = parseFloat(document.getElementById("maxBudget").value);
-  console.log(">>> [quiz.js] minBudget transmis :", minBudget);
-  console.log(">>> [quiz.js] maxBudget transmis :", maxBudget);
 
   const data = {
     interests: [form.interests.value],
@@ -104,10 +104,9 @@ form.addEventListener("submit", function (e) {
         return;
       }
       displaySuggestionsByMerchant(result.suggestions, data.merchants);
-      // Scroll vers les résultats
       setTimeout(() => {
-        suggestionsContainer.scrollIntoView({ behavior: "smooth" });
-      }, 200);
+        document.getElementById("suggestionsContainer").scrollIntoView({ behavior: "smooth" });
+      }, 300);
     })
     .catch(err => {
       loader.style.display = "none";
@@ -131,7 +130,6 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
       const merchantName = merchant === "EasyGift" ? "Catalogue BestGift" : merchant;
       title.textContent = `Suggestions ${merchantName}`;
       section.appendChild(title);
-
       const carousel = document.createElement("div");
       carousel.className = "card-carousel";
 
@@ -152,7 +150,6 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
         card.dataset.image = product.image;
         card.dataset.price = product.price;
         card.dataset.description = product.description || "";
-
         card.querySelector(".compare-btn").addEventListener("click", () => handleCompareClick(card));
         carousel.appendChild(card);
       });
@@ -197,7 +194,7 @@ function handleCompareClick(card) {
   if (selectedProductsForCompare.length === 2) {
     compareBtn.disabled = false;
     setTimeout(() => {
-      compareSection.scrollIntoView({ behavior: "smooth" });
+      document.getElementById("compareSection").scrollIntoView({ behavior: "smooth" });
     }, 200);
   }
 }
@@ -213,10 +210,41 @@ compareBtn.addEventListener("click", async () => {
     });
     const result = await response.json();
     if (result.analysis) {
+      const lines = result.analysis.split('\n');
+      const tableLines = [];
+      const recommendationLines = [];
+      let inReco = false;
+      for (const line of lines) {
+        if (
+          line.toLowerCase().includes("je vous recommande") ||
+          line.toLowerCase().includes("si vous cherchez") ||
+          line.toLowerCase().includes("en revanche") ||
+          line.toLowerCase().includes("meilleur choix")
+        ) {
+          inReco = true;
+        }
+        if (inReco) recommendationLines.push(line);
+        else tableLines.push(line);
+      }
+
+      const headers = tableLines[0]?.split('|').slice(1, -1).map(cell => cell.trim()) || [];
+      const rows = tableLines.slice(1).map(line =>
+        line.split('|').slice(1, -1).map(cell => cell.trim())
+      );
+
       aiResultBox.innerHTML = `
         <div class="ai-analysis-box">
           <h4>Comparaison détaillée</h4>
-          <p>${result.analysis.replace(/\n/g, "<br>")}</p>
+          <table class="ai-table">
+            <thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
+            <tbody>
+              ${rows.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+        <div class="ai-reco-box">
+          <h5>Recommandation IA</h5>
+          <p>${recommendationLines.join('<br>')}</p>
         </div>
       `;
       aiResultBox.scrollIntoView({ behavior: "smooth" });

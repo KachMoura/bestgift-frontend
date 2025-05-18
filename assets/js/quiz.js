@@ -21,19 +21,15 @@ function updateDoubleRange() {
   const minOutput = document.getElementById("minBudgetOutput");
   const maxOutput = document.getElementById("maxBudgetOutput");
   const track = document.getElementById("rangeTrack");
-
   let minVal = parseInt(minSlider.value);
   let maxVal = parseInt(maxSlider.value);
-
   if (minVal > maxVal) {
     [minVal, maxVal] = [maxVal, minVal];
     minSlider.value = minVal;
     maxSlider.value = maxVal;
   }
-
   minOutput.textContent = `${minVal}€`;
   maxOutput.textContent = `${maxVal}€`;
-
   const percentMin = (minVal / 500) * 100;
   const percentMax = (maxVal / 500) * 100;
   track.style.left = `${percentMin}%`;
@@ -75,7 +71,6 @@ form.addEventListener("submit", function (e) {
   const preferences = Array.from(document.querySelectorAll('input[name="preferences"]:checked')).map(el => el.value);
   const minBudget = parseFloat(document.getElementById("minBudget").value);
   const maxBudget = parseFloat(document.getElementById("maxBudget").value);
-
   console.log(">>> [quiz.js] minBudget transmis :", minBudget);
   console.log(">>> [quiz.js] maxBudget transmis :", maxBudget);
 
@@ -109,6 +104,10 @@ form.addEventListener("submit", function (e) {
         return;
       }
       displaySuggestionsByMerchant(result.suggestions, data.merchants);
+      // Scroll vers les résultats
+      setTimeout(() => {
+        suggestionsContainer.scrollIntoView({ behavior: "smooth" });
+      }, 200);
     })
     .catch(err => {
       loader.style.display = "none";
@@ -121,6 +120,7 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
   suggestionsContainer.innerHTML = "";
   const order = [...merchantRanking.top, ...merchantRanking.maybe];
   let anyProductFound = false;
+
   order.forEach(merchant => {
     const products = suggestions[merchant];
     if (products && products.length > 0) {
@@ -131,8 +131,10 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
       const merchantName = merchant === "EasyGift" ? "Catalogue BestGift" : merchant;
       title.textContent = `Suggestions ${merchantName}`;
       section.appendChild(title);
+
       const carousel = document.createElement("div");
       carousel.className = "card-carousel";
+
       products.forEach(product => {
         const score = product.matchingScore || 30;
         const card = document.createElement("div");
@@ -150,13 +152,16 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
         card.dataset.image = product.image;
         card.dataset.price = product.price;
         card.dataset.description = product.description || "";
+
         card.querySelector(".compare-btn").addEventListener("click", () => handleCompareClick(card));
         carousel.appendChild(card);
       });
+
       section.appendChild(carousel);
       suggestionsContainer.appendChild(section);
     }
   });
+
   if (!anyProductFound) {
     messageBox.textContent = "Aucun cadeau ne correspond à vos critères.";
   }
@@ -167,6 +172,7 @@ function handleCompareClick(card) {
     alert("Vous ne pouvez comparer que 2 produits.");
     return;
   }
+
   compareSection.style.display = "block";
   card.classList.add("selected");
   selectedProductsForCompare.push({
@@ -176,6 +182,7 @@ function handleCompareClick(card) {
     link: card.dataset.link,
     description: card.dataset.description || ""
   });
+
   const miniCard = document.createElement("div");
   miniCard.className = "compare-mini-card";
   miniCard.innerHTML = `
@@ -186,8 +193,12 @@ function handleCompareClick(card) {
     </div>
   `;
   compareList.appendChild(miniCard);
+
   if (selectedProductsForCompare.length === 2) {
     compareBtn.disabled = false;
+    setTimeout(() => {
+      compareSection.scrollIntoView({ behavior: "smooth" });
+    }, 200);
   }
 }
 
@@ -208,6 +219,7 @@ compareBtn.addEventListener("click", async () => {
           <p>${result.analysis.replace(/\n/g, "<br>")}</p>
         </div>
       `;
+      aiResultBox.scrollIntoView({ behavior: "smooth" });
     } else {
       aiResultBox.innerHTML = `<p style="color:#e74c3c">Erreur lors de l'analyse.</p>`;
     }

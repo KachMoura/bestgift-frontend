@@ -30,25 +30,68 @@
 
   <!-- Ton formulaire complet ici (inchangé) -->
   <form id="quizForm">
-    <label>Pour qui ?</label>
-    <select name="gender" required>
-      <option value="Elle">Elle</option>
-      <option value="Lui">Lui</option>
-      <option value="Enfant">Enfant</option>
-    </select>
-
-    <label>Pour quel profil ?</label>
-    <select name="interests" required>
-      <option value="tech">Passionné(e) de tech</option>
-      <option value="sport">Sportif(ve)</option>
-      <!--<option value="book">Lecteur(trice)</option> -->
-      <option value="maison">Maison-déco</option>
-      <option value="game">Joueur(se)</option>
-      <option value="music">Amateur(trice) de musique</option>
-      <option value="beauty">Beauty addict</option>
-      <option value="ecolo">Main verte</option>
-      <!--<option value="jewelry">Amateur(trice) de bijoux</option>-->
-    </select>
+    <div class="form-section">
+      <label><strong>Pour qui ?</strong></label>
+      <div class="gender-options">
+        <label class="gender-card">
+          <input type="radio" name="gender" value="Elle" required />
+          <i class="fas fa-female"></i>
+          <span>Elle</span>
+        </label>
+        <label class="gender-card">
+          <input type="radio" name="gender" value="Lui" />
+          <i class="fas fa-male"></i>
+          <span>Lui</span>
+        </label>
+        <label class="gender-card">
+          <input type="radio" name="gender" value="Enfant" />
+          <i class="fas fa-child"></i>
+          <span>Enfant</span>
+        </label>
+      </div>
+    </div>
+    
+    <div class="form-section mt-4">
+      <label><strong>Pour quel profil ?</strong></label>
+      <div class="profile-options">
+        <label class="profile-card">
+          <input type="radio" name="interests" value="tech" required />
+          <i class="fas fa-microchip"></i>
+          <span>Tech</span>
+        </label>
+        <label class="profile-card">
+          <input type="radio" name="interests" value="sport" />
+          <i class="fas fa-running"></i>
+          <span>Sport</span>
+        </label>
+        <label class="profile-card">
+          <input type="radio" name="interests" value="maison" />
+          <i class="fas fa-home"></i>
+          <span>Maison</span>
+        </label>
+        <label class="profile-card">
+          <input type="radio" name="interests" value="game" />
+          <i class="fas fa-gamepad"></i>
+          <span>Jeux</span>
+        </label>
+        <label class="profile-card">
+          <input type="radio" name="interests" value="music" />
+          <i class="fas fa-music"></i>
+          <span>Musique</span>
+        </label>
+        <label class="profile-card">
+          <input type="radio" name="interests" value="beauty" />
+          <i class="fas fa-magic"></i>
+          <span>Beauté</span>
+        </label>
+        <label class="profile-card">
+          <input type="radio" name="interests" value="ecolo" />
+          <i class="fas fa-seedling"></i>
+          <span>Écolo</span>
+        </label>
+      </div>
+    </div>
+    
 
     <label for="budget">Budget Max ?</label>
   <div class="budget-container">

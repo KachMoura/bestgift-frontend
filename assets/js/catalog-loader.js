@@ -4,7 +4,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const profileFilter = document.getElementById("filter-profile");
   const priceFilter = document.getElementById("filter-price");
 
-  const baseApi = "https://bestgift-backend.onrender.com"; // Pas de [] ni slash final
+  const baseApi = "https://bestgift-backend.onrender.com"; // Corrigé : sans crochets ni slash final
+
+  function escapeHTML(str) {
+    if (!str) return "";
+    return str.replace(/[&<>"']/g, function (m) {
+      return {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[m];
+    });
+  }
 
   function loadCatalog() {
     fetch(`${baseApi}/api/catalogue`)
@@ -18,7 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const filtered = products.filter((p) => {
           const matchesGender = !gender || (p.gender || "").toLowerCase() === gender;
-          const matchesProfile = !profile || (p.profile || p.tags || "").toLowerCase().includes(profile);
+          const matchesProfile =
+            !profile || (p.profile || p.tags || "").toLowerCase().includes(profile);
           const matchesPrice = isNaN(maxPrice) || parseFloat(p.price) <= maxPrice;
           return matchesGender && matchesProfile && matchesPrice;
         });
@@ -32,27 +46,33 @@ document.addEventListener("DOMContentLoaded", () => {
           const card = document.createElement("div");
           card.className = "col-sm-6 col-md-4 col-lg-3";
 
+          const title = escapeHTML(p.title);
+          const description = escapeHTML(p.description || "Produit BestGift");
+          const image = escapeHTML(p.image || "");
+          const price = parseFloat(p.price).toFixed(2);
+
           card.innerHTML = `
             <div class="product-card">
-              <img src="${p.image}" alt="${p.title}">
+              <img src="${image}" alt="${title}">
               <div class="detail-box">
-                <h6 class="title">${p.title}</h6>
-                <p class="price">Prix : ${p.price}</p>
+                <h6 class="title">${title}</h6>
+                <p class="price">Prix : ${price} €</p>
                 <button
                   class="btn btn-sm btn-primary snipcart-add-item"
-                  data-item-id="${p.id || p.title}"
-                  data-item-name="${p.title}"
-                  data-item-price="${p.price}"
+                  data-item-id="${p.id || title}"
+                  data-item-name="${title}"
+                  data-item-price="${price}"
                   data-item-url="/shop.html"
-                  data-item-description="${p.description || 'Produit BestGift'}"
-                  data-item-image="${p.image}"
+                  data-item-description="${description}"
+                  data-item-image="${image}"
+                  data-item-currency="EUR"
                 >
                   Ajouter au panier
                 </button>
               </div>
-             
             </div>
           `;
+
           container.appendChild(card);
         });
       })

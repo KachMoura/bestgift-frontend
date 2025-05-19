@@ -6,35 +6,10 @@
   <title>BestGift - Catalogue</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.6.1/default/snipcart.css" />
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       background: #f4f6f8;
-    }
-    header {
-      background-color: #3498db;
-      padding: 15px 0;
-    }
-    header .navbar-brand {
-      display: flex;
-      align-items: center;
-      color: #fff;
-      font-size: 1.8rem;
-      font-weight: bold;
-    }
-    header .navbar-brand img {
-      height: 40px;
-      margin-right: 10px;
-    }
-    header .nav-link {
-      color: #fff !important;
-    }
-    header .nav-item.active .nav-link {
-      border: 2px solid rgba(255, 255, 255, 0.4);
-      border-radius: 6px;
-      padding: 6px 12px;
-      background-color: rgba(255, 255, 255, 0.15);
     }
     .shop-section {
       padding: 50px 0;
@@ -70,15 +45,6 @@
     .product-card .price {
       color: #2c3e50;
       font-weight: bold;
-      margin-bottom: 5px;
-    }
-    .product-card .title {
-      font-size: 1rem;
-      font-weight: 500;
-      color: #555;
-    }
-    .snipcart-add-item {
-      margin-top: 10px;
     }
     footer {
       background-color: #343a40;
@@ -89,80 +55,60 @@
   </style>
 </head>
 <body>
-<header>
-  <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <a class="navbar-brand d-flex align-items-center" href="index.html">
-        <img src="../assets/images/favicon.png" alt="Logo cadeau" />
-        <span>BestGift</span>
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="nav">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
-          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
-          <li class="nav-item active"><a class="nav-link" href="shop.html">Notre Catalogue</a></li>
-          <li class="nav-item"><a class="nav-link" href="why.html">Pourquoi BestGift ?</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-    </nav>
-  </div>
-</header>
+  <header class="bg-primary text-white py-3">
+    <div class="container d-flex justify-content-between align-items-center">
+      <h1 class="h4 m-0">BestGift</h1>
+      <nav>
+        <a href="index.html" class="text-white mr-3">Accueil</a>
+        <a href="quiz.html" class="text-white mr-3">Quiz</a>
+        <a href="shop.html" class="text-white font-weight-bold">Catalogue</a>
+      </nav>
+    </div>
+  </header>
 
-<section class="shop-section">
-  <div class="container">
-    <h2 class="text-center mb-4">Notre Catalogue de Cadeaux</h2>
-    <!-- Barre de filtres -->
-    <div class="filter-bar row">
-      <div class="col-md-4 mb-2">
-        <label>Genre :</label>
-        <select id="filter-gender" class="form-control">
-          <option value="">Tous</option>
-          <option value="Elle">Elle</option>
-          <option value="Lui">Lui</option>
-          <option value="Enfant">Enfant</option>
-        </select>
+  <section class="shop-section">
+    <div class="container">
+      <h2 class="text-center mb-4">Notre Catalogue de Cadeaux</h2>
+      <div class="filter-bar row">
+        <div class="col-md-4 mb-2">
+          <label>Genre :</label>
+          <select id="filter-gender" class="form-control">
+            <option value="">Tous</option>
+            <option value="Elle">Elle</option>
+            <option value="Lui">Lui</option>
+            <option value="Enfant">Enfant</option>
+          </select>
+        </div>
+        <div class="col-md-4 mb-2">
+          <label>Profil :</label>
+          <select id="filter-profile" class="form-control">
+            <option value="">Tous</option>
+            <option value="tech">Tech</option>
+            <option value="sport">Sport</option>
+            <option value="beauty">Beauté</option>
+            <option value="ecolo">Écolo</option>
+          </select>
+        </div>
+        <div class="col-md-4 mb-2">
+          <label>Prix max :</label>
+          <input type="number" id="filter-price" class="form-control" placeholder="Ex : 50" />
+        </div>
       </div>
-      <div class="col-md-4 mb-2">
-        <label>Profil :</label>
-        <select id="filter-profile" class="form-control">
-          <option value="">Tous</option>
-          <option value="tech">Tech</option>
-          <option value="sport">Sport</option>
-          <option value="beauty">Beauté</option>
-          <option value="ecolo">Écolo</option>
-        </select>
-      </div>
-      <div class="col-md-4 mb-2">
-        <label>Prix max :</label>
-        <input type="number" id="filter-price" class="form-control" placeholder="Ex : 50" />
+
+      <div id="catalog-container" class="row mt-4">
+        <!-- Produits dynamiques ici -->
       </div>
     </div>
+  </section>
 
-    <!-- Catalogue -->
-    <div id="catalog-container" class="row mt-4">
-      <!-- Produits dynamiques JS ici -->
+  <footer>
+    <div class="container">
+      <p>© 2025 BestGift. Tous droits réservés.</p>
     </div>
-  </div>
-</section>
+  </footer>
 
-<footer>
-  <div class="container">
-    <p>© 2025 BestGift. Tous droits réservés.</p>
-  </div>
-</footer>
-
-<!-- Snipcart -->
-<script async src="https://cdn.snipcart.com/themes/v3.6.1/default/snipcart.js"></script>
-<div hidden id="snipcart" data-api-key="VOTRE_CLE_SANDBOX" data-config-modal-style="side"></div>
-
-<!-- JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../assets/js/catalog-loader.js"></script>
-
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/catalog-loader.js"></script>
 </body>
 </html>

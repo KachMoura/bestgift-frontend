@@ -4,22 +4,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const profileFilter = document.getElementById("filter-profile");
     const priceFilter = document.getElementById("filter-price");
   
-    const baseApi = "https://bestgift-backend.onrender.com"; // URL backend Render
+    const baseApi = "https://bestgift-backend.onrender.com"; // pas de slash à la fin
   
     function loadCatalog() {
       fetch(`${baseApi}/api/catalogue`)
-        .then((res) => res.json())
-        .then((products) => {
+        .then(res => res.json())
+        .then(products => {
           container.innerHTML = "";
   
           const gender = genderFilter.value.toLowerCase();
           const profile = profileFilter.value.toLowerCase();
           const maxPrice = parseFloat(priceFilter.value);
   
-          const filtered = products.filter((p) => {
+          const filtered = products.filter(p => {
             const matchesGender = !gender || (p.gender || "").toLowerCase() === gender;
-            const matchesProfile =
-              !profile || (p.profile || p.tags || "").toLowerCase().includes(profile);
+            const matchesProfile = !profile || (p.profile || p.tags || "").toLowerCase().includes(profile);
             const matchesPrice = isNaN(maxPrice) || parseFloat(p.price) <= maxPrice;
             return matchesGender && matchesProfile && matchesPrice;
           });
@@ -29,23 +28,22 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
           }
   
-          filtered.forEach((p) => {
+          filtered.forEach(p => {
             const card = document.createElement("div");
             card.className = "col-sm-6 col-md-4 col-lg-3";
             card.innerHTML = `
               <div class="product-card">
                 <img src="${p.image}" alt="${p.title}">
                 <div class="detail-box">
-                  <h6>${p.title}</h6>
-                  <p>Prix : ${p.price} €</p>
+                  <h6 class="title">${p.title}</h6>
+                  <p class="price">Prix : ${p.price} €</p>
                 </div>
-                <div class="new">New</div>
               </div>
             `;
             container.appendChild(card);
           });
         })
-        .catch((err) => {
+        .catch(err => {
           container.innerHTML = `<p class="text-danger w-100">Erreur de chargement du catalogue.</p>`;
           console.error("[catalog-loader] Erreur :", err.message);
         });
@@ -55,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
     loadCatalog();
   
     // Rafraîchir au changement de filtre
-    [genderFilter, profileFilter, priceFilter].forEach((el) =>
+    [genderFilter, profileFilter, priceFilter].forEach(el =>
       el.addEventListener("change", loadCatalog)
     );
   });

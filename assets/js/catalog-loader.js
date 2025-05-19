@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <img src="${p.image}" alt="${p.title}">
               <div class="detail-box">
                 <h6>${p.title}</h6>
-                <p>Prix : ${p.price} €</p>
+                <p class="price">Prix : ${p.price} €</p>
               </div>
               <div class="new">New</div>
             </div>

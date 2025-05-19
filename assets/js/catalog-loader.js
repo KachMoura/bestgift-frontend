@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   Ajouter au panier
                 </button>
               </div>
-              <div class="new">New</div>
+             
             </div>
           `;
           container.appendChild(card);

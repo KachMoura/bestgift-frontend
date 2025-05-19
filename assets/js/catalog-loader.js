@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const priceFilter = document.getElementById("filter-price");
   
     function loadCatalog() {
-      fetch("/api/catalog")
+      fetch("/api/catalogue")
         .then((res) => res.json())
         .then((products) => {
           container.innerHTML = "";

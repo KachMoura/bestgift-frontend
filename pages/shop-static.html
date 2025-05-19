@@ -4,39 +4,61 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BestGift - Test Statique Snipcart</title>
-
-  <!-- CSS Bootstrap -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-
-  <!-- Snipcart Public Key + Script -->
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6f8;
+      padding-bottom: 60px;
+    }
+    .product-card {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 30px;
+      padding: 20px;
+      text-align: center;
+    }
+    .product-card img {
+      height: 200px;
+      object-fit: cover;
+      margin-bottom: 15px;
+    }
+    .snipcart-summary {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #343a40;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+  </style>
+  <!-- Snipcart -->
   <script async src="https://cdn.snipcart.com/themes/v3.3.0/default/snipcart.js"></script>
   <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.3.0/default/snipcart.css" />
-  <div hidden id="snipcart" data-api-key="MTA0ZTc0NzMtMDJkYy00MGIwLWI0MTQtNGJjNzc3OGEwN2QzNjM4ODMyNTAxNzM5NjAxMTAy" data-currency="eur"></div>
-
-  <style>
-    body { font-family: 'Segoe UI', sans-serif; background: #f4f6f8; padding: 30px; }
-    .product-card { border: 1px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 30px; background: white; }
-    .product-card h5 { font-weight: bold; }
-  </style>
+  <div hidden id="snipcart"
+       data-api-key="VOTRE_CLÉ_PUBLIC_TEST"
+       data-currency="eur">
+  </div>
 </head>
 <body>
-
-  <div class="container">
-    <h2 class="text-center mb-4">Catalogue Statique de Test</h2>
+  <div class="container mt-5">
+    <h2 class="text-center mb-5">Test Statique - Catalogue Snipcart</h2>
     <div class="row">
-
       <div class="col-md-4">
         <div class="product-card">
-          <h5>Montre élégante</h5>
-          <p>Une montre sobre et élégante.</p>
-          <p><strong>Prix : 59.99 €</strong></p>
-          <button 
+          <img src="https://via.placeholder.com/300x200" alt="Kit Peinture" />
+          <h5>Kit de Peinture</h5>
+          <p>Prix : 24.99 €</p>
+          <button
             class="btn btn-primary snipcart-add-item"
-            data-item-id="montre-001"
-            data-item-name="Montre élégante"
-            data-item-price="59.99"
-            data-item-url="/shop-static.html"
-            data-item-description="Une montre sobre et élégante.">
+            data-item-id="kit-001"
+            data-item-name="Kit de Peinture"
+            data-item-price="24.99"
+            data-item-url="https://bestgift-frontend.onrender.com/pages/shop-static.html"
+            data-item-description="Kit complet pour artistes débutants">
             Ajouter au panier
           </button>
         </div>
@@ -44,16 +66,16 @@
 
       <div class="col-md-4">
         <div class="product-card">
-          <h5>Casque Bluetooth</h5>
-          <p>Casque sans fil avec réduction de bruit.</p>
-          <p><strong>Prix : 89.00 €</strong></p>
-          <button 
+          <img src="https://via.placeholder.com/300x200" alt="Casque Audio" />
+          <h5>Casque Audio</h5>
+          <p>Prix : 59.99 €</p>
+          <button
             class="btn btn-primary snipcart-add-item"
             data-item-id="casque-002"
-            data-item-name="Casque Bluetooth"
-            data-item-price="89.00"
-            data-item-url="/shop-static.html"
-            data-item-description="Casque sans fil avec réduction de bruit.">
+            data-item-name="Casque Audio"
+            data-item-price="59.99"
+            data-item-url="https://bestgift-frontend.onrender.com/pages/shop-static.html"
+            data-item-description="Casque Bluetooth haute qualité">
             Ajouter au panier
           </button>
         </div>
@@ -61,23 +83,26 @@
 
       <div class="col-md-4">
         <div class="product-card">
-          <h5>Kit de Peinture</h5>
-          <p>Idéal pour les artistes débutants.</p>
-          <p><strong>Prix : 29.99 €</strong></p>
-          <button 
+          <img src="https://via.placeholder.com/300x200" alt="Plaid Cocoon" />
+          <h5>Plaid Cocoon</h5>
+          <p>Prix : 29.99 €</p>
+          <button
             class="btn btn-primary snipcart-add-item"
-            data-item-id="kit-003"
-            data-item-name="Kit de Peinture"
+            data-item-id="plaid-003"
+            data-item-name="Plaid Cocoon"
             data-item-price="29.99"
-            data-item-url="/shop-static.html"
-            data-item-description="Idéal pour les artistes débutants.">
+            data-item-url="https://bestgift-frontend.onrender.com/pages/shop-static.html"
+            data-item-description="Plaid douillet pour les soirées froides">
             Ajouter au panier
           </button>
         </div>
       </div>
-
     </div>
   </div>
 
+  <!-- Résumé Panier -->
+  <div class="snipcart-summary">
+    <button class="btn btn-light snipcart-checkout">Voir le panier</button>
+  </div>
 </body>
 </html>

@@ -4,9 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BestGift - Catalogue</title>
+
   <!-- Bootstrap + FontAwesome -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
   <!-- Snipcart -->
   <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.6.1/default/snipcart.css" />
   <script async src="https://cdn.snipcart.com/themes/v3.6.1/default/snipcart.js"></script>
@@ -122,6 +124,7 @@
   <section class="shop-section">
     <div class="container">
       <h2 class="text-center mb-4">Notre Catalogue de Cadeaux</h2>
+
       <div class="filter-bar row">
         <div class="col-md-4 mb-2">
           <label>Genre :</label>
@@ -147,6 +150,7 @@
           <input type="number" id="filter-price" class="form-control" placeholder="Ex : 50" />
         </div>
       </div>
+
       <div id="catalog-container" class="row mt-4">
         <!-- Produits dynamiques ici -->
       </div>
@@ -164,13 +168,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../assets/js/catalog-loader.js"></script>
 
-  <!-- Snipcart configuration -->
-  <div hidden id="snipcart"
-    data-api-key="MTA0ZTc0NzMtMDJkYy00MGIwLWI0MTQtNGJjNzc3OGEwN2QzNjM4ODMyNTAxNzM5NjAxMTAy"
-    data-currency="eur"
-    data-config-modal-style="side"
-    data-config-add-product-behavior="none"
-    data-config-show-remove-all-button="true">
-  </div>
+  <!-- Snipcart -->
+  <div hidden id="snipcart" data-api-key="MTA0ZTc0NzMtMDJkYy00MGIwLWI0MTQtNGJjNzc3OGEwN2QzNjM4ODMyNTAxNzM5NjAxMTAy" data-config-modal-style="side"></div>
 </body>
 </html>

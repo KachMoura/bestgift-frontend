@@ -9,12 +9,14 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f8f9fa;
+      background: #f4f6f8;
     }
+
     header {
       background-color: #3498db;
       padding: 15px 0;
     }
+
     header .navbar-brand {
       display: flex;
       align-items: center;
@@ -22,60 +24,72 @@
       font-size: 1.8rem;
       font-weight: bold;
     }
+
     header .navbar-brand img {
       height: 40px;
       margin-right: 10px;
     }
+
     header .nav-link {
       color: #fff !important;
     }
+
     header .nav-item.active .nav-link {
       border: 2px solid rgba(255, 255, 255, 0.4);
       border-radius: 6px;
       padding: 6px 12px;
       background-color: rgba(255, 255, 255, 0.15);
     }
+
     .shop-section {
       padding: 50px 0;
     }
+
     .filter-bar {
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      background: white;
       padding: 20px;
-      margin-bottom: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
     }
+
     .product-card {
+      background: white;
       border: 1px solid #ddd;
       border-radius: 10px;
       overflow: hidden;
-      background: white;
       margin-bottom: 30px;
-      transition: transform 0.2s ease, box-shadow 0.2s;
+      transition: all 0.3s ease;
     }
+
     .product-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     }
+
     .product-card img {
       width: 100%;
       height: 200px;
       object-fit: cover;
     }
+
     .product-card .detail-box {
       padding: 15px;
       text-align: center;
     }
-    .product-card .new {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background-color: #3498db;
-      color: white;
-      font-size: 12px;
-      padding: 4px 8px;
-      border-radius: 4px;
+
+    .product-card .price {
+      color: #2c3e50;
+      font-weight: bold;
+      margin-bottom: 5px;
     }
+
+    .product-card .title {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #555;
+    }
+
     footer {
       background-color: #343a40;
       color: white;
@@ -85,78 +99,76 @@
   </style>
 </head>
 <body>
+  <header>
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+          <img src="../assets/images/favicon.png" alt="Logo cadeau" />
+          <span>BestGift</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+            <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+            <li class="nav-item active"><a class="nav-link" href="shop.html">Notre Catalogue</a></li>
+            <li class="nav-item"><a class="nav-link" href="why.html">Pourquoi BestGift ?</a></li>
+            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </header>
 
-<header>
-  <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <a class="navbar-brand d-flex align-items-center" href="index.html">
-        <img src="../assets/images/favicon.png" alt="Logo cadeau" />
-        <span>BestGift</span>
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="nav">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
-          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
-          <li class="nav-item active"><a class="nav-link" href="shop.html">Notre Catalogue</a></li>
-          <li class="nav-item"><a class="nav-link" href="why.html">Pourquoi BestGift ?</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-    </nav>
-  </div>
-</header>
+  <section class="shop-section">
+    <div class="container">
+      <h2 class="text-center mb-4">Notre Catalogue de Cadeaux</h2>
 
-<section class="shop-section">
-  <div class="container">
-    <h2 class="text-center mb-4">Notre Catalogue de Cadeaux</h2>
+      <!-- Barre de filtres -->
+      <div class="filter-bar row">
+        <div class="col-md-4 mb-2">
+          <label>Genre :</label>
+          <select id="filter-gender" class="form-control">
+            <option value="">Tous</option>
+            <option value="Elle">Elle</option>
+            <option value="Lui">Lui</option>
+            <option value="Enfant">Enfant</option>
+          </select>
+        </div>
+        <div class="col-md-4 mb-2">
+          <label>Profil :</label>
+          <select id="filter-profile" class="form-control">
+            <option value="">Tous</option>
+            <option value="tech">Tech</option>
+            <option value="sport">Sport</option>
+            <option value="beauty">Beauté</option>
+            <option value="ecolo">Écolo</option>
+          </select>
+        </div>
+        <div class="col-md-4 mb-2">
+          <label>Prix max :</label>
+          <input type="number" id="filter-price" class="form-control" placeholder="Ex : 50" />
+        </div>
+      </div>
 
-    <!-- Barre de filtres -->
-    <div class="filter-bar row align-items-center">
-      <div class="col-md-4 mb-2">
-        <label>Genre :</label>
-        <select id="filter-gender" class="form-control">
-          <option value="">Tous</option>
-          <option value="Elle">Elle</option>
-          <option value="Lui">Lui</option>
-          <option value="Enfant">Enfant</option>
-        </select>
-      </div>
-      <div class="col-md-4 mb-2">
-        <label>Profil :</label>
-        <select id="filter-profile" class="form-control">
-          <option value="">Tous</option>
-          <option value="tech">Tech</option>
-          <option value="sport">Sport</option>
-          <option value="beauty">Beauté</option>
-          <option value="ecolo">Écolo</option>
-        </select>
-      </div>
-      <div class="col-md-4 mb-2">
-        <label>Prix max :</label>
-        <input type="number" id="filter-price" class="form-control" placeholder="Ex : 50" />
+      <!-- Catalogue -->
+      <div id="catalog-container" class="row mt-4">
+        <!-- Produits chargés dynamiquement ici -->
       </div>
     </div>
+  </section>
 
-    <!-- Contenu catalogue -->
-    <div id="catalog-container" class="row mt-4">
-      <!-- Produits chargés dynamiquement ici -->
+  <footer>
+    <div class="container">
+      <p>© 2025 BestGift. Tous droits réservés.</p>
     </div>
-  </div>
-</section>
+  </footer>
 
-<footer>
-  <div class="container">
-    <p>© 2025 BestGift. Tous droits réservés.</p>
-  </div>
-</footer>
-
-<!-- JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../assets/js/catalog-loader.js"></script>
-
+  <!-- JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/catalog-loader.js"></script>
 </body>
 </html>

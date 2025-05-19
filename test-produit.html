@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BestGift - Test Produit</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.6.1/default/snipcart.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f8;
+      padding: 30px;
+    }
+    .product-card {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+      padding: 20px;
+      max-width: 300px;
+      margin: auto;
+      text-align: center;
+    }
+    .product-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .product-card h6 {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    .product-card p {
+      color: #2c3e50;
+    }
+  </style>
+</head>
+<body>
+
+  <h2 class="text-center mb-4">Test d'un produit dynamique</h2>
+  <div id="product-container"></div>
+
+  <!-- Snipcart -->
+  <script async src="https://cdn.snipcart.com/themes/v3.6.1/default/snipcart.js"></script>
+  <div hidden id="snipcart" data-api-key="TA_CLÉ_SANDBOX" data-currency="eur"></div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const container = document.getElementById("product-container");
+      const response = await fetch("https://bestgift-backend.onrender.com/api/catalogue");
+      const data = await response.json();
+      const p = data[0]; // On prend juste le premier produit de la base
+
+      const card = `
+        <div class="product-card">
+          <img src="${p.image}" alt="${p.title}">
+          <h6>${p.title}</h6>
+          <p>${p.description || 'Produit BestGift'}</p>
+          <p><strong>${p.price} €</strong></p>
+          <button
+            class="btn btn-primary snipcart-add-item"
+            data-item-id="${p.id || p.title}"
+            data-item-name="${p.title}"
+            data-item-price="${p.price}"
+            data-item-url="/shop.html"
+            data-item-description="${p.description || 'Produit BestGift'}"
+            data-item-image="${p.image}"
+            data-item-currency="EUR"
+          >
+            Ajouter au panier
+          </button>
+        </div>
+      `;
+      container.innerHTML = card;
+    });
+  </script>
+
+</body>
+</html>

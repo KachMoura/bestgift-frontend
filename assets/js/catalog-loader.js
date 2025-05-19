@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const profileFilter = document.getElementById("filter-profile");
   const priceFilter = document.getElementById("filter-price");
 
-  const baseApi = "https://bestgift-backend.onrender.com"; // Pas de [] ni slash final
+  const baseApi = "https://bestgift-backend.onrender.com"; // Corrigé : sans []
 
   function loadCatalog() {
     fetch(`${baseApi}/api/catalogue`)
@@ -18,7 +18,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const filtered = products.filter((p) => {
           const matchesGender = !gender || (p.gender || "").toLowerCase() === gender;
-          const matchesProfile = !profile || (p.profile || p.tags || "").toLowerCase().includes(profile);
+          const matchesProfile =
+            !profile || (p.profile || p.tags || "").toLowerCase().includes(profile);
           const matchesPrice = isNaN(maxPrice) || parseFloat(p.price) <= maxPrice;
           return matchesGender && matchesProfile && matchesPrice;
         });
@@ -31,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
         filtered.forEach((p) => {
           const card = document.createElement("div");
           card.className = "col-sm-6 col-md-4 col-lg-3";
-
           card.innerHTML = `
             <div class="product-card">
               <img src="${p.image}" alt="${p.title}">
@@ -46,11 +46,11 @@ document.addEventListener("DOMContentLoaded", () => {
                   data-item-url="/shop.html"
                   data-item-description="${p.description || 'Produit BestGift'}"
                   data-item-image="${p.image}"
+                  data-item-currency="eur"
                 >
                   Ajouter au panier
                 </button>
               </div>
-             
             </div>
           `;
           container.appendChild(card);
@@ -63,7 +63,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   loadCatalog();
-
   [genderFilter, profileFilter, priceFilter].forEach((el) =>
     el.addEventListener("change", loadCatalog)
   );

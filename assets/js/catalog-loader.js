@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <img src="${p.image}" alt="${p.title}">
               <div class="detail-box">
                 <h6 class="title">${p.title}</h6>
-                <p class="price">Prix : $${p.price} </p>
+                <p class="price">Prix : ${p.price}$ </p>
                 <button
                   class="btn btn-sm btn-primary snipcart-add-item"
                   data-item-id="${p.id || p.title}"

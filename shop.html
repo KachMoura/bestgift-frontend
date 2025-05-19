@@ -6,16 +6,17 @@
   <title>BestGift - Catalogue</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.6.1/default/snipcart.css" />
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       background: #f4f6f8;
     }
+
     header {
       background-color: #3498db;
       padding: 15px 0;
     }
+
     header .navbar-brand {
       display: flex;
       align-items: center;
@@ -23,22 +24,27 @@
       font-size: 1.8rem;
       font-weight: bold;
     }
+
     header .navbar-brand img {
       height: 40px;
       margin-right: 10px;
     }
+
     header .nav-link {
       color: #fff !important;
     }
+
     header .nav-item.active .nav-link {
       border: 2px solid rgba(255, 255, 255, 0.4);
       border-radius: 6px;
       padding: 6px 12px;
       background-color: rgba(255, 255, 255, 0.15);
     }
+
     .shop-section {
       padding: 50px 0;
     }
+
     .filter-bar {
       background: white;
       padding: 20px;
@@ -46,6 +52,7 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
       margin-bottom: 30px;
     }
+
     .product-card {
       background: white;
       border: 1px solid #ddd;
@@ -54,39 +61,35 @@
       margin-bottom: 30px;
       transition: all 0.3s ease;
     }
+
     .product-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     }
+
     .product-card img {
       width: 100%;
       height: 200px;
       object-fit: cover;
     }
+
     .product-card .detail-box {
       padding: 15px;
       text-align: center;
     }
+
     .product-card .price {
       color: #2c3e50;
       font-weight: bold;
       margin-bottom: 5px;
     }
+
     .product-card .title {
       font-size: 1rem;
       font-weight: 500;
       color: #555;
     }
-    .product-card .new {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background-color: #3498db;
-      color: white;
-      font-size: 12px;
-      padding: 4px 8px;
-      border-radius: 4px;
-    }
+
     footer {
       background-color: #343a40;
       color: white;
@@ -122,6 +125,7 @@
   <section class="shop-section">
     <div class="container">
       <h2 class="text-center mb-4">Notre Catalogue de Cadeaux</h2>
+
       <!-- Barre de filtres -->
       <div class="filter-bar row">
         <div class="col-md-4 mb-2">
@@ -161,10 +165,6 @@
       <p>© 2025 BestGift. Tous droits réservés.</p>
     </div>
   </footer>
-
-  <!-- Snipcart -->
-  <script async src="https://cdn.snipcart.com/themes/v3.6.1/default/snipcart.js"></script>
-  <div hidden id="snipcart" data-api-key="MTA0ZTc0NzMtMDJkYy00MGIwLWI0MTQtNGJjNzc3OGEwN2QzNjM4ODMyNTAxNzM5NjAxMTAy" data-config-modal-style="side"></div>
 
   <!-- JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

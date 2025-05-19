@@ -4,8 +4,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const profileFilter = document.getElementById("filter-profile");
     const priceFilter = document.getElementById("filter-price");
   
+    const baseApi = "https://bestgift-backend.onrender.com"; // URL backend Render
+  
     function loadCatalog() {
-      fetch("/api/catalogue")
+      fetch(`${baseApi}/api/catalogue`)
         .then((res) => res.json())
         .then((products) => {
           container.innerHTML = "";
@@ -16,20 +18,20 @@ document.addEventListener("DOMContentLoaded", () => {
   
           const filtered = products.filter((p) => {
             const matchesGender = !gender || (p.gender || "").toLowerCase() === gender;
-            const matchesProfile = !profile || (p.tags || "").toLowerCase().includes(profile);
+            const matchesProfile =
+              !profile || (p.profile || p.tags || "").toLowerCase().includes(profile);
             const matchesPrice = isNaN(maxPrice) || parseFloat(p.price) <= maxPrice;
             return matchesGender && matchesProfile && matchesPrice;
           });
   
           if (filtered.length === 0) {
-            container.innerHTML = "<p class='text-center w-100'>Aucun produit trouvé.</p>";
+            container.innerHTML = `<p class="text-center w-100">Aucun produit trouvé.</p>`;
             return;
           }
   
           filtered.forEach((p) => {
             const card = document.createElement("div");
             card.className = "col-sm-6 col-md-4 col-lg-3";
-  
             card.innerHTML = `
               <div class="product-card">
                 <img src="${p.image}" alt="${p.title}">
@@ -44,17 +46,17 @@ document.addEventListener("DOMContentLoaded", () => {
           });
         })
         .catch((err) => {
-          container.innerHTML = "<p class='text-danger'>Erreur de chargement du catalogue.</p>";
+          container.innerHTML = `<p class="text-danger w-100">Erreur de chargement du catalogue.</p>`;
           console.error("[catalog-loader] Erreur :", err.message);
         });
     }
   
-    // Chargement initial
+    // Lancer au chargement
     loadCatalog();
   
-    // Recharge au changement de filtre
+    // Rafraîchir au changement de filtre
     [genderFilter, profileFilter, priceFilter].forEach((el) =>
-      el.addEventListener("input", loadCatalog)
+      el.addEventListener("change", loadCatalog)
     );
   });
   

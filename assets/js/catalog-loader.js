@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const profileFilter = document.getElementById("filter-profile");
     const priceFilter = document.getElementById("filter-price");
   
-    const baseApi = "https://bestgift-backend.onrender.com"; // URL backend Render
+    const baseApi = "https://bestgift-backend.onrender.com"; // Assure-toi que c’est bien l’URL backend sans crochets
   
     function loadCatalog() {
       fetch(`${baseApi}/api/catalogue`)
@@ -36,8 +36,18 @@ document.addEventListener("DOMContentLoaded", () => {
               <div class="product-card">
                 <img src="${p.image}" alt="${p.title}">
                 <div class="detail-box">
-                  <h6>${p.title}</h6>
-                  <p>Prix : ${p.price} €</p>
+                  <p class="price">${p.price} €</p>
+                  <p class="title">${p.title}</p>
+                  <button 
+                    class="btn btn-primary btn-sm snipcart-add-item mt-2"
+                    data-item-id="${p.id || p.title.replace(/\s+/g, '-').toLowerCase()}"
+                    data-item-name="${p.title}"
+                    data-item-price="${p.price}"
+                    data-item-url="/shop.html"
+                    data-item-description="${p.description || ''}"
+                    data-item-image="${p.image}">
+                    Ajouter au panier
+                  </button>
                 </div>
                 <div class="new">New</div>
               </div>
@@ -59,4 +69,3 @@ document.addEventListener("DOMContentLoaded", () => {
       el.addEventListener("change", loadCatalog)
     );
   });
-  

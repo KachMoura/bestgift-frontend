@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const profileFilter = document.getElementById("filter-profile");
   const priceFilter = document.getElementById("filter-price");
 
-  const baseApi = "https://bestgift-backend.onrender.com"; // Corrigé : sans []
+  const baseApi = "https://bestgift-backend.onrender.com"; // URL backend Render
 
   function loadCatalog() {
     fetch(`${baseApi}/api/catalogue`)
@@ -18,8 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const filtered = products.filter((p) => {
           const matchesGender = !gender || (p.gender || "").toLowerCase() === gender;
-          const matchesProfile =
-            !profile || (p.profile || p.tags || "").toLowerCase().includes(profile);
+          const matchesProfile = !profile || (p.profile || p.tags || "").toLowerCase().includes(profile);
           const matchesPrice = isNaN(maxPrice) || parseFloat(p.price) <= maxPrice;
           return matchesGender && matchesProfile && matchesPrice;
         });
@@ -38,19 +37,17 @@ document.addEventListener("DOMContentLoaded", () => {
               <div class="detail-box">
                 <h6 class="title">${p.title}</h6>
                 <p class="price">Prix : ${p.price} €</p>
-                <button
-                  class="btn btn-sm btn-primary snipcart-add-item"
-                  data-item-id="${p.id || p.title}"
+                <button class="btn btn-primary snipcart-add-item"
+                  data-item-id="${p.id}"
                   data-item-name="${p.title}"
                   data-item-price="${p.price}"
-                  data-item-url="/shop.html"
+                  data-item-url="https://bestgift-frontend.onrender.com/shop.html"
                   data-item-description="${p.description || 'Produit BestGift'}"
-                  data-item-image="${p.image}"
-                  data-item-currency="eur"
-                >
+                  data-item-image="${p.image}">
                   Ajouter au panier
                 </button>
               </div>
+              <div class="new">New</div>
             </div>
           `;
           container.appendChild(card);
@@ -62,7 +59,10 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
+  // Lancer au chargement
   loadCatalog();
+
+  // Rafraîchir au changement de filtre
   [genderFilter, profileFilter, priceFilter].forEach((el) =>
     el.addEventListener("change", loadCatalog)
   );

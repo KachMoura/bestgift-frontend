@@ -4,12 +4,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const profileFilter = document.getElementById("filter-profile");
   const priceFilter = document.getElementById("filter-price");
 
-  // URL backend SANS crochets ni slash final
+  // URL backend CORRECTE
   const baseApi = "https://bestgift-backend.onrender.com";
 
-  // Protection XSS : échappement du contenu
+  // Fonction de protection XSS
   function escapeHTML(str) {
-    if (!str) return "";
+    if (typeof str !== "string") return "";
     return str.replace(/[&<>"']/g, (m) => ({
       "&": "&amp;",
       "<": "&lt;",
@@ -24,15 +24,13 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(res => res.json())
       .then(products => {
         container.innerHTML = "";
-
         const gender = genderFilter.value.toLowerCase();
         const profile = profileFilter.value.toLowerCase();
         const maxPrice = parseFloat(priceFilter.value);
 
         const filtered = products.filter(p => {
           const matchesGender = !gender || (p.gender || "").toLowerCase() === gender;
-          const matchesProfile =
-            !profile || (p.profile || p.tags || "").toLowerCase().includes(profile);
+          const matchesProfile = !profile || (p.profile || p.tags || "").toLowerCase().includes(profile);
           const matchesPrice = isNaN(maxPrice) || parseFloat(p.price) <= maxPrice;
           return matchesGender && matchesProfile && matchesPrice;
         });
@@ -47,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const description = escapeHTML(p.description || "Produit BestGift");
           const image = escapeHTML(p.image || "");
           const price = parseFloat(p.price).toFixed(2);
-          const id = escapeHTML(p.id || title);
+          const id = escapeHTML(p.id || title); // corrigé ici
 
           const card = document.createElement("div");
           card.className = "col-sm-6 col-md-4 col-lg-3";
@@ -62,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   data-item-id="${id}"
                   data-item-name="${title}"
                   data-item-price="${price}"
-                  data-item-url="https://bestgift-frontend.onrender.com/pages/shop.html"
+                  data-item-url="https://bestgift-frontend.onrender.com/shop.html"
                   data-item-description="${description}"
                   data-item-image="${image}"
                   data-item-currency="eur"
@@ -82,7 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   loadCatalog();
-
   [genderFilter, profileFilter, priceFilter].forEach(el =>
     el.addEventListener("change", loadCatalog)
   );

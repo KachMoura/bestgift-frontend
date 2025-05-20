@@ -124,7 +124,6 @@
   <section class="shop-section">
     <div class="container">
       <h2 class="text-center mb-4">Notre Catalogue de Cadeaux</h2>
-
       <div class="filter-bar row">
         <div class="col-md-4 mb-2">
           <label>Genre :</label>
@@ -150,9 +149,8 @@
           <input type="number" id="filter-price" class="form-control" placeholder="Ex : 50" />
         </div>
       </div>
-
       <div id="catalog-container" class="row mt-4">
-        <!-- Produits dynamiques ici -->
+        <!-- Produits dynamiques JS ici -->
       </div>
     </div>
   </section>
@@ -168,7 +166,11 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../assets/js/catalog-loader.js"></script>
 
-  <!-- Snipcart -->
-  <div hidden id="snipcart" data-api-key="MTA0ZTc0NzMtMDJkYy00MGIwLWI0MTQtNGJjNzc3OGEwN2QzNjM4ODMyNTAxNzM5NjAxMTAy" data-config-modal-style="side"></div>
+  <!-- Snipcart configuration -->
+  <div hidden id="snipcart"
+    data-api-key="MTA0ZTc0NzMtMDJkYy00MGIwLWI0MTQtNGJjNzc3OGEwN2QzNjM4ODMyNTAxNzM5NjAxMTAy"
+    data-config-modal-style="side"
+    data-currency="eur">
+  </div>
 </body>
 </html>

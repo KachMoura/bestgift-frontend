@@ -4,32 +4,32 @@ document.addEventListener("DOMContentLoaded", () => {
   const profileFilter = document.getElementById("filter-profile");
   const priceFilter = document.getElementById("filter-price");
 
-  const baseApi = "https://bestgift-backend.onrender.com"; // Corrigé : sans crochets ni slash final
+  // URL backend SANS crochets ni slash final
+  const baseApi = "https://bestgift-backend.onrender.com";
 
+  // Protection XSS : échappement du contenu
   function escapeHTML(str) {
     if (!str) return "";
-    return str.replace(/[&<>"']/g, function (m) {
-      return {
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
-      }[m];
-    });
+    return str.replace(/[&<>"']/g, (m) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    }[m]));
   }
 
   function loadCatalog() {
     fetch(`${baseApi}/api/catalogue`)
-      .then((res) => res.json())
-      .then((products) => {
+      .then(res => res.json())
+      .then(products => {
         container.innerHTML = "";
 
         const gender = genderFilter.value.toLowerCase();
         const profile = profileFilter.value.toLowerCase();
         const maxPrice = parseFloat(priceFilter.value);
 
-        const filtered = products.filter((p) => {
+        const filtered = products.filter(p => {
           const matchesGender = !gender || (p.gender || "").toLowerCase() === gender;
           const matchesProfile =
             !profile || (p.profile || p.tags || "").toLowerCase().includes(profile);
@@ -42,15 +42,15 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        filtered.forEach((p) => {
-          const card = document.createElement("div");
-          card.className = "col-sm-6 col-md-4 col-lg-3";
-
+        filtered.forEach(p => {
           const title = escapeHTML(p.title);
           const description = escapeHTML(p.description || "Produit BestGift");
           const image = escapeHTML(p.image || "");
           const price = parseFloat(p.price).toFixed(2);
+          const id = escapeHTML(p.id || title);
 
+          const card = document.createElement("div");
+          card.className = "col-sm-6 col-md-4 col-lg-3";
           card.innerHTML = `
             <div class="product-card">
               <img src="${image}" alt="${title}">
@@ -59,24 +59,23 @@ document.addEventListener("DOMContentLoaded", () => {
                 <p class="price">Prix : ${price} €</p>
                 <button
                   class="btn btn-sm btn-primary snipcart-add-item"
-                  data-item-id="${p.id || title}"
+                  data-item-id="${id}"
                   data-item-name="${title}"
                   data-item-price="${price}"
-                  data-item-url="/shop.html"
+                  data-item-url="https://bestgift-frontend.onrender.com/pages/shop.html"
                   data-item-description="${description}"
                   data-item-image="${image}"
-                  data-item-currency="EUR"
+                  data-item-currency="eur"
                 >
                   Ajouter au panier
                 </button>
               </div>
             </div>
           `;
-
           container.appendChild(card);
         });
       })
-      .catch((err) => {
+      .catch(err => {
         container.innerHTML = `<p class="text-danger w-100">Erreur de chargement du catalogue.</p>`;
         console.error("[catalog-loader] Erreur :", err.message);
       });
@@ -84,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadCatalog();
 
-  [genderFilter, profileFilter, priceFilter].forEach((el) =>
+  [genderFilter, profileFilter, priceFilter].forEach(el =>
     el.addEventListener("change", loadCatalog)
   );
 });

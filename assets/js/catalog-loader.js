@@ -4,13 +4,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const profileFilter = document.getElementById("filter-profile");
   const priceFilter = document.getElementById("filter-price");
 
-  // URL backend CORRECTE
-  const baseApi = "https://bestgift-backend.onrender.com";
+  const baseApi = "https://bestgift-backend.onrender.com"; // Corrigé : sans crochets ni slash final
 
-  // Fonction de protection XSS
   function escapeHTML(str) {
-    if (typeof str !== "string") return "";
-    return str.replace(/[&<>"']/g, (m) => ({
+    if (!str) return "";
+    return String(str).replace(/[&<>"']/g, (m) => ({
       "&": "&amp;",
       "<": "&lt;",
       ">": "&gt;",
@@ -24,13 +22,15 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(res => res.json())
       .then(products => {
         container.innerHTML = "";
+
         const gender = genderFilter.value.toLowerCase();
         const profile = profileFilter.value.toLowerCase();
         const maxPrice = parseFloat(priceFilter.value);
 
         const filtered = products.filter(p => {
           const matchesGender = !gender || (p.gender || "").toLowerCase() === gender;
-          const matchesProfile = !profile || (p.profile || p.tags || "").toLowerCase().includes(profile);
+          const matchesProfile =
+            !profile || (p.profile || p.tags || "").toLowerCase().includes(profile);
           const matchesPrice = isNaN(maxPrice) || parseFloat(p.price) <= maxPrice;
           return matchesGender && matchesProfile && matchesPrice;
         });
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const description = escapeHTML(p.description || "Produit BestGift");
           const image = escapeHTML(p.image || "");
           const price = parseFloat(p.price).toFixed(2);
-          const id = escapeHTML(p.id || title); // corrigé ici
+          const id = escapeHTML(p.id || title || "bestgift-" + Math.random().toString(36).substr(2, 5));
 
           const card = document.createElement("div");
           card.className = "col-sm-6 col-md-4 col-lg-3";

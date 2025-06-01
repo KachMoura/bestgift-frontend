@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
         filtered.forEach((p) => {
           const title = escapeHTML(p.title);
           const description = escapeHTML(p.description || "Produit BestGift");
-          const image = escapeHTML(p.image || "");
+          const image = escapeHTML(p.image_url || "");
           const price = parseFloat(p.price).toFixed(2);
           const id = escapeHTML(p.id ? String(p.id) : title);
 

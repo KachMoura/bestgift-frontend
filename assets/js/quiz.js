@@ -44,6 +44,7 @@ const compareSection = document.getElementById("compareSection");
 const compareList = document.getElementById("compareList");
 const compareBtn = document.getElementById("compareBtn");
 const aiResultBox = document.getElementById("aiComparisonResult");
+
 const apiBaseUrl = window.location.hostname.includes("localhost")
   ? "http://localhost:3000"
   : "https://bestgift-backend.onrender.com";
@@ -62,7 +63,6 @@ form.addEventListener("submit", function (e) {
 
   const topMerchants = getMerchantList("topMerchants");
   const maybeMerchants = getMerchantList("maybeMerchants");
-
   if (topMerchants.length === 0 && maybeMerchants.length === 0) {
     loader.style.display = "none";
     messageBox.textContent = "Veuillez sélectionner au moins un marchand.";
@@ -79,7 +79,7 @@ form.addEventListener("submit", function (e) {
     budget: maxBudget,
     excludedGifts: form.excludedGifts.value.split(',').map(i => i.trim()).filter(Boolean),
     gender: form.gender.value,
-    preferences,
+    preferences: preferences,
     merchants: {
       top: topMerchants,
       maybe: maybeMerchants
@@ -104,7 +104,7 @@ form.addEventListener("submit", function (e) {
       }
       displaySuggestionsByMerchant(result.suggestions, data.merchants);
       setTimeout(() => {
-        suggestionsContainer.scrollIntoView({ behavior: "smooth" });
+        document.getElementById("suggestionsContainer").scrollIntoView({ behavior: "smooth" });
       }, 300);
     })
     .catch(err => {
@@ -118,33 +118,23 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
   suggestionsContainer.innerHTML = "";
   const order = [...merchantRanking.top, ...merchantRanking.maybe];
   let anyProductFound = false;
-
   order.forEach(merchant => {
     const products = suggestions[merchant];
     if (products && products.length > 0) {
       anyProductFound = true;
-
       const section = document.createElement("div");
       section.className = "merchant-section";
       const title = document.createElement("h2");
       const merchantName = merchant === "EasyGift" ? "Catalogue BestGift" : merchant;
       title.textContent = `Suggestions ${merchantName}`;
       section.appendChild(title);
-
       const carousel = document.createElement("div");
       carousel.className = "card-carousel";
-
       products.forEach(product => {
         const score = product.matchingScore || 30;
         const card = document.createElement("div");
         card.className = "card";
-
-        const id = product.id;
-        if (!id) {
-          console.warn("Produit sans ID détecté :", product);
-          return;
-        }
-
+        const id = product.id || btoa(unescape(encodeURIComponent(product.title)));
         card.innerHTML = `
           <div class="score-badge">Matching : ${Math.round(score)}%</div>
           <img src="${product.image}" alt="${product.title}">
@@ -155,7 +145,6 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
           </a><br>
           <button class="btn btn-sm btn-outline-primary mt-2 compare-btn">Comparer</button>
         `;
-
         card.dataset.title = product.title;
         card.dataset.link = product.link;
         card.dataset.image = product.image;
@@ -164,12 +153,10 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
         card.querySelector(".compare-btn").addEventListener("click", () => handleCompareClick(card));
         carousel.appendChild(card);
       });
-
       section.appendChild(carousel);
       suggestionsContainer.appendChild(section);
     }
   });
-
   if (!anyProductFound) {
     messageBox.textContent = "Aucun cadeau ne correspond à vos critères.";
   }
@@ -189,7 +176,6 @@ function handleCompareClick(card) {
     link: card.dataset.link,
     description: card.dataset.description || ""
   });
-
   const miniCard = document.createElement("div");
   miniCard.className = "compare-mini-card";
   miniCard.innerHTML = `
@@ -200,18 +186,17 @@ function handleCompareClick(card) {
     </div>
   `;
   compareList.appendChild(miniCard);
-
   if (selectedProductsForCompare.length === 2) {
     compareBtn.disabled = false;
     setTimeout(() => {
-      compareSection.scrollIntoView({ behavior: "smooth" });
+      document.getElementById("compareSection").scrollIntoView({ behavior: "smooth" });
     }, 200);
   }
 }
 
 compareBtn.addEventListener("click", async () => {
   compareBtn.disabled = true;
-  aiResultBox.innerHTML = `<p style="color:#3498db">Analyse en cours...</p>`;
+  aiResultBox.innerHTML = `<p style="color:#3498db">Analyse en cours (Plusieurs secondes...)</p>`;
   try {
     const response = await fetch(`${apiBaseUrl}/api/compare`, {
       method: "POST",
@@ -224,20 +209,22 @@ compareBtn.addEventListener("click", async () => {
       const tableLines = [];
       const recommendationLines = [];
       let inReco = false;
-
       for (const line of lines) {
-        if (line.toLowerCase().includes("je vous recommande") || line.toLowerCase().includes("meilleur choix")) {
+        if (
+          line.toLowerCase().includes("je vous recommande") ||
+          line.toLowerCase().includes("si vous cherchez") ||
+          line.toLowerCase().includes("en revanche") ||
+          line.toLowerCase().includes("meilleur choix")
+        ) {
           inReco = true;
         }
         if (inReco) recommendationLines.push(line);
         else tableLines.push(line);
       }
-
       const headers = tableLines[0]?.split('|').slice(1, -1).map(cell => cell.trim()) || [];
       const rows = tableLines.slice(1).map(line =>
         line.split('|').slice(1, -1).map(cell => cell.trim())
       );
-
       aiResultBox.innerHTML = `
         <div class="ai-analysis-box">
           <h4>Comparaison détaillée</h4>
@@ -267,11 +254,13 @@ document.getElementById("resetCompareBtn").addEventListener("click", function ()
   compareList.innerHTML = "";
   compareSection.style.display = "none";
   compareBtn.disabled = true;
-  document.querySelectorAll(".card.selected").forEach(card => card.classList.remove("selected"));
+  document.querySelectorAll(".card.selected").forEach(card => {
+    card.classList.remove("selected");
+  });
 });
 
 document.getElementById("resetBtn").addEventListener("click", function () {
-  form.reset();
+  document.getElementById("quizForm").reset();
   document.getElementById("minBudgetOutput").textContent = "0 €";
   document.getElementById("maxBudgetOutput").textContent = "50 €";
   document.getElementById("minBudget").value = 0;

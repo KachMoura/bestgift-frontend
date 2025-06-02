@@ -135,7 +135,10 @@
       <h5 class="text-center">Marchands Disponibles</h5>
       <div class="merchant-zone available-merchant-zone" id="merchantPool"
            ondragover="allowDrop(event)" ondrop="drop(event)">
-        <ul id="merchantList">
+        <ul id="merchantList"
+            class="merchant-zone"
+            ondragover="allowDrop(event)"
+            ondrop="drop(event)">
           <li draggable="true" ondragstart="drag(event)" id="eBay">eBay</li>
           <li draggable="true" ondragstart="drag(event)" id="EasyGift">Catalogue BestGift</li>
         </ul>

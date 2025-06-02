@@ -149,6 +149,7 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
     messageBox.textContent = "Aucun cadeau ne correspond à vos critères.";
   }
 }
+
 function handleCompareClick(card) {
   if (selectedProductsForCompare.length >= 2) {
     alert("Vous ne pouvez comparer que 2 produits. Cliquez sur réinitialiser si besoin");

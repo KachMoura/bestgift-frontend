@@ -92,11 +92,11 @@
     <div class="budget-range-wrapper">
       <label><strong>Quel est votre budget ?</strong></label>
       <div class="budget-labels">
-        <span>Min : <span id="minBudgetOutput">10€</span></span>
+        <span>Min : <span id="minBudgetOutput">0€</span></span>
         <span>Max : <span id="maxBudgetOutput">100€</span></span>
       </div>
       <div class="slider-container">
-        <input type="range" id="minBudget" name="minBudget" min="0" max="500" value="10" step="5" oninput="updateDoubleRange()">
+        <input type="range" id="minBudget" name="minBudget" min="0" max="500" value="0" step="5" oninput="updateDoubleRange()">
         <input type="range" id="maxBudget" name="maxBudget" min="0" max="500" value="100" step="5" oninput="updateDoubleRange()">
         <div class="range-track" id="rangeTrack"></div>
       </div>

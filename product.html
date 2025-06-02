@@ -112,7 +112,6 @@
 
       let productId = getQueryParam("id");
 
-      // Alternative si le produit a été ouvert depuis une suggestion dynamique
       if (!productId) {
         const fromSession = sessionStorage.getItem("lastViewedProductId");
         if (fromSession) productId = fromSession;

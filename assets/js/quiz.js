@@ -35,6 +35,7 @@ function updateDoubleRange() {
   track.style.left = `${percentMin}%`;
   track.style.width = `${percentMax - percentMin}%`;
 }
+
 const form = document.getElementById("quizForm");
 const suggestionsContainer = document.getElementById("suggestionsContainer");
 const loader = document.getElementById("loader");
@@ -62,7 +63,6 @@ form.addEventListener("submit", function (e) {
 
   const topMerchants = getMerchantList("topMerchants");
   const maybeMerchants = getMerchantList("maybeMerchants");
-
   if (topMerchants.length === 0 && maybeMerchants.length === 0) {
     loader.style.display = "none";
     messageBox.textContent = "Veuillez sélectionner au moins un marchand.";
@@ -75,7 +75,7 @@ form.addEventListener("submit", function (e) {
 
   const data = {
     interests: [form.interests.value],
-    minBudget: minBudget,
+    minBudget,
     budget: maxBudget,
     excludedGifts: form.excludedGifts.value.split(',').map(i => i.trim()).filter(Boolean),
     gender: form.gender.value,
@@ -118,35 +118,31 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
   suggestionsContainer.innerHTML = "";
   const order = [...merchantRanking.top, ...merchantRanking.maybe];
   let anyProductFound = false;
-
   order.forEach(merchant => {
     const products = suggestions[merchant];
     if (products && products.length > 0) {
       anyProductFound = true;
       const section = document.createElement("div");
       section.className = "merchant-section";
-
       const title = document.createElement("h2");
       const merchantName = merchant === "EasyGift" ? "Catalogue BestGift" : merchant;
       title.textContent = `Suggestions ${merchantName}`;
       section.appendChild(title);
-
       const carousel = document.createElement("div");
       carousel.className = "card-carousel";
-
       products.forEach(product => {
         const score = product.matchingScore || 30;
         const card = document.createElement("div");
         card.className = "card";
-        const id = product.id;
+        const id = product.id || btoa(unescape(encodeURIComponent(product.title)));
         card.innerHTML = `
           <div class="score-badge">Matching : ${Math.round(score)}%</div>
           <img src="${product.image}" alt="${product.title}">
           <h3>${product.title}</h3>
           <p><strong>${product.price} €</strong></p>
           <a href="product.html?id=${encodeURIComponent(id)}" target="_blank" class="btn btn-sm btn-outline-secondary">
-  Consulter
-</a><br>
+            Consulter
+          </a><br>
           <button class="btn btn-sm btn-outline-primary mt-2 compare-btn">Comparer</button>
         `;
         card.dataset.title = product.title;
@@ -157,12 +153,10 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
         card.querySelector(".compare-btn").addEventListener("click", () => handleCompareClick(card));
         carousel.appendChild(card);
       });
-
       section.appendChild(carousel);
       suggestionsContainer.appendChild(section);
     }
   });
-
   if (!anyProductFound) {
     messageBox.textContent = "Aucun cadeau ne correspond à vos critères.";
   }
@@ -173,10 +167,8 @@ function handleCompareClick(card) {
     alert("Vous ne pouvez comparer que 2 produits. Cliquez sur réinitialiser si besoin");
     return;
   }
-
   compareSection.style.display = "block";
   card.classList.add("selected");
-
   selectedProductsForCompare.push({
     title: card.dataset.title,
     price: card.dataset.price,
@@ -184,7 +176,6 @@ function handleCompareClick(card) {
     link: card.dataset.link,
     description: card.dataset.description || ""
   });
-
   const miniCard = document.createElement("div");
   miniCard.className = "compare-mini-card";
   miniCard.innerHTML = `
@@ -195,7 +186,6 @@ function handleCompareClick(card) {
     </div>
   `;
   compareList.appendChild(miniCard);
-
   if (selectedProductsForCompare.length === 2) {
     compareBtn.disabled = false;
     setTimeout(() => {
@@ -275,13 +265,11 @@ document.getElementById("resetBtn").addEventListener("click", function () {
   document.getElementById("maxBudgetOutput").textContent = "50 €";
   document.getElementById("minBudget").value = 0;
   document.getElementById("maxBudget").value = 50;
-
   const zones = ["topMerchants", "maybeMerchants", "avoidMerchants", "merchantPool"];
   zones.forEach(zoneId => {
     const zone = document.getElementById(zoneId);
     if (zone) zone.innerHTML = "";
   });
-
   const marchands = ["eBay", "Catalogue BestGift"];
   const pool = document.getElementById("merchantPool");
   marchands.forEach(id => {
@@ -292,7 +280,6 @@ document.getElementById("resetBtn").addEventListener("click", function () {
     li.addEventListener("dragstart", drag);
     pool.appendChild(li);
   });
-
   suggestionsContainer.innerHTML = "";
   messageBox.textContent = "";
   aiResultBox.innerHTML = "";

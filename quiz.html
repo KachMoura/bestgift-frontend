@@ -131,20 +131,22 @@
 
   <div class="merchant-container">
     <!-- Colonne gauche : Marchands disponibles -->
-    <div class="merchant-column full-height">
-      <h5 class="text-center">Marchands Disponibles</h5>
-      <div class="merchant-zone available-merchant-zone" id="merchantPool"
-           ondragover="allowDrop(event)" ondrop="drop(event)">
-        <ul id="merchantList"
-            class="merchant-zone"
-            ondragover="allowDrop(event)"
-            ondrop="drop(event)">
-          <li draggable="true" ondragstart="drag(event)" id="eBay">eBay</li>
-          <li draggable="true" ondragstart="drag(event)" id="EasyGift">Catalogue BestGift</li>
-        </ul>
-        <p class="coming-soon">Prochainement : Amazon, Decathlon, Etsy</p>
-      </div>
+    
+<div class="merchant-column full-height">
+  <h5 class="text-center">Marchands Disponibles</h5>
+  <ul id="merchantPool"
+      class="merchant-zone available-merchant-zone d-flex flex-column justify-content-between"
+      ondragover="allowDrop(event)"
+      ondrop="drop(event)">
+    <div>
+      <li draggable="true" ondragstart="drag(event)" id="eBay">eBay</li>
+      <li draggable="true" ondragstart="drag(event)" id="EasyGift">Catalogue BestGift</li>
     </div>
+    <p class="coming-soon text-primary mt-auto mb-0 text-center" style="font-size: 0.8rem;">
+      Prochainement : Amazon, Decathlon, Etsy, Nature & Découvertes
+    </p>
+  </ul>
+</div>
 
     <!-- Colonne droite : 3 blocs verticaux -->
     <div class="merchant-column">

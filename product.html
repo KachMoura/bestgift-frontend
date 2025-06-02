@@ -104,15 +104,25 @@
     document.addEventListener("DOMContentLoaded", () => {
       const container = document.getElementById("product-container");
       const baseApi = "https://bestgift-backend.onrender.com";
+
       function getQueryParam(param) {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get(param);
       }
-      const productId = getQueryParam("id");
+
+      let productId = getQueryParam("id");
+
+      // Alternative si le produit a été ouvert depuis une suggestion dynamique
+      if (!productId) {
+        const fromSession = sessionStorage.getItem("lastViewedProductId");
+        if (fromSession) productId = fromSession;
+      }
+
       if (!productId) {
         container.innerHTML = "<p class='text-danger'>Produit introuvable.</p>";
         return;
       }
+
       fetch(`${baseApi}/api/catalogue/${productId}`)
         .then(res => res.json())
         .then(product => {
@@ -120,11 +130,13 @@
             container.innerHTML = "<p class='text-danger'>Produit non trouvé.</p>";
             return;
           }
+
           const image = product.image_url || "";
           const title = product.title;
           const description = product.description || "Aucune description disponible.";
           const price = parseFloat(product.price).toFixed(2);
           const id = product.id || title;
+
           container.innerHTML = `
             <div class="col-md-6">
               <img src="${image}" alt="${title}" class="img-fluid" />
@@ -138,7 +150,7 @@
                 data-item-id="${id}"
                 data-item-name="${title}"
                 data-item-price="${price}"
-                data-item-url="https://bestgift-frontend.onrender.com/product.html?id=${id}"
+                data-item-url="https://bestgift.fr/product.html?id=${id}"
                 data-item-description="${description}"
                 data-item-image="${image}"
                 data-item-currency="eur"

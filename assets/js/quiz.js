@@ -128,30 +128,29 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
 
       products.forEach(product => {
         const score = product.matchingScore || 30;
-        const productId = product.id || ""; // ✅ Sécurise l'ID
-
         const card = document.createElement("div");
         card.className = "card";
+
+        const id = product.id || product.title;
 
         card.innerHTML = `
           <div class="score-badge">Matching : ${Math.round(score)}%</div>
           <img src="${product.image}" alt="${product.title}">
           <h3>${product.title}</h3>
           <p><strong>${product.price} €</strong></p>
-          <a href="product.html?id=${productId}" target="_blank" class="btn btn-sm btn-outline-secondary mt-2">Consulter</a><br>
+          <a href="product.html?id=${encodeURIComponent(id)}" target="_blank" class="btn btn-sm btn-outline-secondary">
+            Consulter
+          </a><br>
           <button class="btn btn-sm btn-outline-primary mt-2 compare-btn">Comparer</button>
         `;
 
-        // Stockage des données pour comparaison
         card.dataset.title = product.title;
         card.dataset.link = product.link;
         card.dataset.image = product.image;
         card.dataset.price = product.price;
         card.dataset.description = product.description || "";
 
-        // Écouteur bouton comparer
         card.querySelector(".compare-btn").addEventListener("click", () => handleCompareClick(card));
-
         carousel.appendChild(card);
       });
 
@@ -164,6 +163,7 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
     messageBox.textContent = "Aucun cadeau ne correspond à vos critères.";
   }
 }
+
 
 function handleCompareClick(card) {
   if (selectedProductsForCompare.length >= 2) {

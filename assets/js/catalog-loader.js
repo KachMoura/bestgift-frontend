@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const profileFilter = document.getElementById("filter-profile");
   const priceFilter = document.getElementById("filter-price");
 
-  const baseApi = "https://bestgift-backend.onrender.com"; // Sans crochets ni slash final
+  const baseApi = "https://bestgift-backend.onrender.com"; // ✅ Corrigé sans crochets
 
   function escapeHTML(str) {
     if (!str || typeof str !== "string") return "";
@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((res) => res.json())
       .then((products) => {
         container.innerHTML = "";
+
         const gender = genderFilter.value.toLowerCase();
         const profile = profileFilter.value.toLowerCase();
         const maxPrice = parseFloat(priceFilter.value);
@@ -56,18 +57,23 @@ document.addEventListener("DOMContentLoaded", () => {
               <div class="detail-box">
                 <h6 class="title">${title}</h6>
                 <p class="price">Prix : ${price} €</p>
-                <button
-                  class="btn btn-sm btn-primary snipcart-add-item"
-                  data-item-id="${id}"
-                  data-item-name="${title}"
-                  data-item-price="${price}"
-                  data-item-url="https://bestgift-frontend.onrender.com/shop.html"
-                  data-item-description="${description}"
-                  data-item-image="${image}"
-                  data-item-currency="eur"
-                >
-                  Ajouter au panier
-                </button>
+                <div class="d-flex justify-content-center gap-2">
+                  <button
+                    class="btn btn-sm btn-primary snipcart-add-item mr-2"
+                    data-item-id="${id}"
+                    data-item-name="${title}"
+                    data-item-price="${price}"
+                    data-item-url="https://bestgift-frontend.onrender.com/shop.html"
+                    data-item-description="${description}"
+                    data-item-image="${image}"
+                    data-item-currency="eur"
+                  >
+                    Ajouter au panier
+                  </button>
+                  <a href="product.html?id=${id}" class="btn btn-sm btn-outline-secondary">
+                    Consulter
+                  </a>
+                </div>
               </div>
             </div>
           `;
@@ -81,6 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   loadCatalog();
+
   [genderFilter, profileFilter, priceFilter].forEach((el) =>
     el.addEventListener("change", loadCatalog)
   );

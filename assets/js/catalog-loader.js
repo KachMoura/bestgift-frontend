@@ -2,9 +2,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("catalog-container");
   const genderFilter = document.getElementById("filter-gender");
   const profileFilter = document.getElementById("filter-profile");
-  const priceFilter = document.getElementById("filter-price");
+  const priceMinInput = document.getElementById("price-min");
+  const priceMaxInput = document.getElementById("price-max");
+  const priceMinDisplay = document.getElementById("price-min-val");
+  const priceMaxDisplay = document.getElementById("price-max-val");
 
-  const baseApi = "https://bestgift-backend.onrender.com"; // ✅ Corrigé sans crochets
+  const baseApi = "https://bestgift-backend.onrender.com"; // ✅ Corrigé
 
   function escapeHTML(str) {
     if (!str || typeof str !== "string") return "";
@@ -17,15 +20,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }[m]));
   }
 
+  function updatePriceDisplays() {
+    priceMinDisplay.textContent = priceMinInput.value;
+    priceMaxDisplay.textContent = priceMaxInput.value;
+  }
+
   function loadCatalog() {
     fetch(`${baseApi}/api/catalogue`)
       .then((res) => res.json())
       .then((products) => {
         container.innerHTML = "";
-
         const gender = genderFilter.value.toLowerCase();
         const profile = profileFilter.value.toLowerCase();
-        const maxPrice = parseFloat(priceFilter.value);
+        const priceMin = parseFloat(priceMinInput.value);
+        const priceMax = parseFloat(priceMaxInput.value);
 
         const filtered = products.filter((p) => {
           const genderField = (p.gender || "").toLowerCase();
@@ -33,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const price = parseFloat(p.price);
           const matchesGender = !gender || genderField === gender;
           const matchesProfile = !profile || profileField.includes(profile);
-          const matchesPrice = isNaN(maxPrice) || price <= maxPrice;
+          const matchesPrice = !isNaN(priceMin) && !isNaN(priceMax) && price >= priceMin && price <= priceMax;
           return matchesGender && matchesProfile && matchesPrice;
         });
 
@@ -48,7 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
           const image = escapeHTML(p.image_url || "");
           const price = parseFloat(p.price).toFixed(2);
           const id = escapeHTML(p.id ? String(p.id) : title);
-
           const card = document.createElement("div");
           card.className = "col-sm-6 col-md-4 col-lg-3";
           card.innerHTML = `
@@ -86,9 +93,15 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
+  // Initialisation
+  updatePriceDisplays();
   loadCatalog();
 
-  [genderFilter, profileFilter, priceFilter].forEach((el) =>
-    el.addEventListener("change", loadCatalog)
+  // Rafraîchir si filtres changent
+  [genderFilter, profileFilter, priceMinInput, priceMaxInput].forEach((el) =>
+    el.addEventListener("change", () => {
+      updatePriceDisplays();
+      loadCatalog();
+    })
   );
 });

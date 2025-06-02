@@ -4,15 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BestGift - Catalogue</title>
-
   <!-- Bootstrap + FontAwesome -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-
   <!-- Snipcart -->
   <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.6.1/default/snipcart.css" />
   <script async src="https://cdn.snipcart.com/themes/v3.6.1/default/snipcart.js"></script>
-
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -89,6 +86,37 @@
       padding: 20px 0;
       text-align: center;
     }
+    .range-slider-wrapper {
+      position: relative;
+      width: 100%;
+      padding: 20px 0;
+    }
+    .range-slider-wrapper input[type=range] {
+      width: 100%;
+      -webkit-appearance: none;
+      height: 6px;
+      border-radius: 3px;
+      background: #ddd;
+      outline: none;
+      position: absolute;
+      top: 12px;
+    }
+    .range-slider-wrapper input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #3498db;
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+    }
+    .range-slider-wrapper .slider-values {
+      text-align: center;
+      margin-top: 40px;
+      font-weight: bold;
+      color: #2c3e50;
+    }
   </style>
 </head>
 <body>
@@ -124,7 +152,6 @@
   <section class="shop-section">
     <div class="container">
       <h2 class="text-center mb-4">Notre Catalogue de Cadeaux</h2>
-
       <div class="filter-bar row">
         <div class="col-md-4 mb-2">
           <label>Genre :</label>
@@ -147,11 +174,16 @@
           </select>
         </div>
         <div class="col-md-4 mb-2">
-          <label>Prix max :</label>
-          <input type="number" id="filter-price" class="form-control" placeholder="Ex : 50" />
+          <label>Prix (€) :</label>
+          <div class="range-slider-wrapper">
+            <input type="range" id="price-min" min="0" max="200" value="0" />
+            <input type="range" id="price-max" min="0" max="200" value="200" />
+            <div class="slider-values text-center mt-2">
+              <span id="price-min-val">0</span> € - <span id="price-max-val">200</span> €
+            </div>
+          </div>
         </div>
       </div>
-
       <div id="catalog-container" class="row mt-4">
         <!-- Produits dynamiques ici -->
       </div>

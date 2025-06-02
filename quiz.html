@@ -126,24 +126,24 @@
 
       <br>
       <!-- Marchands -->
-   <div class="form-section">
+<div class="form-section">
   <h4 class="mb-3">Classez vos marchands favoris (Glisser/Déposer)</h4>
-  <p style="font-size: 0.9rem;">
-    <strong>Disponibles :</strong> <span style="color:#2980b9;">eBay</span> & <span style="color:#2980b9;">Catalogue BestGift</span><br>
-    <em>Prochainement : Amazon, Decathlon, Etsy, Nature & Découvertes</em>
-  </p>
 
   <div class="merchant-container">
-    <!-- Colonne 1 : Marchands Disponibles -->
-    <div class="merchant-column">
+    <!-- Colonne gauche : Marchands disponibles -->
+    <div class="merchant-column full-height">
       <h5 class="text-center">Marchands Disponibles</h5>
-      <ul id="merchantPool" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)">
-        <li draggable="true" ondragstart="drag(event)" id="eBay">eBay</li>
-        <li draggable="true" ondragstart="drag(event)" id="EasyGift">Catalogue BestGift</li>
-      </ul>
+      <div class="merchant-zone available-merchant-zone" id="merchantPool"
+           ondragover="allowDrop(event)" ondrop="drop(event)">
+        <ul id="merchantList">
+          <li draggable="true" ondragstart="drag(event)" id="eBay">eBay</li>
+          <li draggable="true" ondragstart="drag(event)" id="EasyGift">Catalogue BestGift</li>
+        </ul>
+        <p class="coming-soon">Prochainement : Amazon, Decathlon, Etsy, Nature & Découvertes</p>
+      </div>
     </div>
 
-    <!-- Colonne 2 : Classement -->
+    <!-- Colonne droite : 3 blocs verticaux -->
     <div class="merchant-column">
       <div class="merchant-slot">
         <h5 class="text-center">Top</h5>

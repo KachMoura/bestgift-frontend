@@ -130,7 +130,7 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
           <img src="${product.image}" alt="${product.title}">
           <h3>${product.title}</h3>
           <p><strong>${product.price} €</strong></p>
-          <a href="${product.link}" target="_blank">Consulter</a><br>
+          <a href="product.html?id=${product.id}" class="btn btn-sm btn-outline-secondary mt-2">Consulter</a><br>
           <button class="btn btn-sm btn-outline-primary mt-2 compare-btn">Comparer</button>
         `;
         card.dataset.title = product.title;

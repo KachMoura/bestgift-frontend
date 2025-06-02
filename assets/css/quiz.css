@@ -622,3 +622,46 @@ header .nav-item.active .nav-link {
   outline: none;
   box-shadow: 0 0 0 3px rgba(52,152,219,0.2);
 }
+
+.merchant-container {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.merchant-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 1 300px;
+}
+
+.merchant-slot {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.merchant-zone {
+  border: 2px dashed #ccc;
+  min-height: 60px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #fdfdfd;
+  list-style: none;
+  transition: background-color 0.3s;
+}
+
+.merchant-zone:hover {
+  background-color: #f0f8ff;
+}
+
+.merchant-zone li {
+  background-color: #f0f0f0;
+  margin: 6px 0;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: grab;
+  font-weight: 500;
+}

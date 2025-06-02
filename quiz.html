@@ -126,29 +126,40 @@
 
       <br>
       <!-- Marchands -->
-      <div class="form-section" id="step-merchants">
-        <h4 class="mb-2">Classez vos marchands favoris (Glisser/Déposer)</h4>
-        <p style="font-size: 0.9rem;">Disponibles : <strong>eBay</strong> & <strong>Catalogue BestGift</strong><br />
-          <em>Prochainement : Amazon, Decathlon, Etsy, Nature & Découvertes</em>
-        </p>
-     
-        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-          <div style="flex: 1;">
-            <ul id="merchantPool" ondragover="allowDrop(event)" ondrop="drop(event)" class="merchant-zone">
-              <li draggable="true" ondragstart="drag(event)" id="eBay">eBay</li>
-              <li draggable="true" ondragstart="drag(event)" id="EasyGift">Catalogue BestGift</li>
-            </ul>
-          </div>
-          <div style="flex: 1;">
-            <center><h5>Top</h5></center>
-            <ul id="topMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
-            <center><h5>Pourquoi pas</h5></center>
-            <ul id="maybeMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
-            <center><h5>À éviter</h5></center>
-            <ul id="avoidMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
-          </div>
-        </div>
+   <div class="form-section">
+  <h4 class="mb-3">Classez vos marchands favoris (Glisser/Déposer)</h4>
+  <p style="font-size: 0.9rem;">
+    <strong>Disponibles :</strong> <span style="color:#2980b9;">eBay</span> & <span style="color:#2980b9;">Catalogue BestGift</span><br>
+    <em>Prochainement : Amazon, Decathlon, Etsy, Nature & Découvertes</em>
+  </p>
+
+  <div class="merchant-container">
+    <!-- Colonne 1 : Marchands Disponibles -->
+    <div class="merchant-column">
+      <h5 class="text-center">Marchands Disponibles</h5>
+      <ul id="merchantPool" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)">
+        <li draggable="true" ondragstart="drag(event)" id="eBay">eBay</li>
+        <li draggable="true" ondragstart="drag(event)" id="EasyGift">Catalogue BestGift</li>
+      </ul>
+    </div>
+
+    <!-- Colonne 2 : Classement -->
+    <div class="merchant-column">
+      <div class="merchant-slot">
+        <h5 class="text-center">Top</h5>
+        <ul id="topMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
       </div>
+      <div class="merchant-slot">
+        <h5 class="text-center">Pourquoi pas</h5>
+        <ul id="maybeMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
+      </div>
+      <div class="merchant-slot">
+        <h5 class="text-center">À éviter</h5>
+        <ul id="avoidMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
+      </div>
+    </div>
+  </div>
+</div>
 
       <!-- Boutons -->
       <div class="button-wrapper">

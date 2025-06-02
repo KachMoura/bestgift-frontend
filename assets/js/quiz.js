@@ -138,15 +138,15 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
         const score = product.matchingScore || 30;
         const card = document.createElement("div");
         card.className = "card";
-        const id = product.id || product.title;
+        const id = product.id;
         card.innerHTML = `
           <div class="score-badge">Matching : ${Math.round(score)}%</div>
           <img src="${product.image}" alt="${product.title}">
           <h3>${product.title}</h3>
           <p><strong>${product.price} €</strong></p>
           <a href="product.html?id=${encodeURIComponent(id)}" target="_blank" class="btn btn-sm btn-outline-secondary">
-            Consulter
-          </a><br>
+  Consulter
+</a><br>
           <button class="btn btn-sm btn-outline-primary mt-2 compare-btn">Comparer</button>
         `;
         card.dataset.title = product.title;

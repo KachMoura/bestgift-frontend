@@ -201,7 +201,7 @@ function handleCompareClick(card) {
 
 compareBtn.addEventListener("click", async () => {
   compareBtn.disabled = true;
-  aiResultBox.innerHTML = `<p style="color:#3498db">Analyse en cours...</p>`;
+  aiResultBox.innerHTML = `<p style="color:#3498db">Analyse en cours (Plusieurs secondes...)</p>`;
   try {
     const response = await fetch(`${apiBaseUrl}/api/compare`, {
       method: "POST",

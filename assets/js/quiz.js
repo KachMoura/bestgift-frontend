@@ -12,7 +12,6 @@ function drop(ev) {
     ev.target.appendChild(element);
   }
 }
-
 function getMerchantList(id) {
   return Array.from(document.querySelectorAll(`#${id} li`)).map(li => li.id);
 }
@@ -38,6 +37,18 @@ function updateDoubleRange() {
   track.style.width = `${percentMax - percentMin}%`;
 }
 
+// Nouvelle fonction scroll
+function scrollToNextSection(currentId) {
+  const fields = ["gender", "profile", "interests", "preferences", "minBudget"];
+  const index = fields.indexOf(currentId);
+  if (index !== -1 && index + 1 < fields.length) {
+    const next = document.getElementById(fields[index + 1]);
+    if (next) {
+      setTimeout(() => next.scrollIntoView({ behavior: "smooth", block: "center" }), 300);
+    }
+  }
+}
+
 const form = document.getElementById("quizForm");
 const suggestionsContainer = document.getElementById("suggestionsContainer");
 const loader = document.getElementById("loader");
@@ -52,6 +63,13 @@ const apiBaseUrl = window.location.hostname.includes("localhost")
 
 let selectedProductsForCompare = [];
 
+form.gender.addEventListener("change", () => scrollToNextSection("gender"));
+form.profile.addEventListener("change", () => scrollToNextSection("profile"));
+form.interests.addEventListener("change", () => scrollToNextSection("interests"));
+document.querySelectorAll('input[name="preferences"]').forEach(input =>
+  input.addEventListener("change", () => scrollToNextSection("preferences"))
+);
+
 form.addEventListener("submit", function (e) {
   e.preventDefault();
   suggestionsContainer.innerHTML = "";
@@ -64,6 +82,7 @@ form.addEventListener("submit", function (e) {
 
   const topMerchants = getMerchantList("topMerchants");
   const maybeMerchants = getMerchantList("maybeMerchants");
+
   if (topMerchants.length === 0 && maybeMerchants.length === 0) {
     loader.style.display = "none";
     messageBox.textContent = "Veuillez sélectionner au moins un marchand.";
@@ -114,6 +133,8 @@ form.addEventListener("submit", function (e) {
       console.error("Erreur lors de la requête :", err);
     });
 });
+
+// ... le reste du fichier inchangé (compare, affichage des suggestions, etc.)
 
 function displaySuggestionsByMerchant(suggestions, merchantRanking) {
   suggestionsContainer.innerHTML = "";

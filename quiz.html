@@ -9,176 +9,194 @@
   <link rel="stylesheet" href="../assets/css/quiz.css" />
 </head>
 <body>
-<header class="menu-header">
-  <div class="menu-container">
-    <a href="index.html" class="logo-link">
-      <img src="../assets/images/favicon.png" alt="Logo" class="logo-img" />
-      <span class="logo-text">BestGift</span>
-    </a>
-    <nav class="menu-links">
-      <a href="index.html">Accueil</a>
-      <a href="quiz.html" class="active">Quiz</a>
-      <a href="shop.html">Notre catalogue</a>
-      <a href="why.html">Pourquoi BestGift ?</a>
-      <a href="contact.html">A propos</a>
-    </nav>
-  </div>
-</header>
-
-<main class="container mt-5">
-  <h1 class="text-center mb-4">Moteur à cadeaux BestGift</h1>
-
-  <form id="quizForm">
-    <!-- Pour qui ? -->
-    <div class="form-section">
-      <label><strong>Pour qui ?</strong></label>
-      <div class="gender-options">
-        <label class="gender-card">
-          <input type="radio" name="gender" value="Elle" required />
-          <i class="fas fa-female"></i>
-          <span>Elle</span>
-        </label>
-        <label class="gender-card">
-          <input type="radio" name="gender" value="Lui" />
-          <i class="fas fa-male"></i>
-          <span>Lui</span>
-        </label>
-        <label class="gender-card">
-          <input type="radio" name="gender" value="Enfant" />
-          <i class="fas fa-child"></i>
-          <span>Enfant</span>
-        </label>
-      </div>
+  <header class="menu-header">
+    <div class="menu-container">
+      <a href="index.html" class="logo-link">
+        <img src="../assets/images/favicon.png" alt="Logo" class="logo-img" />
+        <span class="logo-text">BestGift</span>
+      </a>
+      <nav class="menu-links">
+        <a href="index.html">Accueil</a>
+        <a href="quiz.html" class="active">Quiz</a>
+        <a href="shop.html">Notre catalogue</a>
+        <a href="why.html">Pourquoi BestGift ?</a>
+        <a href="contact.html">À propos</a>
+      </nav>
     </div>
+  </header>
 
-    <!-- Profil -->
-    <div class="form-section mt-4">
-      <label><strong>Pour quel profil ?</strong></label>
-      <div class="profile-options">
-        <label class="profile-card">
-          <input type="radio" name="interests" value="tech" required />
-          <i class="fas fa-microchip"></i>
-          <span>Geek</span>
-        </label>
-        <label class="profile-card">
-          <input type="radio" name="interests" value="sport" />
-          <i class="fas fa-running"></i>
-          <span>Sportif</span>
-        </label>
-        <label class="profile-card">
-          <input type="radio" name="interests" value="maison" />
-          <i class="fas fa-home"></i>
-          <span>Déco</span>
-        </label>
-        <label class="profile-card">
-          <input type="radio" name="interests" value="game" />
-          <i class="fas fa-gamepad"></i>
-          <span>Joueur</span>
-        </label>
-        <label class="profile-card">
-          <input type="radio" name="interests" value="beauty" />
-          <i class="fas fa-magic"></i>
-          <span>Beauté</span>
-        </label>
-        <label class="profile-card">
-          <input type="radio" name="interests" value="ecolo" />
-          <i class="fas fa-seedling"></i>
-          <span>Écolo</span>
-        </label>
-      </div>
-    </div>
-
-    <!-- Budget -->
-    <div class="budget-range-wrapper">
-      <label><strong>Quel est votre budget ?</strong></label>
-      <div class="budget-labels">
-        <span>Min : <span id="minBudgetOutput">0€</span></span>
-        <span>Max : <span id="maxBudgetOutput">100€</span></span>
-      </div>
-      <div class="slider-container">
-        <input type="range" id="minBudget" name="minBudget" min="0" max="500" value="0" step="5" oninput="updateDoubleRange()">
-        <input type="range" id="maxBudget" name="maxBudget" min="0" max="500" value="100" step="5" oninput="updateDoubleRange()">
-        <div class="range-track" id="rangeTrack"></div>
-      </div>
-    </div>
-
-    <!-- Exclusions -->
-    <div class="form-section">
-      <label for="excludedGifts"><strong>Produits déjà offerts à exclure</strong></label>
-      <input type="text" name="excludedGifts" placeholder="ex : montre, parfum, bougie..." class="styled-input" />
-    </div>
-
-    <!-- Préférences -->
-    <div class="form-section preferences-box">
-      <h3>Préférences :</h3>
-      <label class="preference-item">
-        <input type="checkbox" name="preferences" value="promo" />
-        <span>En promotion</span>
-      </label>
-      <label class="preference-item">
-        <input type="checkbox" name="preferences" value="compact" />
-        <span>Petit format</span>
-      </label>
-      <label class="preference-item">
-        <input type="checkbox" name="preferences" value="fast_delivery" />
-        <span>Livraison rapide</span>
-      </label>
-    </div>
-
-    <!-- Sélection des marchands -->
-    <div class="form-section">
-      <h4 class="mb-2">Classez vos marchands favoris (Glisser/Déposer)</h4>
-      <p style="font-size: 0.9rem;">Disponibles : <strong>eBay</strong> & <strong>Catalogue BestGift</strong><br />
-      <em>Prochainement disponibles : Amazon, Decathlon, Etsy, Nature & Découvertes</em></p>
-      <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-        <div style="flex: 1;">
-          <ul id="merchantPool" ondragover="allowDrop(event)" ondrop="drop(event)" class="merchant-zone">
-            <li draggable="true" ondragstart="drag(event)" id="eBay">eBay</li>
-            <li draggable="true" ondragstart="drag(event)" id="EasyGift">Catalogue BestGift</li>
-          </ul>
-        </div>
-        <div style="flex: 1;">
-          <center><h5>Top</h5></center>
-          <ul id="topMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
-          <center><h5>Pourquoi pas</h5></center>
-          <ul id="maybeMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
-          <center><h5>À éviter</h5></center>
-          <ul id="avoidMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
+  <main class="container mt-5">
+    <h1 class="text-center mb-4">Moteur à cadeaux BestGift</h1>
+    <form id="quizForm">
+      <!-- Pour qui ? -->
+      <div class="form-section" id="step-gender">
+        <label><strong>Pour qui ?</strong></label>
+        <div class="gender-options">
+          <label class="gender-card">
+            <input type="radio" name="gender" value="Elle" required />
+            <i class="fas fa-female"></i>
+            <span>Elle</span>
+          </label>
+          <label class="gender-card">
+            <input type="radio" name="gender" value="Lui" />
+            <i class="fas fa-male"></i>
+            <span>Lui</span>
+          </label>
+          <label class="gender-card">
+            <input type="radio" name="gender" value="Enfant" />
+            <i class="fas fa-child"></i>
+            <span>Enfant</span>
+          </label>
         </div>
       </div>
-    </div>
 
-    <!-- Boutons -->
-    <div class="button-wrapper">
-      <button type="submit" class="btn btn-primary">Lancer la recherche</button>
-      <div class="button-group">
-        <button type="button" class="btn btn-secondary" onclick="window.location.href='index.html'">Retour</button>
-        <button type="button" id="resetBtn" class="btn btn-secondary">Réinitialiser</button>
+      <!-- Profil -->
+      <div class="form-section mt-4" id="step-profile">
+        <label><strong>Pour quel profil ?</strong></label>
+        <div class="profile-options">
+          <label class="profile-card">
+            <input type="radio" name="interests" value="tech" required />
+            <i class="fas fa-microchip"></i>
+            <span>Geek</span>
+          </label>
+          <label class="profile-card">
+            <input type="radio" name="interests" value="sport" />
+            <i class="fas fa-running"></i>
+            <span>Sportif</span>
+          </label>
+          <label class="profile-card">
+            <input type="radio" name="interests" value="maison" />
+            <i class="fas fa-home"></i>
+            <span>Déco</span>
+          </label>
+          <label class="profile-card">
+            <input type="radio" name="interests" value="game" />
+            <i class="fas fa-gamepad"></i>
+            <span>Joueur</span>
+          </label>
+          <label class="profile-card">
+            <input type="radio" name="interests" value="beauty" />
+            <i class="fas fa-magic"></i>
+            <span>Beauté</span>
+          </label>
+          <label class="profile-card">
+            <input type="radio" name="interests" value="ecolo" />
+            <i class="fas fa-seedling"></i>
+            <span>Écolo</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Budget -->
+      <div class="budget-range-wrapper" id="step-budget">
+        <label><strong>Quel est votre budget ?</strong></label>
+        <div class="budget-labels">
+          <span>Min : <span id="minBudgetOutput">0€</span></span>
+          <span>Max : <span id="maxBudgetOutput">100€</span></span>
+        </div>
+        <div class="slider-container">
+          <input type="range" id="minBudget" name="minBudget" min="0" max="500" value="0" step="5" oninput="updateDoubleRange()">
+          <input type="range" id="maxBudget" name="maxBudget" min="0" max="500" value="100" step="5" oninput="updateDoubleRange()">
+          <div class="range-track" id="rangeTrack"></div>
+        </div>
+      </div>
+
+      <!-- Exclusions -->
+      <div class="form-section" id="step-excluded">
+        <label for="excludedGifts"><strong>Produits déjà offerts à exclure</strong></label>
+        <input type="text" name="excludedGifts" placeholder="ex : montre, parfum, bougie..." class="styled-input" />
+      </div>
+
+      <!-- Préférences -->
+      <div class="form-section preferences-box" id="step-preferences">
+        <h3>Préférences :</h3>
+        <label class="preference-item">
+          <input type="checkbox" name="preferences" value="promo" />
+          <span>En promotion</span>
+        </label>
+        <label class="preference-item">
+          <input type="checkbox" name="preferences" value="compact" />
+          <span>Petit format</span>
+        </label>
+        <label class="preference-item">
+          <input type="checkbox" name="preferences" value="fast_delivery" />
+          <span>Livraison rapide</span>
+        </label>
+      </div>
+
+      <!-- Marchands -->
+      <div class="form-section" id="step-merchants">
+        <h4 class="mb-2">Classez vos marchands favoris (Glisser/Déposer)</h4>
+        <p style="font-size: 0.9rem;">Disponibles : <strong>eBay</strong> & <strong>Catalogue BestGift</strong><br />
+          <em>Prochainement : Amazon, Decathlon, Etsy, Nature & Découvertes</em>
+        </p>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+          <div style="flex: 1;">
+            <ul id="merchantPool" ondragover="allowDrop(event)" ondrop="drop(event)" class="merchant-zone">
+              <li draggable="true" ondragstart="drag(event)" id="eBay">eBay</li>
+              <li draggable="true" ondragstart="drag(event)" id="EasyGift">Catalogue BestGift</li>
+            </ul>
+          </div>
+          <div style="flex: 1;">
+            <center><h5>Top</h5></center>
+            <ul id="topMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
+            <center><h5>Pourquoi pas</h5></center>
+            <ul id="maybeMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
+            <center><h5>À éviter</h5></center>
+            <ul id="avoidMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Boutons -->
+      <div class="button-wrapper">
+        <button type="submit" class="btn btn-primary">Lancer la recherche</button>
+        <div class="button-group">
+          <button type="button" class="btn btn-secondary" onclick="window.location.href='index.html'">Retour</button>
+          <button type="button" id="resetBtn" class="btn btn-secondary">Réinitialiser</button>
+        </div>
+      </div>
+    </form>
+
+    <div id="loader" style="display:none; text-align:center; font-weight:bold; color:#3498db; margin-top:20px;">
+      Chargement en cours...
+    </div>
+    <div id="messageBox" style="text-align:center; font-weight:bold; color:#e74c3c; margin-top:20px;"></div>
+    <div id="suggestionsContainer" class="suggestions"></div>
+
+    <div id="compareSection" style="margin-top: 40px; display: none;">
+      <h3>Comparer des produits avec l'IA</h3>
+      <p>Sélectionnez deux produits dans les résultats ci-dessus :</p>
+      <div id="compareList" style="display:flex; flex-wrap:wrap; gap:20px;"></div>
+      <div class="compare-buttons mt-3">
+        <button id="compareBtn" class="btn btn-info btn-sm" disabled>Analyser avec l'IA</button>
+        <button id="resetCompareBtn" class="btn btn-secondary btn-sm">Réinitialiser la sélection</button>
       </div>
     </div>
-  </form>
 
-  <div id="loader" style="display:none; text-align:center; font-weight:bold; color:#3498db; margin-top:20px;">
-    Chargement en cours...
-  </div>
-  <div id="messageBox" style="text-align:center; font-weight:bold; color:#e74c3c; margin-top:20px;"></div>
-  <div id="suggestionsContainer" class="suggestions"></div>
+    <div id="aiComparisonResult" style="margin-top: 30px;"></div>
+  </main>
 
-  <!-- Comparaison IA -->
-  <div id="compareSection" style="margin-top: 40px; display: none;">
-    <h3>Comparer des produits avec l'IA</h3>
-    <p>Sélectionnez deux produits dans les résultats ci-dessus :</p>
-    <div id="compareList" style="display:flex; flex-wrap:wrap; gap:20px;"></div>
-    <div class="compare-buttons mt-3">
-      <button id="compareBtn" class="btn btn-info btn-sm" disabled>Analyser avec l'IA</button>
-      <button id="resetCompareBtn" class="btn btn-secondary btn-sm">Réinitialiser la sélection</button>
-    </div>
-  </div>
-  <div id="aiComparisonResult" style="margin-top: 30px;"></div>
-</main>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../assets/js/quiz.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/quiz.js"></script>
+  <script>
+    // Scroll fluide après chaque choix
+    document.addEventListener("DOMContentLoaded", () => {
+      const steps = [
+        { name: "gender", next: "#step-profile" },
+        { name: "interests", next: "#step-budget" }
+      ];
+      steps.forEach(({ name, next }) => {
+        document.querySelectorAll(`input[name="${name}"]`).forEach((input) => {
+          input.addEventListener("change", () => {
+            setTimeout(() => {
+              document.querySelector(next).scrollIntoView({ behavior: "smooth" });
+            }, 200);
+          });
+        });
+      });
+    });
+  </script>
 </body>
 </html>

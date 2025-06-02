@@ -4,10 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Détail du Produit | BestGift</title>
-  <!-- Bootstrap + FontAwesome -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  <!-- Snipcart -->
   <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.6.1/default/snipcart.css" />
   <script async src="https://cdn.snipcart.com/themes/v3.6.1/default/snipcart.js"></script>
   <style>
@@ -73,7 +71,7 @@
             <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
             <li class="nav-item"><a class="nav-link" href="shop.html">Notre Catalogue</a></li>
             <li class="nav-item"><a class="nav-link" href="why.html">Pourquoi BestGift ?</a></li>
-            <li class="nav-item"><a class="nav-link" href="contact.html">A propos</a></li>
+            <li class="nav-item"><a class="nav-link" href="contact.html">À propos</a></li>
             <li class="nav-item">
               <a href="#" class="snipcart-checkout nav-link">
                 <i class="fas fa-shopping-cart"></i> Panier
@@ -100,25 +98,21 @@
     </div>
   </footer>
 
-  <!-- JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const container = document.getElementById("product-container");
       const baseApi = "https://bestgift-backend.onrender.com";
-
       function getQueryParam(param) {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get(param);
       }
-
       const productId = getQueryParam("id");
       if (!productId) {
         container.innerHTML = "<p class='text-danger'>Produit introuvable.</p>";
         return;
       }
-
       fetch(`${baseApi}/api/catalogue/${productId}`)
         .then(res => res.json())
         .then(product => {
@@ -126,13 +120,11 @@
             container.innerHTML = "<p class='text-danger'>Produit non trouvé.</p>";
             return;
           }
-
           const image = product.image_url || "";
           const title = product.title;
           const description = product.description || "Aucune description disponible.";
           const price = parseFloat(product.price).toFixed(2);
           const id = product.id || title;
-
           container.innerHTML = `
             <div class="col-md-6">
               <img src="${image}" alt="${title}" class="img-fluid" />
@@ -164,7 +156,6 @@
     });
   </script>
 
-  <!-- Snipcart -->
   <div hidden id="snipcart" data-api-key="MTA0ZTc0NzMtMDJkYy00MGIwLWI0MTQtNGJjNzc3OGEwN2QzNjM4ODMyNTAxNzM5NjAxMTAy" data-config-modal-style="side"></div>
 </body>
 </html>

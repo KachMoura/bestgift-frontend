@@ -109,42 +109,57 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
   suggestionsContainer.innerHTML = "";
   const order = [...merchantRanking.top, ...merchantRanking.maybe];
   let anyProductFound = false;
+
   order.forEach(merchant => {
     const products = suggestions[merchant];
     if (products && products.length > 0) {
       anyProductFound = true;
+
       const section = document.createElement("div");
       section.className = "merchant-section";
+
       const title = document.createElement("h2");
       const merchantName = merchant === "EasyGift" ? "Catalogue BestGift" : merchant;
       title.textContent = `Suggestions ${merchantName}`;
       section.appendChild(title);
+
       const carousel = document.createElement("div");
       carousel.className = "card-carousel";
+
       products.forEach(product => {
         const score = product.matchingScore || 30;
+        const productId = product.id || ""; // ✅ Sécurise l'ID
+
         const card = document.createElement("div");
         card.className = "card";
+
         card.innerHTML = `
           <div class="score-badge">Matching : ${Math.round(score)}%</div>
           <img src="${product.image}" alt="${product.title}">
           <h3>${product.title}</h3>
           <p><strong>${product.price} €</strong></p>
-          <a href="product.html?id=${product.id}" class="btn btn-sm btn-outline-secondary mt-2">Consulter</a><br>
+          <a href="product.html?id=${productId}" target="_blank" class="btn btn-sm btn-outline-secondary mt-2">Consulter</a><br>
           <button class="btn btn-sm btn-outline-primary mt-2 compare-btn">Comparer</button>
         `;
+
+        // Stockage des données pour comparaison
         card.dataset.title = product.title;
         card.dataset.link = product.link;
         card.dataset.image = product.image;
         card.dataset.price = product.price;
         card.dataset.description = product.description || "";
+
+        // Écouteur bouton comparer
         card.querySelector(".compare-btn").addEventListener("click", () => handleCompareClick(card));
+
         carousel.appendChild(card);
       });
+
       section.appendChild(carousel);
       suggestionsContainer.appendChild(section);
     }
   });
+
   if (!anyProductFound) {
     messageBox.textContent = "Aucun cadeau ne correspond à vos critères.";
   }

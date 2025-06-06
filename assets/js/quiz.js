@@ -268,7 +268,7 @@ document.getElementById("resetBtn").addEventListener("click", function () {
     const zone = document.getElementById(zoneId);
     if (zone) zone.innerHTML = "";
   });
-  const marchands = ["eBay", "Catalogue BestGift"];
+  const marchands = ["eBay", "Catalogue BestGift","Affilae"];
   const pool = document.getElementById("merchantPool");
   marchands.forEach(id => {
     const li = document.createElement("li");

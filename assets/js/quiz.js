@@ -85,6 +85,19 @@ form.addEventListener("submit", function (e) {
       messageBox.textContent = "Veuillez sélectionner au moins un marchand.";
       return;
     }
+
+    if (gender.length === 0) {
+      loader.style.display = "none";
+      messageBox.textContent = "Veuillez sélectionner un gendre";
+      return;
+    }
+
+
+    if (interests.length === 0) {
+      loader.style.display = "none";
+      messageBox.textContent = "Veuillez sélectionner un profil";
+      return;
+    }
   }
 
   const preferences = Array.from(document.querySelectorAll('input[name="preferences"]:checked')).map(el => el.value);

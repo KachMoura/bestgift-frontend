@@ -1,6 +1,7 @@
 // --- Configuration ---
 const USE_ALL_MERCHANTS = true; // 🔁 Remets sur false pour réactiver le drag & drop plus tard
 
+
 // --- Drag & drop merchants ---
 function allowDrop(ev) {
   ev.preventDefault();
@@ -72,25 +73,16 @@ form.addEventListener("submit", function (e) {
   let maybeMerchants = [];
 
   if (USE_ALL_MERCHANTS) {
-    // ✅ Tous les marchands activés automatiquement
-    topMerchants = ["eBay", "SportDecouverte", "EasyGift", "bookvillage"];
-    
+    topMerchants = ["eBay", "SportDecouverte", "EasyGift", "BookVillage"];
     maybeMerchants = [];
-
-  
-
   } else {
-    // 🧩 Ancienne méthode drag & drop
     topMerchants = getMerchantList("topMerchants");
     maybeMerchants = getMerchantList("maybeMerchants");
-
     if (topMerchants.length === 0 && maybeMerchants.length === 0) {
       loader.style.display = "none";
       messageBox.textContent = "Veuillez sélectionner au moins un marchand.";
       return;
     }
-
-  
   }
 
   const preferences = Array.from(document.querySelectorAll('input[name="preferences"]:checked')).map(el => el.value);
@@ -122,10 +114,18 @@ form.addEventListener("submit", function (e) {
     .then(result => {
       loader.style.display = "none";
       const hasSuggestions = result?.suggestions && Object.keys(result.suggestions).length > 0;
+
+      // ✅ Cas spécial : profil lecteur → afficher BookVillage même seul
+      if (data.interests.includes("book") && result.suggestions?.BookVillage?.length > 0) {
+        displaySuggestionsByMerchant({ BookVillage: result.suggestions.BookVillage }, { top: ["BookVillage"], maybe: [] });
+        return;
+      }
+
       if (!hasSuggestions) {
         messageBox.textContent = "Aucun cadeau ne correspond à vos critères pour le moment.";
         return;
       }
+
       displaySuggestionsByMerchant(result.suggestions, data.merchants);
       setTimeout(() => {
         document.getElementById("suggestionsContainer").scrollIntoView({ behavior: "smooth" });
@@ -151,12 +151,15 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
       const section = document.createElement("div");
       section.className = "merchant-section";
       const title = document.createElement("h2");
-      const merchantName = merchant === "EasyGift" ? "Catalogue BestGift" : merchant;
+      let merchantName = merchant;
+      if (merchant === "EasyGift") merchantName = "Catalogue BestGift";
+      if (merchant === "BookVillage") merchantName = "Catégories BookVillage";
       title.textContent = `Suggestions ${merchantName}`;
       section.appendChild(title);
 
       const carousel = document.createElement("div");
       carousel.className = "card-carousel";
+
       products.forEach(product => {
         const score = product.matchingScore || 30;
         const card = document.createElement("div");
@@ -178,6 +181,7 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
         card.querySelector(".compare-btn").addEventListener("click", () => handleCompareClick(card));
         carousel.appendChild(card);
       });
+
       section.appendChild(carousel);
       suggestionsContainer.appendChild(section);
     }
@@ -213,6 +217,7 @@ function handleCompareClick(card) {
     </div>
   `;
   compareList.appendChild(miniCard);
+
   if (selectedProductsForCompare.length === 2) {
     compareBtn.disabled = false;
     setTimeout(() => {
@@ -249,10 +254,12 @@ compareBtn.addEventListener("click", async () => {
         if (inReco) recommendationLines.push(line);
         else tableLines.push(line);
       }
+
       const headers = tableLines[0]?.split('|').slice(1, -1).map(cell => cell.trim()) || [];
       const rows = tableLines.slice(1).map(line =>
         line.split('|').slice(1, -1).map(cell => cell.trim())
       );
+
       aiResultBox.innerHTML = `
         <div class="ai-analysis-box">
           <h4>Comparaison détaillée</h4>
@@ -277,7 +284,7 @@ compareBtn.addEventListener("click", async () => {
   }
 });
 
-// --- Réinitialisation formulaire ---
+// --- Réinitialisation ---
 document.getElementById("resetCompareBtn").addEventListener("click", function () {
   selectedProductsForCompare = [];
   compareList.innerHTML = "";
@@ -298,7 +305,7 @@ document.getElementById("resetBtn").addEventListener("click", function () {
     const zone = document.getElementById(zoneId);
     if (zone) zone.innerHTML = "";
   });
-  const marchands = ["eBay", "Catalogue BestGift", "bookvillage", "SportDecouverte"];
+  const marchands = ["eBay", "Catalogue BestGift", "BookVillage", "SportDecouverte"];
   const pool = document.getElementById("merchantPool");
   if (pool) {
     marchands.forEach(id => {

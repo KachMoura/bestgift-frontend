@@ -73,7 +73,7 @@ form.addEventListener("submit", function (e) {
 
   if (USE_ALL_MERCHANTS) {
     // ✅ Tous les marchands activés automatiquement
-    topMerchants = ["eBay", "EasyGift", "SportDecouverte"];
+    topMerchants = ["eBay", "SportDecouverte", "EasyGift"];
     maybeMerchants = [];
   } else {
     // 🧩 Ancienne méthode drag & drop

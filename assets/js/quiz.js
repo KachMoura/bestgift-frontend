@@ -115,10 +115,9 @@ form.addEventListener("submit", function (e) {
       loader.style.display = "none";
       const hasSuggestions = result?.suggestions && Object.keys(result.suggestions).length > 0;
 
-      // ✅ Cas spécial : profil lecteur → afficher BookVillage même seul
+      // Cas spécial : profil lecteur → forcer l'affichage de BookVillage si dispo
       if (data.interests.includes("book") && result.suggestions?.BookVillage?.length > 0) {
-        displaySuggestionsByMerchant({ BookVillage: result.suggestions.BookVillage }, { top: ["BookVillage"], maybe: [] });
-        return;
+        data.merchants.top = [...new Set([...(data.merchants.top || []), "BookVillage"])];
       }
 
       if (!hasSuggestions) {
@@ -127,6 +126,7 @@ form.addEventListener("submit", function (e) {
       }
 
       displaySuggestionsByMerchant(result.suggestions, data.merchants);
+
       setTimeout(() => {
         document.getElementById("suggestionsContainer").scrollIntoView({ behavior: "smooth" });
       }, 300);
@@ -150,10 +150,9 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
       anyProductFound = true;
       const section = document.createElement("div");
       section.className = "merchant-section";
+
       const title = document.createElement("h2");
-      let merchantName = merchant;
-      if (merchant === "EasyGift") merchantName = "Catalogue BestGift";
-      if (merchant === "BookVillage") merchantName = "Catégories BookVillage";
+      const merchantName = merchant === "EasyGift" ? "Catalogue BestGift" : merchant;
       title.textContent = `Suggestions ${merchantName}`;
       section.appendChild(title);
 
@@ -164,7 +163,6 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
         const score = product.matchingScore || 30;
         const card = document.createElement("div");
         card.className = "card";
-        const id = product.id || btoa(unescape(encodeURIComponent(product.title)));
         card.innerHTML = `
           <div class="score-badge">Matching : ${Math.round(score)}%</div>
           <img src="${product.image}" alt="${product.title}">
@@ -217,7 +215,6 @@ function handleCompareClick(card) {
     </div>
   `;
   compareList.appendChild(miniCard);
-
   if (selectedProductsForCompare.length === 2) {
     compareBtn.disabled = false;
     setTimeout(() => {
@@ -254,12 +251,10 @@ compareBtn.addEventListener("click", async () => {
         if (inReco) recommendationLines.push(line);
         else tableLines.push(line);
       }
-
       const headers = tableLines[0]?.split('|').slice(1, -1).map(cell => cell.trim()) || [];
       const rows = tableLines.slice(1).map(line =>
         line.split('|').slice(1, -1).map(cell => cell.trim())
       );
-
       aiResultBox.innerHTML = `
         <div class="ai-analysis-box">
           <h4>Comparaison détaillée</h4>
@@ -294,6 +289,7 @@ document.getElementById("resetCompareBtn").addEventListener("click", function ()
     card.classList.remove("selected");
   });
 });
+
 document.getElementById("resetBtn").addEventListener("click", function () {
   document.getElementById("quizForm").reset();
   document.getElementById("minBudgetOutput").textContent = "0 €";
@@ -325,6 +321,7 @@ document.getElementById("resetBtn").addEventListener("click", function () {
   selectedProductsForCompare = [];
   compareBtn.disabled = true;
 });
+
 document.addEventListener("DOMContentLoaded", function () {
   updateDoubleRange();
 });

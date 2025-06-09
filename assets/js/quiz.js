@@ -1,3 +1,7 @@
+// --- Configuration ---
+const USE_ALL_MERCHANTS = true; // 🔁 Remets sur false pour réactiver le drag & drop plus tard
+
+// --- Drag & drop merchants ---
 function allowDrop(ev) {
   ev.preventDefault();
 }
@@ -15,6 +19,8 @@ function drop(ev) {
 function getMerchantList(id) {
   return Array.from(document.querySelectorAll(`#${id} li`)).map(li => li.id);
 }
+
+// --- Budget sliders ---
 function updateDoubleRange() {
   const minSlider = document.getElementById("minBudget");
   const maxSlider = document.getElementById("maxBudget");
@@ -36,6 +42,7 @@ function updateDoubleRange() {
   track.style.width = `${percentMax - percentMin}%`;
 }
 
+// --- Main logic ---
 const form = document.getElementById("quizForm");
 const suggestionsContainer = document.getElementById("suggestionsContainer");
 const loader = document.getElementById("loader");
@@ -61,12 +68,23 @@ form.addEventListener("submit", function (e) {
   messageBox.textContent = "";
   loader.style.display = "block";
 
-  const topMerchants = getMerchantList("topMerchants");
-  const maybeMerchants = getMerchantList("maybeMerchants");
-  if (topMerchants.length === 0 && maybeMerchants.length === 0) {
-    loader.style.display = "none";
-    messageBox.textContent = "Veuillez sélectionner au moins un marchand.";
-    return;
+  let topMerchants = [];
+  let maybeMerchants = [];
+
+  if (USE_ALL_MERCHANTS) {
+    // ✅ Tous les marchands activés automatiquement
+    topMerchants = ["eBay", "EasyGift", "SportDecouverte"];
+    maybeMerchants = [];
+  } else {
+    // 🧩 Ancienne méthode drag & drop
+    topMerchants = getMerchantList("topMerchants");
+    maybeMerchants = getMerchantList("maybeMerchants");
+
+    if (topMerchants.length === 0 && maybeMerchants.length === 0) {
+      loader.style.display = "none";
+      messageBox.textContent = "Veuillez sélectionner au moins un marchand.";
+      return;
+    }
   }
 
   const preferences = Array.from(document.querySelectorAll('input[name="preferences"]:checked')).map(el => el.value);
@@ -114,10 +132,12 @@ form.addEventListener("submit", function (e) {
     });
 });
 
+// --- Affichage des suggestions ---
 function displaySuggestionsByMerchant(suggestions, merchantRanking) {
   suggestionsContainer.innerHTML = "";
   const order = [...merchantRanking.top, ...merchantRanking.maybe];
   let anyProductFound = false;
+
   order.forEach(merchant => {
     const products = suggestions[merchant];
     if (products && products.length > 0) {
@@ -128,6 +148,7 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
       const merchantName = merchant === "EasyGift" ? "Catalogue BestGift" : merchant;
       title.textContent = `Suggestions ${merchantName}`;
       section.appendChild(title);
+
       const carousel = document.createElement("div");
       carousel.className = "card-carousel";
       products.forEach(product => {
@@ -155,11 +176,13 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
       suggestionsContainer.appendChild(section);
     }
   });
+
   if (!anyProductFound) {
     messageBox.textContent = "Aucun cadeau ne correspond à vos critères.";
   }
 }
 
+// --- Comparaison produits ---
 function handleCompareClick(card) {
   if (selectedProductsForCompare.length >= 2) {
     alert("Vous ne pouvez comparer que 2 produits. Cliquez sur réinitialiser si besoin");
@@ -192,6 +215,7 @@ function handleCompareClick(card) {
   }
 }
 
+// --- Analyse IA ---
 compareBtn.addEventListener("click", async () => {
   compareBtn.disabled = true;
   aiResultBox.innerHTML = `<p style="color:#3498db">Analyse en cours (Plusieurs secondes...)</p>`;
@@ -247,6 +271,7 @@ compareBtn.addEventListener("click", async () => {
   }
 });
 
+// --- Réinitialisation formulaire ---
 document.getElementById("resetCompareBtn").addEventListener("click", function () {
   selectedProductsForCompare = [];
   compareList.innerHTML = "";
@@ -256,7 +281,6 @@ document.getElementById("resetCompareBtn").addEventListener("click", function ()
     card.classList.remove("selected");
   });
 });
-
 document.getElementById("resetBtn").addEventListener("click", function () {
   document.getElementById("quizForm").reset();
   document.getElementById("minBudgetOutput").textContent = "0 €";
@@ -268,16 +292,18 @@ document.getElementById("resetBtn").addEventListener("click", function () {
     const zone = document.getElementById(zoneId);
     if (zone) zone.innerHTML = "";
   });
-  const marchands = ["eBay", "Catalogue BestGift","Affilae"];
+  const marchands = ["eBay", "Catalogue BestGift", "SportDecouverte"];
   const pool = document.getElementById("merchantPool");
-  marchands.forEach(id => {
-    const li = document.createElement("li");
-    li.id = id;
-    li.draggable = true;
-    li.textContent = id;
-    li.addEventListener("dragstart", drag);
-    pool.appendChild(li);
-  });
+  if (pool) {
+    marchands.forEach(id => {
+      const li = document.createElement("li");
+      li.id = id;
+      li.draggable = true;
+      li.textContent = id;
+      li.addEventListener("dragstart", drag);
+      pool.appendChild(li);
+    });
+  }
   suggestionsContainer.innerHTML = "";
   messageBox.textContent = "";
   aiResultBox.innerHTML = "";
@@ -286,7 +312,6 @@ document.getElementById("resetBtn").addEventListener("click", function () {
   selectedProductsForCompare = [];
   compareBtn.disabled = true;
 });
-
 document.addEventListener("DOMContentLoaded", function () {
   updateDoubleRange();
 });

@@ -74,20 +74,12 @@ form.addEventListener("submit", function (e) {
   if (USE_ALL_MERCHANTS) {
     // ✅ Tous les marchands activés automatiquement
     topMerchants = ["eBay", "SportDecouverte", "EasyGift"];
+    if (form.interests.value === "lecteur") {
+      topMerchants.push("BookVillage");
+    }
     maybeMerchants = [];
 
-  if (gender.length === 0) {
-      loader.style.display = "none";
-      messageBox.textContent = "Veuillez sélectionner un gendre";
-      return;
-    }
-
-
-    if (interests.length === 0) {
-      loader.style.display = "none";
-      messageBox.textContent = "Veuillez sélectionner un profil";
-      return;
-    }
+  
 
   } else {
     // 🧩 Ancienne méthode drag & drop

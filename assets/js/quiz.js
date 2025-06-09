@@ -1,7 +1,6 @@
 // --- Configuration ---
 const USE_ALL_MERCHANTS = true; // 🔁 Remets sur false pour réactiver le drag & drop plus tard
 
-
 // --- Drag & drop merchants ---
 function allowDrop(ev) {
   ev.preventDefault();
@@ -67,6 +66,14 @@ form.addEventListener("submit", function (e) {
   selectedProductsForCompare = [];
   compareSection.style.display = "none";
   messageBox.textContent = "";
+
+  // 👉 Validation obligatoire du genre et du profil
+  if (!form.gender.value || !form.interests.value) {
+    loader.style.display = "none";
+    messageBox.textContent = "Merci de sélectionner un genre et un profil.";
+    return;
+  }
+
   loader.style.display = "block";
 
   let topMerchants = [];
@@ -126,7 +133,6 @@ form.addEventListener("submit", function (e) {
       }
 
       displaySuggestionsByMerchant(result.suggestions, data.merchants);
-
       setTimeout(() => {
         document.getElementById("suggestionsContainer").scrollIntoView({ behavior: "smooth" });
       }, 300);
@@ -138,11 +144,6 @@ form.addEventListener("submit", function (e) {
     });
 });
 
-if (!form.gender.value || !form.interests.value) {
-  loader.style.display = "none";
-  messageBox.textContent = "Merci de sélectionner un genre et un profil.";
-  return;
-}
 
 // --- Affichage des suggestions ---
 function displaySuggestionsByMerchant(suggestions, merchantRanking) {

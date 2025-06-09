@@ -73,10 +73,8 @@ form.addEventListener("submit", function (e) {
 
   if (USE_ALL_MERCHANTS) {
     // ✅ Tous les marchands activés automatiquement
-    topMerchants = ["eBay", "SportDecouverte", "EasyGift"];
-    if (form.interests.value === "lecteur") {
-      topMerchants.push("bookvillage");
-    }
+    topMerchants = ["eBay", "SportDecouverte", "EasyGift", "bookvillage"];
+    
     maybeMerchants = [];
 
   
@@ -300,7 +298,7 @@ document.getElementById("resetBtn").addEventListener("click", function () {
     const zone = document.getElementById(zoneId);
     if (zone) zone.innerHTML = "";
   });
-  const marchands = ["eBay", "Catalogue BestGift", "SportDecouverte"];
+  const marchands = ["eBay", "Catalogue BestGift", "bookvillage", "SportDecouverte"];
   const pool = document.getElementById("merchantPool");
   if (pool) {
     marchands.forEach(id => {

@@ -75,18 +75,8 @@ form.addEventListener("submit", function (e) {
     // ✅ Tous les marchands activés automatiquement
     topMerchants = ["eBay", "SportDecouverte", "EasyGift"];
     maybeMerchants = [];
-  } else {
-    // 🧩 Ancienne méthode drag & drop
-    topMerchants = getMerchantList("topMerchants");
-    maybeMerchants = getMerchantList("maybeMerchants");
 
-    if (topMerchants.length === 0 && maybeMerchants.length === 0) {
-      loader.style.display = "none";
-      messageBox.textContent = "Veuillez sélectionner au moins un marchand.";
-      return;
-    }
-
-    if (gender.length === 0) {
+  if (gender.length === 0) {
       loader.style.display = "none";
       messageBox.textContent = "Veuillez sélectionner un gendre";
       return;
@@ -98,6 +88,19 @@ form.addEventListener("submit", function (e) {
       messageBox.textContent = "Veuillez sélectionner un profil";
       return;
     }
+
+  } else {
+    // 🧩 Ancienne méthode drag & drop
+    topMerchants = getMerchantList("topMerchants");
+    maybeMerchants = getMerchantList("maybeMerchants");
+
+    if (topMerchants.length === 0 && maybeMerchants.length === 0) {
+      loader.style.display = "none";
+      messageBox.textContent = "Veuillez sélectionner au moins un marchand.";
+      return;
+    }
+
+  
   }
 
   const preferences = Array.from(document.querySelectorAll('input[name="preferences"]:checked')).map(el => el.value);

@@ -326,3 +326,4 @@ document.getElementById("resetBtn").addEventListener("click", function () {
 document.addEventListener("DOMContentLoaded", function () {
   updateDoubleRange();
 });
+

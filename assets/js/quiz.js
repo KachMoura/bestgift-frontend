@@ -75,7 +75,7 @@ form.addEventListener("submit", function (e) {
     // ✅ Tous les marchands activés automatiquement
     topMerchants = ["eBay", "SportDecouverte", "EasyGift"];
     if (form.interests.value === "lecteur") {
-      topMerchants.push("BookVillage");
+      topMerchants.push("bookvillage");
     }
     maybeMerchants = [];
 

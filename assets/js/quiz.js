@@ -138,6 +138,12 @@ form.addEventListener("submit", function (e) {
     });
 });
 
+if (!form.gender.value || !form.interests.value) {
+  loader.style.display = "none";
+  messageBox.textContent = "Merci de sélectionner un genre et un profil.";
+  return;
+}
+
 // --- Affichage des suggestions ---
 function displaySuggestionsByMerchant(suggestions, merchantRanking) {
   suggestionsContainer.innerHTML = "";

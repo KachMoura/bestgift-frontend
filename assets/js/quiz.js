@@ -60,30 +60,19 @@ const apiBaseUrl = window.location.hostname.includes("localhost")
 let selectedProductsForCompare = [];
 
 form.addEventListener("submit", function (e) {
-  e.preventDefault();
-  
-  suggestionsContainer.innerHTML = "";
-  aiResultBox.innerHTML = "";
-  compareList.innerHTML = "";
-  selectedProductsForCompare = [];
-  compareSection.style.display = "none";
-  messageBox.textContent = "";
-  loader.style.display = "block";
+   e.preventDefault(); // Empêche l'envoi du formulaire si la validation échoue
 
-  let topMerchants = [];
-  let maybeMerchants = [];
-
-// Vérifie si le genre ou le profil sont non sélectionnés
+  // Vérifie si le genre ou le profil sont non sélectionnés
   if (!form.gender.value || !form.interests.value) {
     let missingField = '';
 
     // Détermine quel champ est manquant
     if (!form.gender.value) {
       missingField = 'genre';
-      document.getElementById('gender').focus(); // Place le focus sur le champ genre
+      document.getElementById('step-gender').scrollIntoView({ behavior: 'smooth' }); // Scroll jusqu'au champ genre
     } else if (!form.interests.value) {
       missingField = 'profil';
-      document.getElementById('interests').focus(); // Place le focus sur le champ profil
+      document.getElementById('step-profile').scrollIntoView({ behavior: 'smooth' }); // Scroll jusqu'au champ profil
     }
 
     // Affiche la pop-up de message
@@ -92,7 +81,9 @@ form.addEventListener("submit", function (e) {
     return; // Arrête le processus si un champ est manquant
   }
 
-
+  // Si tout est bon, exécute la logique du formulaire
+  let topMerchants = [];
+  let maybeMerchants = [];
 
   if (USE_ALL_MERCHANTS) {
     topMerchants = ["eBay", "SportDecouverte", "EasyGift", "BookVillage"];

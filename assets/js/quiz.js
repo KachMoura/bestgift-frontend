@@ -61,6 +61,7 @@ let selectedProductsForCompare = [];
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
+  
   suggestionsContainer.innerHTML = "";
   aiResultBox.innerHTML = "";
   compareList.innerHTML = "";
@@ -71,6 +72,27 @@ form.addEventListener("submit", function (e) {
 
   let topMerchants = [];
   let maybeMerchants = [];
+
+// Vérifie si le genre ou le profil sont non sélectionnés
+  if (!form.gender.value || !form.interests.value) {
+    let missingField = '';
+
+    // Détermine quel champ est manquant
+    if (!form.gender.value) {
+      missingField = 'genre';
+      document.getElementById('gender').focus(); // Place le focus sur le champ genre
+    } else if (!form.interests.value) {
+      missingField = 'profil';
+      document.getElementById('interests').focus(); // Place le focus sur le champ profil
+    }
+
+    // Affiche la pop-up de message
+    alert(`Merci de renseigner votre ${missingField}`);
+
+    return; // Arrête le processus si un champ est manquant
+  }
+
+
 
   if (USE_ALL_MERCHANTS) {
     topMerchants = ["eBay", "SportDecouverte", "EasyGift", "BookVillage"];

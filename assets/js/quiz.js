@@ -60,7 +60,16 @@ const apiBaseUrl = window.location.hostname.includes("localhost")
 let selectedProductsForCompare = [];
 
 form.addEventListener("submit", function (e) {
-   e.preventDefault(); // Empêche l'envoi du formulaire si la validation échoue
+  e.preventDefault();
+  
+  suggestionsContainer.innerHTML = "";
+  aiResultBox.innerHTML = "";
+  compareList.innerHTML = "";
+  selectedProductsForCompare = [];
+  compareSection.style.display = "none";
+  messageBox.textContent = "";
+  loader.style.display = "block";
+
 
   // Vérifie si le genre ou le profil sont non sélectionnés
   if (!form.gender.value || !form.interests.value) {
@@ -81,9 +90,13 @@ form.addEventListener("submit", function (e) {
     return; // Arrête le processus si un champ est manquant
   }
 
-  // Si tout est bon, exécute la logique du formulaire
   let topMerchants = [];
   let maybeMerchants = [];
+
+
+  
+
+
 
   if (USE_ALL_MERCHANTS) {
     topMerchants = ["eBay", "SportDecouverte", "EasyGift", "BookVillage"];

@@ -175,6 +175,7 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
     const products = suggestions[merchant];
     if (products && products.length > 0) {
       anyProductFound = true;
+
       const section = document.createElement("div");
       section.className = "merchant-section";
 
@@ -190,6 +191,14 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
         const score = product.matchingScore || 30;
         const card = document.createElement("div");
         card.className = "card";
+
+        // ✅ Ajout des données pour la comparaison
+        card.setAttribute("data-title", product.title);
+        card.setAttribute("data-link", product.link);
+        card.setAttribute("data-image", product.image);
+        card.setAttribute("data-price", product.price);
+        card.setAttribute("data-description", product.description || "");
+
         card.innerHTML = `
           <div class="score-badge">Matching : ${Math.round(score)}%</div>
           <img src="${product.image}" alt="${product.title}">
@@ -198,12 +207,10 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
           <a href="${product.link}" target="_blank">Consulter</a><br>
           <button class="btn btn-sm btn-outline-primary mt-2 compare-btn">Comparer</button>
         `;
-        card.dataset.title = product.title;
-        card.dataset.link = product.link;
-        card.dataset.image = product.image;
-        card.dataset.price = product.price;
-        card.dataset.description = product.description || "";
+
+        // ✅ Ajout de l'événement de comparaison
         card.querySelector(".compare-btn").addEventListener("click", () => handleCompareClick(card));
+
         carousel.appendChild(card);
       });
 
@@ -216,6 +223,7 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
     messageBox.textContent = "Aucun cadeau ne correspond à vos critères.";
   }
 }
+
 
 // --- Comparaison produits ---
 function handleCompareClick(card) {

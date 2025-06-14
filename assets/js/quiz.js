@@ -1,3 +1,7 @@
+document.addEventListener("DOMContentLoaded", () => {
+  const loader = document.getElementById("loader");
+  if (loader) loader.style.display = "none"; // Masquer le loader à l'ouverture
+});
 // --- Configuration ---
 const USE_ALL_MERCHANTS = true; // 🔁 Remets sur false pour réactiver le drag & drop plus tard
 

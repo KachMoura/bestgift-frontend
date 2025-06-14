@@ -320,9 +320,9 @@ document.getElementById("resetCompareBtn").addEventListener("click", function ()
 document.getElementById("resetBtn").addEventListener("click", function () {
   document.getElementById("quizForm").reset();
   document.getElementById("minBudgetOutput").textContent = "0 €";
-  document.getElementById("maxBudgetOutput").textContent = "50 €";
+  document.getElementById("maxBudgetOutput").textContent = "100 €";
   document.getElementById("minBudget").value = 0;
-  document.getElementById("maxBudget").value = 50;
+  document.getElementById("maxBudget").value = 100;
   const zones = ["topMerchants", "maybeMerchants", "avoidMerchants", "merchantPool"];
   zones.forEach(zoneId => {
     const zone = document.getElementById(zoneId);

@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     data-item-id="${id}"
                     data-item-name="${title}"
                     data-item-price="${price}"
-                    data-item-url="https://toto.html"
+                    data-item-url="https://www.bestgift.fr/product.html?id=${id}"
                     data-item-description="${description}"
                     data-item-image="${image}"
                     data-item-currency="eur"

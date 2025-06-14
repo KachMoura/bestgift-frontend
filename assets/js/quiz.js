@@ -1,7 +1,6 @@
 // --- Configuration ---
 const USE_ALL_MERCHANTS = true; // 🔁 Remets sur false pour réactiver le drag & drop plus tard
 
-
 // --- Drag & drop merchants ---
 function allowDrop(ev) {
   ev.preventDefault();
@@ -59,9 +58,16 @@ const apiBaseUrl = window.location.hostname.includes("localhost")
 
 let selectedProductsForCompare = [];
 
+// ✅ Masquer le loader au chargement de la page
+document.addEventListener("DOMContentLoaded", function () {
+  updateDoubleRange();
+  const loader = document.getElementById("loader");
+  if (loader) loader.style.display = "none";
+});
+
 form.addEventListener("submit", function (e) {
   e.preventDefault();
-  
+
   suggestionsContainer.innerHTML = "";
   aiResultBox.innerHTML = "";
   compareList.innerHTML = "";
@@ -70,37 +76,24 @@ form.addEventListener("submit", function (e) {
   messageBox.textContent = "";
   loader.style.display = "block";
 
-
-  // Vérifie si le genre ou le profil sont non sélectionnés
   if (!form.gender.value || !form.interests.value) {
     let missingField = '';
-
-    // Détermine quel champ est manquant
     if (!form.gender.value) {
       missingField = 'genre';
-      document.getElementById('step-gender').scrollIntoView({ behavior: 'smooth' }); // Scroll jusqu'au champ genre
+      document.getElementById('step-gender').scrollIntoView({ behavior: 'smooth' });
     } else if (!form.interests.value) {
       missingField = 'profil';
-      document.getElementById('step-profile').scrollIntoView({ behavior: 'smooth' }); // Scroll jusqu'au champ profil
+      document.getElementById('step-profile').scrollIntoView({ behavior: 'smooth' });
     }
-
-    // Affiche la pop-up de message
     alert(`Merci de renseigner votre ${missingField}`);
-
-    return; // Arrête le processus si un champ est manquant
+    return;
   }
 
   let topMerchants = [];
   let maybeMerchants = [];
 
-
-  
-
-
-
   if (USE_ALL_MERCHANTS) {
     topMerchants = ["eBay", "SportDecouverte", "EasyGift", "BookVillage"];
-    maybeMerchants = [];
   } else {
     topMerchants = getMerchantList("topMerchants");
     maybeMerchants = getMerchantList("maybeMerchants");
@@ -140,19 +133,14 @@ form.addEventListener("submit", function (e) {
     .then(result => {
       loader.style.display = "none";
       const hasSuggestions = result?.suggestions && Object.keys(result.suggestions).length > 0;
-
-      // Cas spécial : profil lecteur → forcer l'affichage de BookVillage si dispo
       if (data.interests.includes("book") && result.suggestions?.BookVillage?.length > 0) {
         data.merchants.top = [...new Set([...(data.merchants.top || []), "BookVillage"])];
       }
-
       if (!hasSuggestions) {
         messageBox.textContent = "Aucun cadeau ne correspond à vos critères pour le moment.";
         return;
       }
-
       displaySuggestionsByMerchant(result.suggestions, data.merchants);
-
       setTimeout(() => {
         document.getElementById("suggestionsContainer").scrollIntoView({ behavior: "smooth" });
       }, 300);

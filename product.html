@@ -111,12 +111,10 @@
       }
 
       let productId = getQueryParam("id");
-
       if (!productId) {
         const fromSession = sessionStorage.getItem("lastViewedProductId");
         if (fromSession) productId = fromSession;
       }
-
       if (!productId) {
         container.innerHTML = "<p class='text-danger'>Produit introuvable.</p>";
         return;
@@ -144,6 +142,7 @@
               <h2>${title}</h2>
               <p>${description}</p>
               <p class="font-weight-bold">Prix : ${price} €</p>
+              <p class="snipcart-price" style="display:none;">${price}</p>
               <button
                 class="btn btn-primary snipcart-add-item"
                 data-item-id="${id}"

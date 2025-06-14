@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const priceMinDisplay = document.getElementById("price-min-val");
   const priceMaxDisplay = document.getElementById("price-max-val");
 
-  const baseApi = "https://bestgift-backend.onrender.com";
+  const baseApi = "https://bestgift-backend.onrender.com"; // ✅ Corrigé
 
   function escapeHTML(str) {
     if (!str || typeof str !== "string") return "";
@@ -30,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((res) => res.json())
       .then((products) => {
         container.innerHTML = "";
-
         const gender = genderFilter.value.toLowerCase();
         const profile = profileFilter.value.toLowerCase();
         const priceMin = parseFloat(priceMinInput.value);
@@ -42,9 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const price = parseFloat(p.price);
           const matchesGender = !gender || genderField === gender;
           const matchesProfile = !profile || profileField.includes(profile);
-          const matchesPrice =
-            !isNaN(priceMin) && !isNaN(priceMax) && price >= priceMin && price <= priceMax;
-
+          const matchesPrice = !isNaN(priceMin) && !isNaN(priceMax) && price >= priceMin && price <= priceMax;
           return matchesGender && matchesProfile && matchesPrice;
         });
 
@@ -59,7 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
           const image = escapeHTML(p.image_url || "");
           const price = parseFloat(p.price).toFixed(2);
           const id = escapeHTML(p.id ? String(p.id) : title);
-
           const card = document.createElement("div");
           card.className = "col-sm-6 col-md-4 col-lg-3";
           card.innerHTML = `
@@ -68,14 +64,13 @@ document.addEventListener("DOMContentLoaded", () => {
               <div class="detail-box">
                 <h6 class="title">${title}</h6>
                 <p class="price">Prix : ${price} €</p>
-                <p class="snipcart-price" style="display:none;">${price}</p>
                 <div class="d-flex justify-content-center gap-2">
                   <button
                     class="btn btn-sm btn-primary snipcart-add-item mr-2"
                     data-item-id="${id}"
                     data-item-name="${title}"
                     data-item-price="${price}"
-                    data-item-url="https://bestgift.fr/shop.html?id=${id}"
+                    data-item-url="https://bestgift-frontend.onrender.com/shop.html"
                     data-item-description="${description}"
                     data-item-image="${image}"
                     data-item-currency="eur"
@@ -98,9 +93,11 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
+  // Initialisation
   updatePriceDisplays();
   loadCatalog();
 
+  // Rafraîchir si filtres changent
   [genderFilter, profileFilter, priceMinInput, priceMaxInput].forEach((el) =>
     el.addEventListener("change", () => {
       updatePriceDisplays();

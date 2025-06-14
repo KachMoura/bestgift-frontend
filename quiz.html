@@ -3,24 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title> BestGift - Trouvez le cadeau parfait</title>
+  <title> 🎁 BestGift - Trouvez le cadeau parfait</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <link rel="stylesheet" href="../assets/css/quiz.css" />
-  <style>
-    #loader {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background-color: rgba(255,255,255,0.8);
-      z-index: 9999;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
-  </style>
 </head>
 <body>
   <header>
@@ -68,14 +54,46 @@
       <div class="form-section mt-4" id="step-profile">
         <label><strong>Quel est son profil ?</strong></label>
         <div class="profile-options">
-          <label class="profile-card"><input type="radio" name="interests" value="tech" /><i class="fas fa-microchip"></i><span>Geek</span></label>
-          <label class="profile-card"><input type="radio" name="interests" value="sport" /><i class="fas fa-running"></i><span>Sportif</span></label>
-          <label class="profile-card"><input type="radio" name="interests" value="maison" /><i class="fas fa-home"></i><span>Déco</span></label>
-          <label class="profile-card"><input type="radio" name="interests" value="game" /><i class="fas fa-gamepad"></i><span>Joueur</span></label>
-          <label class="profile-card"><input type="radio" name="interests" value="beauty" /><i class="fas fa-magic"></i><span>Beauté</span></label>
-          <label class="profile-card"><input type="radio" name="interests" value="ecolo" /><i class="fas fa-seedling"></i><span>Écolo</span></label>
-          <label class="profile-card"><input type="radio" name="interests" value="book" /><i class="fas fa-book"></i><span>Lecteur</span></label>
-          <label class="profile-card"><input type="radio" name="interests" value="voyageur" /><i class="fas fa-plane"></i><span>Voyageur</span></label>
+          <label class="profile-card">
+            <input type="radio" name="interests" value="tech" />
+            <i class="fas fa-microchip"></i>
+            <span>Geek</span>
+          </label>
+          <label class="profile-card">
+            <input type="radio" name="interests" value="sport" />
+            <i class="fas fa-running"></i>
+            <span>Sportif</span>
+          </label>
+          <label class="profile-card">
+            <input type="radio" name="interests" value="maison" />
+            <i class="fas fa-home"></i>
+            <span>Déco</span>
+          </label>
+          <label class="profile-card">
+            <input type="radio" name="interests" value="game" />
+            <i class="fas fa-gamepad"></i>
+            <span>Joueur</span>
+          </label>
+          <label class="profile-card">
+            <input type="radio" name="interests" value="beauty" />
+            <i class="fas fa-magic"></i>
+            <span>Beauté</span>
+          </label>
+          <label class="profile-card">
+            <input type="radio" name="interests" value="ecolo" />
+            <i class="fas fa-seedling"></i>
+            <span>Écolo</span>
+          </label>
+          <label class="profile-card">
+            <input type="radio" name="interests" value="book" />
+            <i class="fas fa-book"></i>
+            <span>Lecteur</span>
+          </label>
+          <label class="profile-card">
+            <input type="radio" name="interests" value="voyageur" />
+            <i class="fas fa-plane"></i>
+            <span>Voyageur</span>
+          </label>
         </div>
       </div>
 
@@ -102,9 +120,18 @@
       <!-- Préférences -->
       <div class="form-section preferences-box" id="step-preferences">
         <h3>Préférences :</h3>
-        <label class="preference-item"><input type="checkbox" name="preferences" value="promo" /><span>En promotion</span></label>
-        <label class="preference-item"><input type="checkbox" name="preferences" value="compact" /><span>Petit format</span></label>
-        <label class="preference-item"><input type="checkbox" name="preferences" value="fast_delivery" /><span>Livraison rapide</span></label>
+        <label class="preference-item">
+          <input type="checkbox" name="preferences" value="promo" />
+          <span>En promotion</span>
+        </label>
+        <label class="preference-item">
+          <input type="checkbox" name="preferences" value="compact" />
+          <span>Petit format</span>
+        </label>
+        <label class="preference-item">
+          <input type="checkbox" name="preferences" value="fast_delivery" />
+          <span>Livraison rapide</span>
+        </label>
       </div>
 
       <!-- Boutons -->
@@ -118,7 +145,18 @@
     </form>
 
     <!-- Loader centré -->
-    <div id="loader">
+    <div id="loader" style="
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background-color: rgba(255,255,255,0.8);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    ">
       <div class="spinner-border text-primary" role="status" style="width: 3.5rem; height: 3.5rem;">
         <span class="sr-only">Chargement...</span>
       </div>
@@ -165,3 +203,4 @@
   </script>
 </body>
 </html>
+

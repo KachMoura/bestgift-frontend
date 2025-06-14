@@ -87,7 +87,7 @@
   <section class="product-detail">
     <div class="container">
       <div id="product-container" class="product-card row">
-        <!-- Produit chargé ici -->
+        <!-- Produit chargé dynamiquement -->
       </div>
     </div>
   </section>
@@ -100,6 +100,7 @@
 
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const container = document.getElementById("product-container");
@@ -111,7 +112,6 @@
       }
 
       let productId = getQueryParam("id");
-
       if (!productId) {
         const fromSession = sessionStorage.getItem("lastViewedProductId");
         if (fromSession) productId = fromSession;
@@ -143,13 +143,13 @@
             <div class="col-md-6">
               <h2>${title}</h2>
               <p>${description}</p>
-              <p class="font-weight-bold">Prix : ${price} €</p>
+              <p class="snipcart-price">${price}</p>
               <button
                 class="btn btn-primary snipcart-add-item"
                 data-item-id="${id}"
                 data-item-name="${title}"
                 data-item-price="${price}"
-                data-item-url="https://bestgift.fr/product.html?id=${id}"
+                data-item-url="https://www.bestgift.fr/product.html?id=${id}"
                 data-item-description="${description}"
                 data-item-image="${image}"
                 data-item-currency="eur"

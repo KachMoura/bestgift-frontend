@@ -292,6 +292,8 @@ header .nav-item.active .nav-link {
   font-weight: bold;
   border-radius: 6px;
 }
+
+/* === STYLE DU TABLEAU IA AMÉLIORÉ === */
 .ai-analysis-box {
   width: 100%;
   max-width: 1000px;
@@ -302,6 +304,7 @@ header .nav-item.active .nav-link {
   border: 1px solid #ccc;
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
+
 .ai-reco-box {
   width: 100%;
   max-width: 1000px;
@@ -311,29 +314,61 @@ header .nav-item.active .nav-link {
   border-left: 6px solid #2ecc71;
   border-radius: 8px;
 }
+
 .ai-reco-box h5 {
   margin-top: 0;
   color: #27ae60;
 }
+
 .ai-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 15px;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 14px;
 }
+
 .ai-table th {
-  background-color: #3498db;
+  background-color: #2c3e50;
   color: white;
-  padding: 10px;
-  text-align: left;
+  padding: 12px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  border: 1px solid #ccc;
 }
+
 .ai-table td {
   background: #fdfdfd;
-  padding: 10px;
+  padding: 10px 12px;
+  text-align: center;
+  color: #333;
+  font-size: 14px;
   border: 1px solid #ddd;
 }
+
+.ai-table td:first-child {
+  font-weight: bold;
+  color: #3498db;
+  background-color: #f4f9ff;
+}
+
 .ai-table tr:nth-child(even) td {
   background: #f4f9ff;
 }
+
+.ai-table tr:hover td {
+  background-color: #eef6fb;
+}
+
+
+
+
+
+
+
+
+
 
 .compare-card {
   background-color: #ffffff;

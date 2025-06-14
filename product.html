@@ -3,77 +3,170 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fiche Produit | BestGift</title>
+  <title>Détail du Produit | BestGift</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.6.1/default/snipcart.css" />
+  <script async src="https://cdn.snipcart.com/themes/v3.6.1/default/snipcart.js"></script>
   <style>
-    body { font-family: sans-serif; padding: 2rem; background: #f4f4f4; }
-    .product { background: #fff; padding: 2rem; border-radius: 8px; max-width: 600px; margin: auto; }
-    img { max-width: 100%; height: auto; border-radius: 6px; }
-    .snipcart-price { font-weight: bold; margin-top: 10px; }
-    button { margin-top: 15px; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f8;
+    }
+    header {
+      background-color: #3498db;
+      padding: 15px 0;
+    }
+    header .navbar-brand {
+      display: flex;
+      align-items: center;
+      color: #fff;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    header .navbar-brand img {
+      height: 40px;
+      margin-right: 10px;
+    }
+    header .nav-link {
+      color: #fff !important;
+    }
+    .product-detail {
+      padding: 50px 0;
+    }
+    .product-card {
+      background: white;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+    .product-card img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    footer {
+      background-color: #343a40;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
+  <header>
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+          <img src="../assets/images/favicon.png" alt="Logo cadeau" />
+          <span>BestGift</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+            <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+            <li class="nav-item"><a class="nav-link" href="shop.html">Notre Catalogue</a></li>
+            <li class="nav-item"><a class="nav-link" href="why.html">Pourquoi BestGift ?</a></li>
+            <li class="nav-item"><a class="nav-link" href="contact.html">À propos</a></li>
+            <li class="nav-item">
+              <a href="#" class="snipcart-checkout nav-link">
+                <i class="fas fa-shopping-cart"></i> Panier
+                <span class="snipcart-items-count"></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </header>
 
-  <div class="product" id="product-container">
-    <p>Chargement du produit...</p>
-  </div>
+  <section class="product-detail">
+    <div class="container">
+      <div id="product-container" class="product-card row">
+        <!-- Produit chargé ici -->
+      </div>
+    </div>
+  </section>
 
-  <!-- Snipcart -->
-  <script async src="https://cdn.snipcart.com/themes/v3.6.1/default/snipcart.js"></script>
-  <div hidden id="snipcart" data-api-key="MTA0ZTc0NzMtMDJkYy00MGIwLWI0MTQtNGJjNzc3OGEwN2QzNjM4ODMyNTAxNzM5NjAxMTAy" data-config-modal-style="side"></div>
+  <footer>
+    <div class="container">
+      <p>© 2025 BestGift. Tous droits réservés.</p>
+    </div>
+  </footer>
 
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const container = document.getElementById("product-container");
       const baseApi = "https://bestgift-backend.onrender.com";
 
-      const params = new URLSearchParams(window.location.search);
-      const id = params.get("id");
+      function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+      }
 
-      if (!id) {
-        container.innerHTML = "<p class='text-danger'>ID produit manquant dans l’URL.</p>";
+      let productId = getQueryParam("id");
+
+      if (!productId) {
+        const fromSession = sessionStorage.getItem("lastViewedProductId");
+        if (fromSession) productId = fromSession;
+      }
+
+      if (!productId) {
+        container.innerHTML = "<p class='text-danger'>Produit introuvable.</p>";
         return;
       }
 
-      fetch(`${baseApi}/api/catalogue/${id}`)
+      fetch(`${baseApi}/api/catalogue/${productId}`)
         .then(res => res.json())
         .then(product => {
           if (!product || !product.title) {
-            container.innerHTML = "<p class='text-danger'>Produit introuvable.</p>";
+            container.innerHTML = "<p class='text-danger'>Produit non trouvé.</p>";
             return;
           }
 
-          const title = product.title;
-          const description = product.description || "Produit BestGift";
           const image = product.image_url || "";
+          const title = product.title;
+          const description = product.description || "Aucune description disponible.";
           const price = parseFloat(product.price).toFixed(2);
+          const id = product.id || title;
 
           container.innerHTML = `
-            <h1>${title}</h1>
-            <img src="${image}" alt="${title}" />
-            <p>${description}</p>
-            <p class="snipcart-price">${price}</p>
-
-            <button
-              class="snipcart-add-item"
-              data-item-id="${id}"
-              data-item-name="${title}"
-              data-item-price="${price}"
-              data-item-url="https://www.bestgift.fr/product.html?id=${id}"
-              data-item-description="${description}"
-              data-item-image="${image}"
-              data-item-currency="eur"
-            >
-              Ajouter au panier
-            </button>
+            <div class="col-md-6">
+              <img src="${image}" alt="${title}" class="img-fluid" />
+            </div>
+            <div class="col-md-6">
+              <h2>${title}</h2>
+              <p>${description}</p>
+              <p class="font-weight-bold">Prix : ${price} €</p>
+              <button
+                class="btn btn-primary snipcart-add-item"
+                data-item-id="${id}"
+                data-item-name="${title}"
+                data-item-price="${price}"
+                data-item-url="https://bestgift.fr/product.html?id=${id}"
+                data-item-description="${description}"
+                data-item-image="${image}"
+                data-item-currency="eur"
+              >
+                Ajouter au panier
+              </button>
+              <a href="shop.html" class="btn btn-link mt-3 d-block">← Retour au catalogue</a>
+            </div>
           `;
         })
         .catch(err => {
-          console.error("Erreur produit :", err.message);
+          console.error("[product.html] Erreur :", err.message);
           container.innerHTML = "<p class='text-danger'>Erreur lors du chargement du produit.</p>";
         });
     });
   </script>
+
+  <div hidden id="snipcart" data-api-key="MTA0ZTc0NzMtMDJkYy00MGIwLWI0MTQtNGJjNzc3OGEwN2QzNjM4ODMyNTAxNzM5NjAxMTAy" data-config-modal-style="side"></div>
 </body>
 </html>

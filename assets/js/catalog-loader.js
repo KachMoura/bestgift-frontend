@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     data-item-id="${id}"
                     data-item-name="${title}"
                     data-item-price="${price}"
-                    data-item-url="https://bestgift-frontend.onrender.com/shop.html"
+                    data-item-url="https://bestgift.fr/shop.html?id=${id}"
                     data-item-description="${description}"
                     data-item-image="${image}"
                     data-item-currency="eur"

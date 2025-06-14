@@ -349,7 +349,7 @@ header .nav-item.active .nav-link {
 
 .ai-table td:first-child {
   font-weight: bold;
-  color: #000000;
+  color: #3498db;
   background-color: #f4f9ff;
 }
 
@@ -360,7 +360,11 @@ header .nav-item.active .nav-link {
 .ai-table tr:hover td {
   background-color: #eef6fb;
 }
-
+.ai-table th:nth-child(2),
+.ai-table th:nth-child(3) {
+  color: #1e6fbd; /* bleu doux */
+  font-weight: bold;
+}
 
 
 

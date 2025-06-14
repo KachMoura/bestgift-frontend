@@ -3,120 +3,203 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BestGift - Trouvez le cadeau parfait</title>
+  <title> 🎁 BestGift - Trouvez le cadeau parfait</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <link rel="stylesheet" href="../assets/css/quiz.css" />
-  <style>
-    #loader {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(255, 255, 255, 0.9);
-      z-index: 9999;
-      justify-content: center;
-      align-items: center;
-    }
-    .spinner-border {
-      width: 4rem;
-      height: 4rem;
-    }
-  </style>
 </head>
 <body>
-  <!-- Loader -->
-  <div id="loader">
-    <div class="spinner-border text-primary" role="status">
-      <span class="sr-only">Chargement...</span>
+  <header>
+    <div class="menu-container">
+      <a href="index.html" class="logo-link">
+        <img src="../assets/images/favicon.png" alt="Logo" class="logo-img" />
+        <span class="logo-text">BestGift</span>
+      </a>
+      <nav class="menu-links">
+        <a href="index.html">Accueil</a>
+        <a href="quiz.html" class="active">Quiz</a>
+        <a href="shop.html">Notre catalogue</a>
+        <a href="why.html">Pourquoi BestGift ?</a>
+        <a href="contact.html">À propos</a>
+      </nav>
     </div>
-  </div>
+  </header>
 
-  <!-- Contenu principal -->
-  <div class="container mt-5">
-    <h1 class="text-center mb-4">🎁 Trouvez le cadeau idéal</h1>
+  <main class="container mt-5">
+    <h1 class="text-center mb-4">Moteur à cadeaux BestGift</h1>
     <form id="quizForm">
-      <!-- Étape 1 : Genre -->
-      <div id="step-gender" class="form-group">
-        <label for="gender">Pour qui est le cadeau ?</label>
-        <select id="gender" name="gender" class="form-control" required>
-          <option value="">-- Sélectionnez --</option>
-          <option value="man">Homme</option>
-          <option value="woman">Femme</option>
-          <option value="child">Enfant</option>
-        </select>
-      </div>
-
-      <!-- Étape 2 : Profil -->
-      <div id="step-profile" class="form-group">
-        <label for="interests">Quel est son profil ?</label>
-        <select id="interests" name="interests" class="form-control" required>
-          <option value="">-- Sélectionnez --</option>
-          <option value="sport">Sportif</option>
-          <option value="beauty">Beauty Addict</option>
-          <option value="geek">Geek</option>
-          <option value="eco">Écolo</option>
-          <option value="gourmet">Gourmand</option>
-          <option value="traveler">Voyageur</option>
-          <option value="book">Lecteur</option>
-        </select>
-      </div>
-
-      <!-- Étape 3 : Budget -->
-      <div class="form-group">
-        <label>Budget</label>
-        <div class="d-flex align-items-center">
-          <span id="minBudgetOutput" class="mr-2">0 €</span>
-          <input type="range" id="minBudget" min="0" max="500" value="0" class="form-control-range mr-2" />
-          <input type="range" id="maxBudget" min="0" max="500" value="100" class="form-control-range ml-2" />
-          <span id="maxBudgetOutput" class="ml-2">100 €</span>
-        </div>
-        <div id="rangeTrack" style="height: 4px; background: #007bff; margin-top: 8px;"></div>
-      </div>
-
-      <!-- Étape 4 : Préférences -->
-      <div class="form-group">
-        <label>Préférences (optionnel)</label><br>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" name="preferences" value="eco" id="pref1">
-          <label class="form-check-label" for="pref1">Écologique</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" name="preferences" value="local" id="pref2">
-          <label class="form-check-label" for="pref2">Fabriqué en France</label>
+      <!-- Pour qui ? -->
+      <div class="form-section" id="step-gender">
+        <label><strong>Pour qui est le cadeau ?</strong></label>
+        <div class="gender-options">
+          <label class="gender-card">
+            <input type="radio" name="gender" value="Elle" />
+            <i class="fas fa-female"></i>
+            <span>Elle</span>
+          </label>
+          <label class="gender-card">
+            <input type="radio" name="gender" value="Lui" />
+            <i class="fas fa-male"></i>
+            <span>Lui</span>
+          </label>
+          <label class="gender-card">
+            <input type="radio" name="gender" value="Enfant" />
+            <i class="fas fa-child"></i>
+            <span>Enfant</span>
+          </label>
         </div>
       </div>
 
-      <!-- Étape 5 : Exclusions -->
-      <div class="form-group">
-        <label for="excludedGifts">Exclure certains cadeaux ? (ex: parfum, alcool...)</label>
-        <input type="text" id="excludedGifts" name="excludedGifts" class="form-control" placeholder="Séparés par des virgules" />
+      <!-- Profil -->
+      <div class="form-section mt-4" id="step-profile">
+        <label><strong>Quel est son profil ?</strong></label>
+        <div class="profile-options">
+          <label class="profile-card">
+            <input type="radio" name="interests" value="tech" />
+            <i class="fas fa-microchip"></i>
+            <span>Geek</span>
+          </label>
+          <label class="profile-card">
+            <input type="radio" name="interests" value="sport" />
+            <i class="fas fa-running"></i>
+            <span>Sportif</span>
+          </label>
+          <label class="profile-card">
+            <input type="radio" name="interests" value="maison" />
+            <i class="fas fa-home"></i>
+            <span>Déco</span>
+          </label>
+          <label class="profile-card">
+            <input type="radio" name="interests" value="game" />
+            <i class="fas fa-gamepad"></i>
+            <span>Joueur</span>
+          </label>
+          <label class="profile-card">
+            <input type="radio" name="interests" value="beauty" />
+            <i class="fas fa-magic"></i>
+            <span>Beauté</span>
+          </label>
+          <label class="profile-card">
+            <input type="radio" name="interests" value="ecolo" />
+            <i class="fas fa-seedling"></i>
+            <span>Écolo</span>
+          </label>
+          <label class="profile-card">
+            <input type="radio" name="interests" value="book" />
+            <i class="fas fa-book"></i>
+            <span>Lecteur</span>
+          </label>
+          <label class="profile-card">
+            <input type="radio" name="interests" value="voyageur" />
+            <i class="fas fa-plane"></i>
+            <span>Voyageur</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Budget -->
+      <div class="budget-range-wrapper" id="step-budget">
+        <label><strong>Quel est votre budget ?</strong></label>
+        <div class="budget-labels">
+          <span>Min : <span id="minBudgetOutput">0€</span></span>
+          <span>Max : <span id="maxBudgetOutput">100€</span></span>
+        </div>
+        <div class="slider-container">
+          <input type="range" id="minBudget" name="minBudget" min="0" max="500" value="0" step="5" oninput="updateDoubleRange()">
+          <input type="range" id="maxBudget" name="maxBudget" min="0" max="500" value="100" step="5" oninput="updateDoubleRange()">
+          <div class="range-track" id="rangeTrack"></div>
+        </div>
+      </div>
+
+      <!-- Exclusions -->
+      <div class="form-section" id="step-excluded">
+        <label for="excludedGifts"><strong>Exclure certains cadeaux ? (ex: parfum, montre...)</strong></label>
+        <input type="text" name="excludedGifts" placeholder="ex : montre, parfum, bougie..." class="styled-input" />
+      </div>
+
+      <!-- Préférences -->
+      <div class="form-section preferences-box" id="step-preferences">
+        <h3>Préférences (optionnel) :</h3>
+        <label class="preference-item">
+          <input type="checkbox" name="preferences" value="promo" />
+          <span>En promotion</span>
+        </label>
+        <label class="preference-item">
+          <input type="checkbox" name="preferences" value="compact" />
+          <span>Petit format</span>
+        </label>
+        <label class="preference-item">
+          <input type="checkbox" name="preferences" value="fast_delivery" />
+          <span>Livraison rapide</span>
+        </label>
       </div>
 
       <!-- Boutons -->
-      <button type="submit" class="btn btn-primary btn-block">Voir les suggestions</button>
-      <button type="button" id="resetBtn" class="btn btn-secondary btn-block mt-2">Réinitialiser</button>
+      <div class="button-wrapper">
+        <button type="submit" class="btn btn-primary">Voir les suggestions</button>
+        <div class="button-group">
+          <button type="button" class="btn btn-secondary" onclick="window.location.href='index.html'">Retour</button>
+          <button type="button" id="resetBtn" class="btn btn-secondary">Réinitialiser</button>
+        </div>
+      </div>
     </form>
 
-    <!-- Message -->
-    <p id="messageBox" class="text-danger mt-3"></p>
-
-    <!-- Résultats -->
-    <div id="suggestionsContainer" class="mt-4"></div>
-
-    <!-- Comparateur -->
-    <div id="compareSection" style="display:none;" class="mt-5">
-      <h3>Comparer deux produits</h3>
-      <div id="compareList" class="d-flex flex-wrap"></div>
-      <button id="compareBtn" class="btn btn-info mt-3" disabled>Comparer avec l'IA</button>
-      <button id="resetCompareBtn" class="btn btn-outline-danger mt-3 ml-2">Réinitialiser</button>
-      <div id="aiComparisonResult" class="mt-4"></div>
+    <!-- Loader centré -->
+    <div id="loader" style="
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background-color: rgba(255,255,255,0.8);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    ">
+      <div class="spinner-border text-primary" role="status" style="width: 3.5rem; height: 3.5rem;">
+        <span class="sr-only">Chargement...</span>
+      </div>
+      <p class="mt-3" style="color: #3498db; font-weight: bold; font-size: 1.2rem;">Recherche de cadeaux en cours...</p>
     </div>
-  </div>
 
-  <!-- Scripts -->
-  <script src="quiz.js"></script>
+    <div id="messageBox" style="text-align:center; font-weight:bold; color:#e74c3c; margin-top:20px;"></div>
+    <div id="suggestionsContainer" class="suggestions"></div>
+    <div id="compareSection" style="margin-top: 40px; display: none;">
+      <h3>Comparer des produits avec l'IA</h3>
+      <p>Sélectionnez deux produits dans les résultats ci-dessus :</p>
+      <div id="compareList" style="display:flex; flex-wrap:wrap; gap:20px;"></div>
+      <div class="compare-buttons mt-3">
+        <button id="compareBtn" class="btn btn-info btn-sm" disabled>Analyser avec l'IA</button>
+        <button id="resetCompareBtn" class="btn btn-secondary btn-sm">Réinitialiser la sélection</button>
+      </div>
+    </div>
+    <div id="aiComparisonResult" style="margin-top: 30px;"></div>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/quiz.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const steps = [
+        { name: "gender", next: "#step-profile" },
+        { name: "interests", next: "#step-budget" }
+      ];
+      steps.forEach(({ name, next }) => {
+        document.querySelectorAll(`input[name="${name}"]`).forEach((input) => {
+          input.addEventListener("change", () => {
+            setTimeout(() => {
+              document.querySelector(next).scrollIntoView({ behavior: "smooth" });
+            }, 200);
+          });
+        });
+      });
+
+      // Masquer le loader à l'ouverture de la page
+      const loader = document.getElementById("loader");
+      if (loader) loader.style.display = "none";
+    });
+  </script>
 </body>
 </html>

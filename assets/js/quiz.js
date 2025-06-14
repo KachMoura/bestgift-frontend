@@ -224,7 +224,7 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
 // --- Comparaison produits ---
 function handleCompareClick(card) {
   if (selectedProductsForCompare.length >= 2) {
-    alert("Vous ne pouvez comparer que 2 produits. Cliquez sur réinitialiser si besoin");
+    alert("Vous ne pouvez comparer que 2 produits. Cliquez sur réinitialiser la sélection");
     return;
   }
   compareSection.style.display = "block";

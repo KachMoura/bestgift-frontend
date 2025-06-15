@@ -1,25 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
   const loader = document.getElementById("loader");
-  if (loader) loader.style.display = "none";
-  updateDoubleRange();
+  if (loader) loader.style.display = "none"; // Masquer le loader à l'ouverture
 });
+// --- Configuration ---
+const USE_ALL_MERCHANTS = true; // 🔁 Remets sur false pour réactiver le drag & drop plus tard
 
-const USE_ALL_MERCHANTS = true;
-const form = document.getElementById("quizForm");
-const suggestionsContainer = document.getElementById("suggestionsContainer");
-const loader = document.getElementById("loader");
-const messageBox = document.getElementById("messageBox");
-const compareSection = document.getElementById("compareSection");
-const compareList = document.getElementById("compareList");
-const compareBtn = document.getElementById("compareBtn");
-const aiResultBox = document.getElementById("aiComparisonResult");
 
-const apiBaseUrl = window.location.hostname.includes("localhost")
-  ? "http://localhost:3000"
-  : "https://bestgift-backend.onrender.com";
-
-let selectedProductsForCompare = [];
-
+// --- Drag & drop merchants ---
 function allowDrop(ev) {
   ev.preventDefault();
 }
@@ -37,13 +24,14 @@ function drop(ev) {
 function getMerchantList(id) {
   return Array.from(document.querySelectorAll(`#${id} li`)).map(li => li.id);
 }
+
+// --- Budget sliders ---
 function updateDoubleRange() {
   const minSlider = document.getElementById("minBudget");
   const maxSlider = document.getElementById("maxBudget");
   const minOutput = document.getElementById("minBudgetOutput");
   const maxOutput = document.getElementById("maxBudgetOutput");
   const track = document.getElementById("rangeTrack");
-
   let minVal = parseInt(minSlider.value);
   let maxVal = parseInt(maxSlider.value);
   if (minVal > maxVal) {
@@ -51,18 +39,33 @@ function updateDoubleRange() {
     minSlider.value = minVal;
     maxSlider.value = maxVal;
   }
-
   minOutput.textContent = `${minVal}€`;
   maxOutput.textContent = `${maxVal}€`;
-
   const percentMin = (minVal / 500) * 100;
   const percentMax = (maxVal / 500) * 100;
   track.style.left = `${percentMin}%`;
   track.style.width = `${percentMax - percentMin}%`;
 }
 
+// --- Main logic ---
+const form = document.getElementById("quizForm");
+const suggestionsContainer = document.getElementById("suggestionsContainer");
+const loader = document.getElementById("loader");
+const messageBox = document.getElementById("messageBox");
+const compareSection = document.getElementById("compareSection");
+const compareList = document.getElementById("compareList");
+const compareBtn = document.getElementById("compareBtn");
+const aiResultBox = document.getElementById("aiComparisonResult");
+
+const apiBaseUrl = window.location.hostname.includes("localhost")
+  ? "http://localhost:3000"
+  : "https://bestgift-backend.onrender.com";
+
+let selectedProductsForCompare = [];
+
 form.addEventListener("submit", function (e) {
   e.preventDefault();
+  
   suggestionsContainer.innerHTML = "";
   aiResultBox.innerHTML = "";
   compareList.innerHTML = "";
@@ -71,18 +74,37 @@ form.addEventListener("submit", function (e) {
   messageBox.textContent = "";
   loader.style.display = "block";
 
+
+  // Vérifie si le genre ou le profil sont non sélectionnés
   if (!form.gender.value || !form.interests.value) {
-    const missingField = !form.gender.value ? "genre" : "profil";
-    document.getElementById(`step-${missingField}`).scrollIntoView({ behavior: "smooth" });
+    let missingField = '';
+
+    // Détermine quel champ est manquant
+    if (!form.gender.value) {
+      missingField = 'genre';
+      document.getElementById('step-gender').scrollIntoView({ behavior: 'smooth' }); // Scroll jusqu'au champ genre
+    } else if (!form.interests.value) {
+      missingField = 'profil';
+      document.getElementById('step-profile').scrollIntoView({ behavior: 'smooth' }); // Scroll jusqu'au champ profil
+    }
+
+    // Affiche la pop-up de message
     alert(`Merci de renseigner votre ${missingField}`);
-    return;
+
+    return; // Arrête le processus si un champ est manquant
   }
 
   let topMerchants = [];
   let maybeMerchants = [];
 
+
+  
+
+
+
   if (USE_ALL_MERCHANTS) {
     topMerchants = ["eBay", "SportDecouverte", "EasyGift", "BookVillage"];
+    maybeMerchants = [];
   } else {
     topMerchants = getMerchantList("topMerchants");
     maybeMerchants = getMerchantList("maybeMerchants");
@@ -103,7 +125,7 @@ form.addEventListener("submit", function (e) {
     budget: maxBudget,
     excludedGifts: form.excludedGifts.value.split(',').map(i => i.trim()).filter(Boolean),
     gender: form.gender.value,
-    preferences,
+    preferences: preferences,
     merchants: {
       top: topMerchants,
       maybe: maybeMerchants
@@ -122,14 +144,19 @@ form.addEventListener("submit", function (e) {
     .then(result => {
       loader.style.display = "none";
       const hasSuggestions = result?.suggestions && Object.keys(result.suggestions).length > 0;
+
+      // Cas spécial : profil lecteur → forcer l'affichage de BookVillage si dispo
       if (data.interests.includes("book") && result.suggestions?.BookVillage?.length > 0) {
         data.merchants.top = [...new Set([...(data.merchants.top || []), "BookVillage"])];
       }
+
       if (!hasSuggestions) {
         messageBox.textContent = "Aucun cadeau ne correspond à vos critères pour le moment.";
         return;
       }
+
       displaySuggestionsByMerchant(result.suggestions, data.merchants);
+
       setTimeout(() => {
         document.getElementById("suggestionsContainer").scrollIntoView({ behavior: "smooth" });
       }, 300);
@@ -141,6 +168,8 @@ form.addEventListener("submit", function (e) {
     });
 });
 
+
+// --- Affichage des suggestions ---
 function displaySuggestionsByMerchant(suggestions, merchantRanking) {
   suggestionsContainer.innerHTML = "";
   const order = [...merchantRanking.top, ...merchantRanking.maybe];
@@ -150,7 +179,6 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
     const products = suggestions[merchant];
     if (products && products.length > 0) {
       anyProductFound = true;
-
       const section = document.createElement("div");
       section.className = "merchant-section";
 
@@ -164,16 +192,6 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
 
       products.forEach(product => {
         const score = product.matchingScore || 30;
-        const productId = product.id || product._id || null;
-        const isEasyGift = merchant === "EasyGift" && productId;
-
-        // ✅ Toujours utiliser l’URL BestGift même si product.link existe
-        const consultLink = isEasyGift
-          ? `https://www.bestgift.fr/product-${productId}.html`
-          : product.link;
-
-        const target = isEasyGift ? "_self" : "_blank";
-
         const card = document.createElement("div");
         card.className = "card";
         card.innerHTML = `
@@ -181,11 +199,11 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
           <img src="${product.image}" alt="${product.title}">
           <h3>${product.title}</h3>
           <p><strong>${product.price} €</strong></p>
-          ${consultLink ? `<a href="${consultLink}" class="btn btn-sm btn-outline-secondary mb-2" target="${target}">Consulter</a>` : ""}
-          <button class="btn btn-sm btn-outline-primary compare-btn">Comparer</button>
+          <a href="${product.link}" target="_blank">Consulter</a><br>
+          <button class="btn btn-sm btn-outline-primary mt-2 compare-btn">Comparer</button>
         `;
         card.dataset.title = product.title;
-        card.dataset.link = consultLink;
+        card.dataset.link = product.link;
         card.dataset.image = product.image;
         card.dataset.price = product.price;
         card.dataset.description = product.description || "";
@@ -203,10 +221,10 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
   }
 }
 
-
+// --- Comparaison produits ---
 function handleCompareClick(card) {
   if (selectedProductsForCompare.length >= 2) {
-    alert("Vous ne pouvez comparer que 2 produits. Cliquez sur réinitialiser la sélection");
+    alert("Vous ne pouvez comparer que 2 produits. Cliquez sur réinitialiser si besoin");
     return;
   }
   compareSection.style.display = "block";
@@ -218,7 +236,6 @@ function handleCompareClick(card) {
     link: card.dataset.link,
     description: card.dataset.description || ""
   });
-
   const miniCard = document.createElement("div");
   miniCard.className = "compare-mini-card";
   miniCard.innerHTML = `
@@ -229,7 +246,6 @@ function handleCompareClick(card) {
     </div>
   `;
   compareList.appendChild(miniCard);
-
   if (selectedProductsForCompare.length === 2) {
     compareBtn.disabled = false;
     setTimeout(() => {
@@ -238,9 +254,10 @@ function handleCompareClick(card) {
   }
 }
 
+// --- Analyse IA ---
 compareBtn.addEventListener("click", async () => {
   compareBtn.disabled = true;
-  aiResultBox.innerHTML = `<p style="color:#3498db">Analyse en cours...</p>`;
+  aiResultBox.innerHTML = `<p style="color:#3498db">Analyse en cours (Plusieurs secondes...)</p>`;
   try {
     const response = await fetch(`${apiBaseUrl}/api/compare`, {
       method: "POST",
@@ -248,14 +265,52 @@ compareBtn.addEventListener("click", async () => {
       body: JSON.stringify({ products: selectedProductsForCompare })
     });
     const result = await response.json();
-    aiResultBox.innerHTML = result.analysis
-      ? `<pre>${result.analysis}</pre>`
-      : `<p style="color:#e74c3c">Erreur lors de l'analyse.</p>`;
+    if (result.analysis) {
+      const lines = result.analysis.split('\n');
+      const tableLines = [];
+      const recommendationLines = [];
+      let inReco = false;
+      for (const line of lines) {
+        if (
+          line.toLowerCase().includes("je vous recommande") ||
+          line.toLowerCase().includes("si vous cherchez") ||
+          line.toLowerCase().includes("en revanche") ||
+          line.toLowerCase().includes("meilleur choix")
+        ) {
+          inReco = true;
+        }
+        if (inReco) recommendationLines.push(line);
+        else tableLines.push(line);
+      }
+      const headers = tableLines[0]?.split('|').slice(1, -1).map(cell => cell.trim()) || [];
+      const rows = tableLines.slice(1).map(line =>
+        line.split('|').slice(1, -1).map(cell => cell.trim())
+      );
+      aiResultBox.innerHTML = `
+        <div class="ai-analysis-box">
+          <h4>Comparaison détaillée</h4>
+          <table class="ai-table">
+            <thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
+            <tbody>
+              ${rows.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+        <div class="ai-reco-box">
+          <h5>Recommandation IA</h5>
+          <p>${recommendationLines.join('<br>')}</p>
+        </div>
+      `;
+      aiResultBox.scrollIntoView({ behavior: "smooth" });
+    } else {
+      aiResultBox.innerHTML = `<p style="color:#e74c3c">Erreur lors de l'analyse.</p>`;
+    }
   } catch (e) {
     aiResultBox.innerHTML = `<p style="color:#e74c3c">Erreur : ${e.message}</p>`;
   }
 });
 
+// --- Réinitialisation ---
 document.getElementById("resetCompareBtn").addEventListener("click", function () {
   selectedProductsForCompare = [];
   compareList.innerHTML = "";
@@ -297,3 +352,9 @@ document.getElementById("resetBtn").addEventListener("click", function () {
   selectedProductsForCompare = [];
   compareBtn.disabled = true;
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  updateDoubleRange();
+});
+
+

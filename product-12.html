@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boîte à mouchoir écolo | BestGift</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.6.1/default/snipcart.css" />
+  <script async src="https://cdn.snipcart.com/themes/v3.6.1/default/snipcart.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f8;
+    }
+    header {
+      background-color: #3498db;
+      padding: 15px 0;
+    }
+    header .navbar-brand {
+      display: flex;
+      align-items: center;
+      color: #fff;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    header .navbar-brand img {
+      height: 40px;
+      margin-right: 10px;
+    }
+    header .nav-link {
+      color: #fff !important;
+    }
+    .product-detail {
+      padding: 50px 0;
+    }
+    .product-card {
+      background: white;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+    .product-card img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    footer {
+      background-color: #343a40;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="index.html">
+          <img src="assets/images/favicon.png" alt="Logo" />
+          <span>BestGift</span>
+        </a>
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+            <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+            <li class="nav-item"><a class="nav-link" href="shop.html">Catalogue</a></li>
+            <li class="nav-item"><a class="nav-link" href="why.html">Pourquoi ?</a></li>
+            <li class="nav-item"><a class="nav-link" href="contact.html">À propos</a></li>
+            <li class="nav-item">
+              <a href="#" class="snipcart-checkout nav-link">
+                <i class="fas fa-shopping-cart"></i> Panier
+                <span class="snipcart-items-count"></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <section class="product-detail">
+    <div class="container">
+      <div class="product-card row">
+        <div class="col-md-6">
+          <img src="https://i.imgur.com/m0qmsvN.jpeg" alt="Boîte à mouchoir écolo" />
+        </div>
+        <div class="col-md-6">
+          <h2>Boîte à mouchoir écolo</h2>
+          <p>Boîte à mouchoir tressé en fibre naturelle de raphia boîte à mouchoir décoration artisans marocain</p>
+          <p class="snipcart-price">14.99 €</p>
+          <button
+            class="btn btn-primary snipcart-add-item"
+            data-item-id="12"
+            data-item-name="Boîte à mouchoir écolo"
+            data-item-price="14.99"
+            data-item-url="https://www.bestgift.fr/product-12.html"
+            data-item-description="Boîte à mouchoir tressé en fibre naturelle de raphia boîte à mouchoir décoration artisans marocain"
+            data-item-image="https://i.imgur.com/m0qmsvN.jpeg"
+            data-item-currency="eur"
+          >
+            Ajouter au panier
+          </button>
+          <a href="shop.html" class="btn btn-link mt-3 d-block">← Retour au catalogue</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 BestGift. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <div hidden id="snipcart" data-api-key="TON_API_KEY_ICI" data-config-modal-style="side"></div>
+</body>
+</html>

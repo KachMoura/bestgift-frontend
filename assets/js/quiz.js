@@ -164,7 +164,7 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
         const score = product.matchingScore || 30;
         const productId = product.id || product._id || null;
         const isEasyGift = merchant === "EasyGift" && productId;
-        const consultLink = isEasyGift ? `product-${productId}.html` : product.link;
+        const consultLink = isEasyGift ? `https://www.bestgift.fr/product-${productId}.html`: product.link;
         const target = (consultLink && consultLink.startsWith("http")) ? "_blank" : "_self";
 
         const card = document.createElement("div");

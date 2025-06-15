@@ -1,9 +1,24 @@
 document.addEventListener("DOMContentLoaded", () => {
   const loader = document.getElementById("loader");
   if (loader) loader.style.display = "none";
+  updateDoubleRange();
 });
 
 const USE_ALL_MERCHANTS = true;
+const form = document.getElementById("quizForm");
+const suggestionsContainer = document.getElementById("suggestionsContainer");
+const loader = document.getElementById("loader");
+const messageBox = document.getElementById("messageBox");
+const compareSection = document.getElementById("compareSection");
+const compareList = document.getElementById("compareList");
+const compareBtn = document.getElementById("compareBtn");
+const aiResultBox = document.getElementById("aiComparisonResult");
+
+const apiBaseUrl = window.location.hostname.includes("localhost")
+  ? "http://localhost:3000"
+  : "https://bestgift-backend.onrender.com";
+
+let selectedProductsForCompare = [];
 
 function allowDrop(ev) {
   ev.preventDefault();
@@ -44,23 +59,9 @@ function updateDoubleRange() {
   track.style.width = `${percentMax - percentMin}%`;
 }
 
-const form = document.getElementById("quizForm");
-const suggestionsContainer = document.getElementById("suggestionsContainer");
-const loader = document.getElementById("loader");
-const messageBox = document.getElementById("messageBox");
-const compareSection = document.getElementById("compareSection");
-const compareList = document.getElementById("compareList");
-const compareBtn = document.getElementById("compareBtn");
-const aiResultBox = document.getElementById("aiComparisonResult");
-
-const apiBaseUrl = window.location.hostname.includes("localhost")
-  ? "http://localhost:3000"
-  : "https://bestgift-backend.onrender.com";
-
-let selectedProductsForCompare = [];
-
 form.addEventListener("submit", function (e) {
   e.preventDefault();
+
   suggestionsContainer.innerHTML = "";
   aiResultBox.innerHTML = "";
   compareList.innerHTML = "";
@@ -70,14 +71,8 @@ form.addEventListener("submit", function (e) {
   loader.style.display = "block";
 
   if (!form.gender.value || !form.interests.value) {
-    let missingField = '';
-    if (!form.gender.value) {
-      missingField = 'genre';
-      document.getElementById('step-gender').scrollIntoView({ behavior: 'smooth' });
-    } else if (!form.interests.value) {
-      missingField = 'profil';
-      document.getElementById('step-profile').scrollIntoView({ behavior: 'smooth' });
-    }
+    const missingField = !form.gender.value ? 'genre' : 'profil';
+    document.getElementById(`step-${missingField}`).scrollIntoView({ behavior: 'smooth' });
     alert(`Merci de renseigner votre ${missingField}`);
     return;
   }
@@ -107,7 +102,7 @@ form.addEventListener("submit", function (e) {
     budget: maxBudget,
     excludedGifts: form.excludedGifts.value.split(',').map(i => i.trim()).filter(Boolean),
     gender: form.gender.value,
-    preferences: preferences,
+    preferences,
     merchants: {
       top: topMerchants,
       maybe: maybeMerchants
@@ -126,16 +121,13 @@ form.addEventListener("submit", function (e) {
     .then(result => {
       loader.style.display = "none";
       const hasSuggestions = result?.suggestions && Object.keys(result.suggestions).length > 0;
-
       if (data.interests.includes("book") && result.suggestions?.BookVillage?.length > 0) {
         data.merchants.top = [...new Set([...(data.merchants.top || []), "BookVillage"])];
       }
-
       if (!hasSuggestions) {
         messageBox.textContent = "Aucun cadeau ne correspond à vos critères pour le moment.";
         return;
       }
-
       displaySuggestionsByMerchant(result.suggestions, data.merchants);
       setTimeout(() => {
         document.getElementById("suggestionsContainer").scrollIntoView({ behavior: "smooth" });
@@ -159,6 +151,7 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
       anyProductFound = true;
       const section = document.createElement("div");
       section.className = "merchant-section";
+
       const title = document.createElement("h2");
       const merchantName = merchant === "EasyGift" ? "Catalogue BestGift" : merchant;
       title.textContent = `Suggestions ${merchantName}`;
@@ -170,10 +163,9 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
       products.forEach(product => {
         const score = product.matchingScore || 30;
         const productId = product.id || product._id || null;
-        const consultLink = merchant === "EasyGift" && productId
-          ? `product-${productId}.html`
-          : product.link;
-        const target = consultLink.startsWith("http") ? "_blank" : "_self";
+        const isEasyGift = merchant === "EasyGift" && productId;
+        const consultLink = isEasyGift ? `product-${productId}.html` : product.link;
+        const target = (consultLink && consultLink.startsWith("http")) ? "_blank" : "_self";
 
         const card = document.createElement("div");
         card.className = "card";
@@ -228,7 +220,6 @@ function handleCompareClick(card) {
     </div>
   `;
   compareList.appendChild(miniCard);
-
   if (selectedProductsForCompare.length === 2) {
     compareBtn.disabled = false;
     setTimeout(() => {
@@ -247,11 +238,9 @@ compareBtn.addEventListener("click", async () => {
       body: JSON.stringify({ products: selectedProductsForCompare })
     });
     const result = await response.json();
-    if (result.analysis) {
-      aiResultBox.innerHTML = `<pre>${result.analysis}</pre>`;
-    } else {
-      aiResultBox.innerHTML = `<p style="color:#e74c3c">Erreur lors de l'analyse.</p>`;
-    }
+    aiResultBox.innerHTML = result.analysis
+      ? `<pre>${result.analysis}</pre>`
+      : `<p style="color:#e74c3c">Erreur lors de l'analyse.</p>`;
   } catch (e) {
     aiResultBox.innerHTML = `<p style="color:#e74c3c">Erreur : ${e.message}</p>`;
   }
@@ -278,6 +267,18 @@ document.getElementById("resetBtn").addEventListener("click", function () {
     const zone = document.getElementById(zoneId);
     if (zone) zone.innerHTML = "";
   });
+  const marchands = ["eBay", "Catalogue BestGift", "BookVillage", "SportDecouverte"];
+  const pool = document.getElementById("merchantPool");
+  if (pool) {
+    marchands.forEach(id => {
+      const li = document.createElement("li");
+      li.id = id;
+      li.draggable = true;
+      li.textContent = id;
+      li.addEventListener("dragstart", drag);
+      pool.appendChild(li);
+    });
+  }
   suggestionsContainer.innerHTML = "";
   messageBox.textContent = "";
   aiResultBox.innerHTML = "";
@@ -285,8 +286,4 @@ document.getElementById("resetBtn").addEventListener("click", function () {
   compareSection.style.display = "none";
   selectedProductsForCompare = [];
   compareBtn.disabled = true;
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-  updateDoubleRange();
 });

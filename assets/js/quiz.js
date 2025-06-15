@@ -166,9 +166,12 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
         const score = product.matchingScore || 30;
         const productId = product.id || product._id || null;
         const isEasyGift = merchant === "EasyGift" && productId;
+
+        // ✅ Toujours utiliser l’URL BestGift même si product.link existe
         const consultLink = isEasyGift
           ? `https://www.bestgift.fr/product-${productId}.html`
           : product.link;
+
         const target = isEasyGift ? "_self" : "_blank";
 
         const card = document.createElement("div");
@@ -182,7 +185,7 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
           <button class="btn btn-sm btn-outline-primary compare-btn">Comparer</button>
         `;
         card.dataset.title = product.title;
-        card.dataset.link = product.link;
+        card.dataset.link = consultLink;
         card.dataset.image = product.image;
         card.dataset.price = product.price;
         card.dataset.description = product.description || "";
@@ -199,6 +202,7 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
     messageBox.textContent = "Aucun cadeau ne correspond à vos critères.";
   }
 }
+
 
 function handleCompareClick(card) {
   if (selectedProductsForCompare.length >= 2) {

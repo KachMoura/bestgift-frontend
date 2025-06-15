@@ -205,5 +205,10 @@
 
   <!-- Snipcart -->
   <div hidden id="snipcart" data-api-key="MTA0ZTc0NzMtMDJkYy00MGIwLWI0MTQtNGJjNzc3OGEwN2QzNjM4ODMyNTAxNzM5NjAxMTAy" data-config-modal-style="side"></div>
+<script>
+  document.addEventListener('snipcart.order.completed', function () {
+    window.location.href = 'https://www.bestgift.fr/confirmation.html';
+  });
+</script>
 </body>
 </html>

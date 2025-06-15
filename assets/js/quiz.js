@@ -37,13 +37,13 @@ function drop(ev) {
 function getMerchantList(id) {
   return Array.from(document.querySelectorAll(`#${id} li`)).map(li => li.id);
 }
-
 function updateDoubleRange() {
   const minSlider = document.getElementById("minBudget");
   const maxSlider = document.getElementById("maxBudget");
   const minOutput = document.getElementById("minBudgetOutput");
   const maxOutput = document.getElementById("maxBudgetOutput");
   const track = document.getElementById("rangeTrack");
+
   let minVal = parseInt(minSlider.value);
   let maxVal = parseInt(maxSlider.value);
   if (minVal > maxVal) {
@@ -51,8 +51,10 @@ function updateDoubleRange() {
     minSlider.value = minVal;
     maxSlider.value = maxVal;
   }
+
   minOutput.textContent = `${minVal}€`;
   maxOutput.textContent = `${maxVal}€`;
+
   const percentMin = (minVal / 500) * 100;
   const percentMax = (maxVal / 500) * 100;
   track.style.left = `${percentMin}%`;
@@ -61,7 +63,6 @@ function updateDoubleRange() {
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
-
   suggestionsContainer.innerHTML = "";
   aiResultBox.innerHTML = "";
   compareList.innerHTML = "";
@@ -71,8 +72,8 @@ form.addEventListener("submit", function (e) {
   loader.style.display = "block";
 
   if (!form.gender.value || !form.interests.value) {
-    const missingField = !form.gender.value ? 'genre' : 'profil';
-    document.getElementById(`step-${missingField}`).scrollIntoView({ behavior: 'smooth' });
+    const missingField = !form.gender.value ? "genre" : "profil";
+    document.getElementById(`step-${missingField}`).scrollIntoView({ behavior: "smooth" });
     alert(`Merci de renseigner votre ${missingField}`);
     return;
   }
@@ -149,6 +150,7 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
     const products = suggestions[merchant];
     if (products && products.length > 0) {
       anyProductFound = true;
+
       const section = document.createElement("div");
       section.className = "merchant-section";
 
@@ -164,8 +166,10 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
         const score = product.matchingScore || 30;
         const productId = product.id || product._id || null;
         const isEasyGift = merchant === "EasyGift" && productId;
-        const consultLink = isEasyGift ? `https://www.bestgift.fr/product-${productId}.html`: product.link;
-        const target = (consultLink && consultLink.startsWith("http")) ? "_blank" : "_self";
+        const consultLink = isEasyGift
+          ? `https://www.bestgift.fr/product-${productId}.html`
+          : product.link;
+        const target = isEasyGift ? "_self" : "_blank";
 
         const card = document.createElement("div");
         card.className = "card";
@@ -174,7 +178,7 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
           <img src="${product.image}" alt="${product.title}">
           <h3>${product.title}</h3>
           <p><strong>${product.price} €</strong></p>
-          ${consultLink ? `<a href="${consultLink}" class="btn btn-sm btn-outline-secondary mb-2" target="${target}">Consulter</a>` : ''}
+          ${consultLink ? `<a href="${consultLink}" class="btn btn-sm btn-outline-secondary mb-2" target="${target}">Consulter</a>` : ""}
           <button class="btn btn-sm btn-outline-primary compare-btn">Comparer</button>
         `;
         card.dataset.title = product.title;
@@ -210,6 +214,7 @@ function handleCompareClick(card) {
     link: card.dataset.link,
     description: card.dataset.description || ""
   });
+
   const miniCard = document.createElement("div");
   miniCard.className = "compare-mini-card";
   miniCard.innerHTML = `
@@ -220,6 +225,7 @@ function handleCompareClick(card) {
     </div>
   `;
   compareList.appendChild(miniCard);
+
   if (selectedProductsForCompare.length === 2) {
     compareBtn.disabled = false;
     setTimeout(() => {

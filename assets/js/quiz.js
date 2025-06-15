@@ -52,6 +52,7 @@ const compareSection = document.getElementById("compareSection");
 const compareList = document.getElementById("compareList");
 const compareBtn = document.getElementById("compareBtn");
 const aiResultBox = document.getElementById("aiComparisonResult");
+
 const apiBaseUrl = window.location.hostname.includes("localhost")
   ? "http://localhost:3000"
   : "https://bestgift-backend.onrender.com";
@@ -86,7 +87,6 @@ form.addEventListener("submit", function (e) {
 
   if (USE_ALL_MERCHANTS) {
     topMerchants = ["eBay", "SportDecouverte", "EasyGift", "BookVillage"];
-    maybeMerchants = [];
   } else {
     topMerchants = getMerchantList("topMerchants");
     maybeMerchants = getMerchantList("maybeMerchants");
@@ -126,13 +126,16 @@ form.addEventListener("submit", function (e) {
     .then(result => {
       loader.style.display = "none";
       const hasSuggestions = result?.suggestions && Object.keys(result.suggestions).length > 0;
+
       if (data.interests.includes("book") && result.suggestions?.BookVillage?.length > 0) {
         data.merchants.top = [...new Set([...(data.merchants.top || []), "BookVillage"])];
       }
+
       if (!hasSuggestions) {
         messageBox.textContent = "Aucun cadeau ne correspond à vos critères pour le moment.";
         return;
       }
+
       displaySuggestionsByMerchant(result.suggestions, data.merchants);
       setTimeout(() => {
         document.getElementById("suggestionsContainer").scrollIntoView({ behavior: "smooth" });
@@ -166,24 +169,22 @@ function displaySuggestionsByMerchant(suggestions, merchantRanking) {
 
       products.forEach(product => {
         const score = product.matchingScore || 30;
+        const productId = product.id || product._id || null;
+        const consultLink = merchant === "EasyGift" && productId
+          ? `product-${productId}.html`
+          : product.link;
+        const target = consultLink.startsWith("http") ? "_blank" : "_self";
+
         const card = document.createElement("div");
         card.className = "card";
-
-        const consultLink = merchant === "EasyGift"
-          ? `product-${product.id}.html`
-          : product.link;
-
-        const target = merchant === "EasyGift" ? "_self" : "_blank";
-
         card.innerHTML = `
           <div class="score-badge">Matching : ${Math.round(score)}%</div>
           <img src="${product.image}" alt="${product.title}">
           <h3>${product.title}</h3>
           <p><strong>${product.price} €</strong></p>
-          <a href="${consultLink}" target="${target}">Consulter</a><br>
-          <button class="btn btn-sm btn-outline-primary mt-2 compare-btn">Comparer</button>
+          ${consultLink ? `<a href="${consultLink}" class="btn btn-sm btn-outline-secondary mb-2" target="${target}">Consulter</a>` : ''}
+          <button class="btn btn-sm btn-outline-primary compare-btn">Comparer</button>
         `;
-
         card.dataset.title = product.title;
         card.dataset.link = product.link;
         card.dataset.image = product.image;
@@ -217,7 +218,6 @@ function handleCompareClick(card) {
     link: card.dataset.link,
     description: card.dataset.description || ""
   });
-
   const miniCard = document.createElement("div");
   miniCard.className = "compare-mini-card";
   miniCard.innerHTML = `
@@ -239,7 +239,7 @@ function handleCompareClick(card) {
 
 compareBtn.addEventListener("click", async () => {
   compareBtn.disabled = true;
-  aiResultBox.innerHTML = `<p style="color:#3498db">Analyse en cours (Plusieurs secondes...)</p>`;
+  aiResultBox.innerHTML = `<p style="color:#3498db">Analyse en cours...</p>`;
   try {
     const response = await fetch(`${apiBaseUrl}/api/compare`, {
       method: "POST",
@@ -248,44 +248,7 @@ compareBtn.addEventListener("click", async () => {
     });
     const result = await response.json();
     if (result.analysis) {
-      const lines = result.analysis.split('\n');
-      const tableLines = [];
-      const recommendationLines = [];
-      let inReco = false;
-      for (const line of lines) {
-        if (
-          line.toLowerCase().includes("je vous recommande") ||
-          line.toLowerCase().includes("si vous cherchez") ||
-          line.toLowerCase().includes("en revanche") ||
-          line.toLowerCase().includes("meilleur choix")
-        ) {
-          inReco = true;
-        }
-        if (inReco) recommendationLines.push(line);
-        else tableLines.push(line);
-      }
-
-      const headers = tableLines[0]?.split('|').slice(1, -1).map(cell => cell.trim()) || [];
-      const rows = tableLines.slice(1).map(line =>
-        line.split('|').slice(1, -1).map(cell => cell.trim())
-      );
-
-      aiResultBox.innerHTML = `
-        <div class="ai-analysis-box">
-          <h4>Comparaison détaillée</h4>
-          <table class="ai-table">
-            <thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
-            <tbody>
-              ${rows.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`).join('')}
-            </tbody>
-          </table>
-        </div>
-        <div class="ai-reco-box">
-          <h5>Recommandation IA</h5>
-          <p>${recommendationLines.join('<br>')}</p>
-        </div>
-      `;
-      aiResultBox.scrollIntoView({ behavior: "smooth" });
+      aiResultBox.innerHTML = `<pre>${result.analysis}</pre>`;
     } else {
       aiResultBox.innerHTML = `<p style="color:#e74c3c">Erreur lors de l'analyse.</p>`;
     }
@@ -310,26 +273,11 @@ document.getElementById("resetBtn").addEventListener("click", function () {
   document.getElementById("maxBudgetOutput").textContent = "100 €";
   document.getElementById("minBudget").value = 0;
   document.getElementById("maxBudget").value = 100;
-
   const zones = ["topMerchants", "maybeMerchants", "avoidMerchants", "merchantPool"];
   zones.forEach(zoneId => {
     const zone = document.getElementById(zoneId);
     if (zone) zone.innerHTML = "";
   });
-
-  const marchands = ["eBay", "Catalogue BestGift", "BookVillage", "SportDecouverte"];
-  const pool = document.getElementById("merchantPool");
-  if (pool) {
-    marchands.forEach(id => {
-      const li = document.createElement("li");
-      li.id = id;
-      li.draggable = true;
-      li.textContent = id;
-      li.addEventListener("dragstart", drag);
-      pool.appendChild(li);
-    });
-  }
-
   suggestionsContainer.innerHTML = "";
   messageBox.textContent = "";
   aiResultBox.innerHTML = "";

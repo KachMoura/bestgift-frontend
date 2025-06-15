@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   >
                     Ajouter au panier
                   </button>
-                  <a href="product.html?id=${id}" class="btn btn-sm btn-outline-secondary">
+                  <a href="https://www.bestgift.fr/product-${id}.html"  class="btn btn-sm btn-outline-secondary">
                     Consulter
                   </a>
                 </div>

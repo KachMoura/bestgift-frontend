@@ -7,6 +7,49 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+  .navbar-collapse {
+    background-color: white;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 15px;
+  }
+
+  .navbar-nav .nav-link {
+    color: #3498db !important;
+    font-weight: 500;
+    padding: 10px 0;
+    display: block;
+    border-bottom: 1px solid #eee;
+  }
+
+  .navbar-nav .nav-link:last-child {
+    border-bottom: none;
+  }
+
+  .navbar-nav .nav-item.active .nav-link {
+    color: #1d6fa5 !important;
+    font-weight: bold;
+  }
+
+  @media (min-width: 992px) {
+    .navbar-collapse {
+      background-color: transparent !important;
+      box-shadow: none;
+      padding: 0;
+    }
+
+    .navbar-nav .nav-link {
+      border: none;
+      padding: 0 15px;
+      color: white !important;
+    }
+
+    .navbar-nav .nav-item.active .nav-link {
+      color: #ffd4ec !important;
+    }
+  }
+</style>
 </head>
 <body>
 

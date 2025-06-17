@@ -361,7 +361,21 @@ header .nav-item.active .nav-link {
   background-color: #eef6fb;
 }
 
+@media (max-width: 991.98px) {
+  .navbar {
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+  }
 
+  .navbar-toggler {
+    margin-left: auto;
+  }
+
+  .navbar-brand {
+    flex-shrink: 1;
+    white-space: nowrap;
+  }
+}
 
 
 

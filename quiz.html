@@ -4,36 +4,44 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BestGift - Trouvez le cadeau parfait</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  <link rel="stylesheet" href="../assets/css/quiz.css" />
+  <link rel="stylesheet" href="../assets/css/quiz-clean.css" />
 </head>
 <body>
-  <header class="menu-header">
-    <div class="menu-container">
-      <a href="index.html" class="logo-link">
-        <img src="../assets/images/favicon.png" alt="Logo" class="logo-img" />
-        <span class="logo-text">BestGift</span>
+<header>
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="../assets/images/favicon.png" alt="Logo BestGift" height="32" class="mr-2" />
+        <span>BestGift</span>
       </a>
-      <nav class="menu-links">
-        <a href="index.html">Accueil</a>
-        <a href="quiz.html" class="active">Quiz</a>
-        <a href="shop.html">Notre catalogue</a>
-        <a href="why.html">Pourquoi BestGift ?</a>
-        <a href="contact.html">À propos</a>
-      </nav>
-    </div>
-  </header>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+          <li class="nav-item active"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="shop.html">Notre Catalogue</a></li>
+          <li class="nav-item"><a class="nav-link" href="why.html">Pourquoi BestGift ?</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">À propos</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
 
-  <main class="container mt-5">
-    <h1 class="text-center mb-4">Moteur à cadeaux BestGift</h1>
+<main class="container mt-5">
+  <h1 class="text-center mb-4">🎁 Moteur à cadeaux BestGift</h1>
+
     <form id="quizForm">
       <!-- Pour qui ? -->
       <div class="form-section" id="step-gender">
-        <label><strong>Pour qui ?</strong></label>
+        <label><strong>Pour qui est le cadeau ?</strong></label>
         <div class="gender-options">
           <label class="gender-card">
-            <input type="radio" name="gender" value="Elle" required />
+            <input type="radio" name="gender" value="Elle" />
             <i class="fas fa-female"></i>
             <span>Elle</span>
           </label>
@@ -52,10 +60,10 @@
 
       <!-- Profil -->
       <div class="form-section mt-4" id="step-profile">
-        <label><strong>Pour quel profil ?</strong></label>
+        <label><strong>Quel est son profil ?</strong></label>
         <div class="profile-options">
           <label class="profile-card">
-            <input type="radio" name="interests" value="tech" required />
+            <input type="radio" name="interests" value="tech" />
             <i class="fas fa-microchip"></i>
             <span>Geek</span>
           </label>
@@ -89,6 +97,11 @@
             <i class="fas fa-book"></i>
             <span>Lecteur</span>
           </label>
+          <label class="profile-card">
+            <input type="radio" name="interests" value="voyageur" />
+            <i class="fas fa-plane"></i>
+            <span>Voyageur</span>
+          </label>
         </div>
       </div>
 
@@ -108,7 +121,7 @@
 
       <!-- Exclusions -->
       <div class="form-section" id="step-excluded">
-        <label for="excludedGifts"><strong>Produits déjà offerts à exclure</strong></label>
+        <label for="excludedGifts"><strong>Exclure certains cadeaux ? (ex: parfum, montre...)</strong></label>
         <input type="text" name="excludedGifts" placeholder="ex : montre, parfum, bougie..." class="styled-input" />
       </div>
 
@@ -129,56 +142,9 @@
         </label>
       </div>
 
-      <br>
-      <!-- Marchands -->
-<div class="form-section" style="display: none;">
-  <h4 class="mb-3">Classez vos marchands favoris (Glisser/Déposer)</h4>
-
-  <div class="merchant-container">
-    <!-- Colonne gauche : Marchands disponibles -->
-    
-<div class="merchant-column full-height">
-  <h5 class="text-center">Marchands Disponibles</h5>
-  <ul id="merchantPool"
-      class="merchant-zone available-merchant-zone d-flex flex-column justify-content-between"
-      ondragover="allowDrop(event)"
-      ondrop="drop(event)">
-    <div>
-      <li draggable="true" ondragstart="drag(event)" id="eBay">eBay</li>
-      <li draggable="true" ondragstart="drag(event)" id="EasyGift">Catalogue BestGift</li>
-      <!--<li draggable="true" ondragstart="drag(event)" id="Affilea">Affilea</li>-->
-      <li draggable="true" ondragstart="drag(event)" id="SportDecouverte">Sport Découverte</li>
-      <li draggable="true" ondragstart="drag(event)" id="Bookvillage">Book Village</li>
-      
-    </div>
-    <p class="coming-soon text-primary mt-auto mb-0 text-center" style="font-size: 0.8rem;">
-      Prochainement : Amazon, Decathlon, Etsy.
-    </p>
-  </ul>
-</div>
-
-    <!-- Colonne droite : 3 blocs verticaux -->
-    <div class="merchant-column">
-      <div class="merchant-slot">
-        <h5 class="text-center">Top</h5>
-        <ul id="topMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
-      </div>
-      <div class="merchant-slot">
-        <h5 class="text-center">Pourquoi pas</h5>
-        <ul id="maybeMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
-      </div>
-      <div class="merchant-slot">
-        <h5 class="text-center">À éviter</h5>
-        <ul id="avoidMerchants" class="merchant-zone" ondragover="allowDrop(event)" ondrop="drop(event)"></ul>
-      </div>
-    </div>
-  </div>
-</div>
-
-
       <!-- Boutons -->
       <div class="button-wrapper">
-        <button type="submit" class="btn btn-primary">Lancer la recherche</button>
+        <button type="submit" class="btn btn-primary">Voir les suggestions</button>
         <div class="button-group">
           <button type="button" class="btn btn-secondary" onclick="window.location.href='index.html'">Retour</button>
           <button type="button" id="resetBtn" class="btn btn-secondary">Réinitialiser</button>
@@ -186,12 +152,27 @@
       </div>
     </form>
 
-    <div id="loader" style="display:none; text-align:center; font-weight:bold; color:#3498db; margin-top:20px;">
-      Chargement en cours...
+    <!-- Loader centré -->
+    <div id="loader" style="
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background-color: rgba(255,255,255,0.8);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    ">
+      <div class="spinner-border text-primary" role="status" style="width: 3.5rem; height: 3.5rem;">
+        <span class="sr-only">Chargement...</span>
+      </div>
+      <p class="mt-3" style="color: #3498db; font-weight: bold; font-size: 1.2rem;">Recherche de cadeaux en cours...</p>
     </div>
+
     <div id="messageBox" style="text-align:center; font-weight:bold; color:#e74c3c; margin-top:20px;"></div>
     <div id="suggestionsContainer" class="suggestions"></div>
-
     <div id="compareSection" style="margin-top: 40px; display: none;">
       <h3>Comparer des produits avec l'IA</h3>
       <p>Sélectionnez deux produits dans les résultats ci-dessus :</p>
@@ -201,30 +182,30 @@
         <button id="resetCompareBtn" class="btn btn-secondary btn-sm">Réinitialiser la sélection</button>
       </div>
     </div>
-
     <div id="aiComparisonResult" style="margin-top: 30px;"></div>
-  </main>
+</main>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/js/quiz.js"></script>
-  <script>
-    // Scroll fluide après chaque choix
-    document.addEventListener("DOMContentLoaded", () => {
-      const steps = [
-        { name: "gender", next: "#step-profile" },
-        { name: "interests", next: "#step-budget" }
-      ];
-      steps.forEach(({ name, next }) => {
-        document.querySelectorAll(`input[name="${name}"]`).forEach((input) => {
-          input.addEventListener("change", () => {
-            setTimeout(() => {
-              document.querySelector(next).scrollIntoView({ behavior: "smooth" });
-            }, 200);
-          });
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/js/quiz.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const steps = [
+      { name: "gender", next: "#step-profile" },
+      { name: "interests", next: "#step-budget" }
+    ];
+    steps.forEach(({ name, next }) => {
+      document.querySelectorAll(`input[name="${name}"]`).forEach((input) => {
+        input.addEventListener("change", () => {
+          setTimeout(() => {
+            document.querySelector(next).scrollIntoView({ behavior: "smooth" });
+          }, 200);
         });
       });
     });
-  </script>
+    const loader = document.getElementById("loader");
+    if (loader) loader.style.display = "none";
+  });
+</script>
 </body>
 </html>

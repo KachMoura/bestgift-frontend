@@ -1,0 +1,87 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f5f7fa;
+  color: #333;
+  padding-bottom: 60px;
+}
+
+/* TITRES */
+.quiz-title {
+  text-align: center;
+  color: #2c3e50;
+  margin: 40px 0 20px;
+}
+
+/* FORMULAIRE */
+.quiz-form {
+  background: white;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-form label {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.quiz-form input,
+.quiz-form select,
+.quiz-form .quiz-btn {
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+/* BOUTON PERSONNALISÉ */
+.quiz-btn {
+  background-color: #3498db;
+  color: white;
+  font-weight: bold;
+  border: none;
+  transition: background-color 0.3s;
+}
+.quiz-btn:hover {
+  background-color: #2980b9;
+}
+
+/* NAVIGATION */
+.quiz-navbar {
+  background-color: #3498db;
+  padding: 10px 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.quiz-navbar .quiz-logo {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+}
+.quiz-navbar .quiz-logo img {
+  height: 36px;
+  margin-right: 10px;
+}
+.quiz-navbar .quiz-nav-link {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: 500;
+}
+.quiz-navbar .quiz-nav-link:hover {
+  text-decoration: underline;
+}
+
+/* RESPONSIVE NAVIGATION */
+@media (max-width: 768px) {
+  .quiz-navbar .quiz-nav-link {
+    display: block;
+    margin: 10px 0;
+  }
+}

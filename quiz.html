@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title> BestGift - Trouvez le cadeau parfait</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+  <title>BestGift - Trouvez le cadeau parfait</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <link rel="stylesheet" href="../assets/css/quiz-clean.css" />
 </head>
@@ -31,8 +31,10 @@
     </nav>
   </div>
 </header>
-  <main class="container mt-5">
-    <h1 class="text-center mb-4">🎁 Moteur à cadeaux BestGift</h1>
+
+<main class="container mt-5">
+  <h1 class="text-center mb-4">🎁 Moteur à cadeaux BestGift</h1>
+
     <form id="quizForm">
       <!-- Pour qui ? -->
       <div class="form-section" id="step-gender">
@@ -181,32 +183,29 @@
       </div>
     </div>
     <div id="aiComparisonResult" style="margin-top: 30px;"></div>
-  </main>
+</main>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/js/quiz.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const steps = [
-        { name: "gender", next: "#step-profile" },
-        { name: "interests", next: "#step-budget" }
-      ];
-      steps.forEach(({ name, next }) => {
-        document.querySelectorAll(`input[name="${name}"]`).forEach((input) => {
-          input.addEventListener("change", () => {
-            setTimeout(() => {
-              document.querySelector(next).scrollIntoView({ behavior: "smooth" });
-            }, 200);
-          });
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/js/quiz.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const steps = [
+      { name: "gender", next: "#step-profile" },
+      { name: "interests", next: "#step-budget" }
+    ];
+    steps.forEach(({ name, next }) => {
+      document.querySelectorAll(`input[name="${name}"]`).forEach((input) => {
+        input.addEventListener("change", () => {
+          setTimeout(() => {
+            document.querySelector(next).scrollIntoView({ behavior: "smooth" });
+          }, 200);
         });
       });
-
-      // Masquer le loader à l'ouverture de la page
-      const loader = document.getElementById("loader");
-      if (loader) loader.style.display = "none";
     });
-  </script>
+    const loader = document.getElementById("loader");
+    if (loader) loader.style.display = "none";
+  });
+</script>
 </body>
 </html>
-

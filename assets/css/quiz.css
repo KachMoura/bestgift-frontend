@@ -729,3 +729,12 @@ header .nav-item.active .nav-link {
   padding: 0 10px;
   display: inline;
 }
+/* Correction menu aligné comme index.html */
+.menu-container {
+  flex-wrap: nowrap;
+  gap: 30px;
+}
+.menu-links {
+  display: flex;
+  align-items: center;
+}

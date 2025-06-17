@@ -712,3 +712,20 @@ header .nav-item.active .nav-link {
   text-align: center;
   margin-top: 20px;
 }
+/* Correction de l'affichage du menu importé depuis index.html */
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.navbar-nav .nav-item {
+  margin: 0;
+}
+
+.navbar-nav .nav-link {
+  color: #fff !important;
+  font-weight: 500;
+  padding: 0 10px;
+  display: inline;
+}

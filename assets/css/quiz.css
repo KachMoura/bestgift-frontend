@@ -33,3 +33,22 @@ input, select, button {
   width: 100%;
   margin-bottom: 15px;
 }
+
+
+.budget-container {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+#budgetOutput {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#budget {
+  width: 100%;
+}

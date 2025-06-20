@@ -1,9 +1,11 @@
-
-h1 {
-  text-align: center;
-  color: #2c3e50;
-  margin: 40px 0 20px;
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f5f7fa;
+  color: #333;
+  padding-bottom: 60px;
 }
+
+
 
 form {
   background: white;

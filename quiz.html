@@ -3,15 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title> BestGift - Trouvez le cadeau parfait</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+  <title>BestGift - Accueil</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-    
- 
-  <link rel="stylesheet" href="../assets/css/quiz.css" />
-
-  
-<style>
+  <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       background: #f8f9fa;
@@ -73,192 +68,32 @@
       padding: 20px 0;
       text-align: center;
     }
-
-h1 {
-  text-align: center;
-  color: #2c3e50;
-  margin: 40px 0 20px;
-}
-form {
-  background: white;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-}
-label {
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-input, select, button {
-  padding: 12px;
-  font-size: 16px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  width: 100%;
-  margin-bottom: 15px;
-}
-
-button {
-  background-color: #3498db;
-  color: white;
-  font-weight: bold;
-  border: none;
-  transition: background-color 0.3s;
-}
-
-button:hover {
-  background-color: #2980b9;
-}
-
-.budget-container {
-  position: relative;
-  margin-bottom: 30px;
-}
-
-#budgetOutput {
-  position: absolute;
-  top: -25px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#budget {
-  width: 100%;
-}
-
-
-
-.merchant-zone {
-  border: 1px dashed #aaa;
-  min-height: 80px;
-  padding: 10px;
-  margin-bottom: 20px;
-  background: #f9f9f9;
-  border-radius: 6px;
-}
-
-li {
-  list-style: none;
-  padding: 8px 12px;
-  margin: 5px;
-  background: #e0e0e0;
-  border-radius: 4px;
-  cursor: grab;
-}
-
-.suggestions {
-  margin-top: 40px;
-  padding: 0 20px;
-}
-
-.merchant-section {
-  margin-bottom: 40px;
-}
-
-.card-carousel {
-  display: flex;
-  gap: 15px;
-  overflow-x: auto;
-  padding: 10px;
-  scroll-snap-type: x mandatory;
-}
-
-.card-carousel {
-  display: flex;
-  gap: 15px;
-  overflow-x: auto;
-  padding: 10px;
-  scroll-snap-type: x mandatory;
-}
-
-.card {
-  flex: 0 0 auto;
-  scroll-snap-align: start;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  width: 180px;
-  text-align: center;
-  position: relative;
-  margin-bottom: 15px;
-}
-
-.card img {
-  width: 100%;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 6px;
-  margin-bottom: 8px;
-}
-
-.card h3 {
-  min-height: 120px;
-  font-size: 14px;
-  font-weight: 500;
-  margin: 5px 0;
-}
-
-.card p {
-  font-size: 13px;
-  margin: 0;
-}
-
-.card a {
-  display: inline-block;
-  margin-top: 8px;
-  padding: 6px 10px;
-  background-color: #3498db;
-  color: white;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 13px;
-}
-
-.card a:hover {
-  background-color: #2980b9;
-}
-
-.card .btn {
-  font-size: 13px;
-  padding: 6px 10px;
-  margin-top: 8px;
-}
-.card.selected {
-  border: 2px solid #f39c12;
-  background-color: #fff8e1;
-}
-
-.score-badge {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: #27ae60;
-  color: white;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 4px 8px;
-  border-radius: 8px;
-  transform: rotate(20deg);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-  z-index: 1;
-}
-
-
-
   </style>
-
-
-
-
-
 </head>
+<body>
+<header>
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="../assets/images/favicon.png" alt="Logo cadeau" height="28" class="mr-2" />
+        <span>BestGift</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active"><a class="nav-link" href="index.html">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz  </a></li>
+          <li class="nav-item"><a class="nav-link" href="shop.html">Notre Catalogue</a></li>
+          <li class="nav-item"><a class="nav-link" href="why.html">Pourquoi BestGift ?</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">A propos</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+
 <body>
 <header>
   <div class="container">

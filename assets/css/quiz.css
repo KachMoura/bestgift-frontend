@@ -2,26 +2,6 @@
 
 
 
-.budget-container {
-  position: relative;
-  margin-bottom: 30px;
-}
-
-#budgetOutput {
-  position: absolute;
-  top: -25px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#budget {
-  width: 100%;
-}
-
-
-
 .merchant-zone {
   border: 1px dashed #aaa;
   min-height: 80px;

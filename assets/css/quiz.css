@@ -25,14 +25,7 @@ label {
   margin-top: 10px;
 }
 
-input, select, button {
-  padding: 12px;
-  font-size: 16px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  width: 100%;
-  margin-bottom: 15px;
-}
+
 
 button {
   background-color: #3498db;
@@ -84,7 +77,10 @@ li {
   cursor: grab;
 }
 
-
+.suggestions {
+  margin-top: 40px;
+  padding: 0 20px;
+}
 
 .merchant-section {
   margin-bottom: 40px;

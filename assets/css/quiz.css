@@ -25,19 +25,16 @@ label {
   margin-top: 10px;
 }
 
-
-
-button {
-  background-color: #3498db;
-  color: white;
-  font-weight: bold;
-  border: none;
-  transition: background-color 0.3s;
+input, select, button {
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 100%;
+  margin-bottom: 15px;
 }
 
-button:hover {
-  background-color: #2980b9;
-}
+
 
 .budget-container {
   position: relative;

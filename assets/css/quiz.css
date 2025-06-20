@@ -34,7 +34,17 @@ input, select, button {
   margin-bottom: 15px;
 }
 
+button {
+  background-color: #3498db;
+  color: white;
+  font-weight: bold;
+  border: none;
+  transition: background-color 0.3s;
+}
 
+button:hover {
+  background-color: #2980b9;
+}
 
 .budget-container {
   position: relative;
@@ -65,14 +75,7 @@ input, select, button {
   border-radius: 6px;
 }
 
-li {
-  list-style: none;
-  padding: 8px 12px;
-  margin: 5px;
-  background: #e0e0e0;
-  border-radius: 4px;
-  cursor: grab;
-}
+
 
 .suggestions {
   margin-top: 40px;

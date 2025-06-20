@@ -51,6 +51,21 @@ input, select, button {
   width: 100%;
 }
 
+
+.merchant-zone {
+  border: 1px dashed #aaa;
+  min-height: 80px;
+  padding: 10px;
+  margin-bottom: 20px;
+  background: #f9f9f9;
+  border-radius: 6px;
+}
+
+.merchant-section {
+  margin-bottom: 40px;
+}
+
+
 .card-carousel {
   display: flex;
   gap: 15px;

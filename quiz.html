@@ -3,11 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BestGift - Accueil</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <title> BestGift - Trouvez le cadeau parfait</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    
+ 
+  <link rel="stylesheet" href="../assets/css/quiz.css" />
+
   
-  <style>
+<style>
     body {
       font-family: 'Segoe UI', sans-serif;
       background: #f8f9fa;
@@ -70,7 +74,23 @@
       text-align: center;
     }
 
-
+h1 {
+  text-align: center;
+  color: #2c3e50;
+  margin: 40px 0 20px;
+}
+form {
+  background: white;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+label {
+  font-weight: bold;
+  margin-top: 10px;
+}
 
 input, select, button {
   padding: 12px;
@@ -93,11 +113,34 @@ button:hover {
   background-color: #2980b9;
 }
 
+.budget-container {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+#budgetOutput {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#budget {
+  width: 100%;
+}
 
 
 
-
-
+.merchant-zone {
+  border: 1px dashed #aaa;
+  min-height: 80px;
+  padding: 10px;
+  margin-bottom: 20px;
+  background: #f9f9f9;
+  border-radius: 6px;
+}
 
 li {
   list-style: none;
@@ -113,6 +156,9 @@ li {
   padding: 0 20px;
 }
 
+.merchant-section {
+  margin-bottom: 40px;
+}
 
 .card-carousel {
   display: flex;
@@ -188,6 +234,7 @@ li {
   border: 2px solid #f39c12;
   background-color: #fff8e1;
 }
+
 .score-badge {
   position: absolute;
   top: 10px;
@@ -204,199 +251,37 @@ li {
 }
 
 
-.budget-container {
-  position: relative;
-  margin-bottom: 30px;
-}
-
-#budgetOutput {
-  position: absolute;
-  top: -25px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#budget {
-  width: 100%;
-}
-.budget-range-wrapper {
-  margin: 30px 0;
-}
-
-.budget-labels {
-  display: flex;
-  justify-content: space-between;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-/* === STYLE DU TABLEAU IA AMÉLIORÉ === */
-.ai-analysis-box {
-  width: 100%;
-  max-width: 1000px;
-  margin: auto;
-  padding: 20px;
-  background: #f9f9f9;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-
-.ai-reco-box {
-  width: 100%;
-  max-width: 1000px;
-  margin: 30px auto 0;
-  padding: 20px;
-  background: #eafaf1;
-  border-left: 6px solid #2ecc71;
-  border-radius: 8px;
-}
-
-.ai-reco-box h5 {
-  margin-top: 0;
-  color: #27ae60;
-}
-
-.ai-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 15px;
-  font-family: 'Segoe UI', sans-serif;
-  font-size: 14px;
-}
-
-.ai-table th {
-  background-color: #2c3e50;
-  color: white;
-  padding: 12px;
-  text-align: center;
-  font-size: 15px;
-  font-weight: bold;
-  border: 1px solid #ccc;
-}
-
-.ai-table td {
-  background: #fdfdfd;
-  padding: 10px 12px;
-  text-align: center;
-  color: #333;
-  font-size: 14px;
-  border: 1px solid #ddd;
-}
-
-.ai-table td:first-child {
-  font-weight: bold;
-  color: #3498db;
-  background-color: #f4f9ff;
-}
-
-.ai-table tr:nth-child(even) td {
-  background: #f4f9ff;
-}
-
-.ai-table tr:hover td {
-  background-color: #eef6fb;
-}
-
-
-
-.merchant-section {
-  margin-bottom: 40px;
-}
-
-.merchant-zone {
-  border: 2px dashed #ccc;
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 10px;
-  min-height: 80px;
-  list-style: none;
-  margin-bottom: 10px;
-  transition: background-color 0.3s;
-}
-
-#topMerchants li,
-#maybeMerchants li {
-  background-color: #eaf4fb !important;
-  border: 1px solid #3498db !important;
-  color: #3498db;
-  font-weight: bold;
-  border-radius: 5px;
-}
-
-.merchant-container {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  flex-wrap: wrap;
-  margin-top: 20px;
-}
-
-
-.merchant-column {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 320px;
-  min-width: 300px;
-}
-
-.merchant-zone:hover {
-  background-color: #f0f8ff;
-}
-
-.merchant-zone li {
-  background-color: #f5f5f5;
-  padding: 8px 12px;
-  margin: 6px 0;
-  border-radius: 6px;
-  font-weight: 500;
-  cursor: grab;
-}
-
-.merchant-slot {
-  margin-bottom: 20px;
-}
-
-.available-merchant-zone {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 330px;
-  position: relative;
-}
-
 
   </style>
+
+
+
+
+
 </head>
 <body>
 <header>
   <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <a class="navbar-brand d-flex align-items-center" href="#">
-        <img src="../assets/images/favicon.png" alt="Logo cadeau" height="28" class="mr-2" />
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="../assets/images/favicon.png" alt="Logo BestGift" height="32" class="mr-2" />
         <span>BestGift</span>
       </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="nav">
+      <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item"><a class="nav-link" href="index.html">Accueil  </a></li>
-         
-           <li class="nav-item active"><a class="nav-link" href="quiz.html">Quiz</a></li>
-         
+          <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+          <li class="nav-item active"><a class="nav-link" href="quiz.html">Quiz</a></li>
           <li class="nav-item"><a class="nav-link" href="shop.html">Notre Catalogue</a></li>
           <li class="nav-item"><a class="nav-link" href="why.html">Pourquoi BestGift ?</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html">A propos</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">À propos</a></li>
         </ul>
       </div>
     </nav>
   </div>
 </header>
-
   <main class="container mt-5">
     <h1 class="text-center mb-4">🎁 Moteur à cadeaux BestGift</h1>
     <form id="quizForm">

@@ -753,3 +753,6 @@ header .nav-item.active .nav-link {
     transform: none !important;
   }
 }
+#step-profile {
+  margin-bottom: 40px; /* Ajuste la valeur selon l’espacement désiré */
+}

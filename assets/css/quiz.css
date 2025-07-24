@@ -663,3 +663,12 @@ header .nav-item.active .nav-link {
   text-align: center;
   margin-top: 20px;
 }
+/* Correction du bug d'affichage du bouton hamburger */
+.navbar-toggler {
+  padding: 0.25rem 0.75rem;
+  font-size: 1.25rem;
+  border: none;
+  background-color: transparent;
+  width: auto;
+  margin-bottom: 0;
+}

@@ -115,7 +115,11 @@
       <i class="fas fa-male"></i>
       <span>Lui</span>
     </label>
-    
+    <!--<label class="gender-card">
+      <input type="radio" name="gender" value="Enfant" />
+      <i class="fas fa-child"></i>
+      <span>Enfant</span>
+    </label>-->
     <label class="gender-card">
       <input type="radio" name="gender" value="Mixte" />
       <i class="fas fa-user-friends"></i>
@@ -176,7 +180,7 @@
         <label><strong>Quel est votre budget ?</strong></label>
         <div class="budget-labels">
           <span>Min : <span id="minBudgetOutput">0€</span></span>
-          <span>Max : <span id="maxBudgetOutput">100€</span></span>
+          <span>Max : <span id="maxBudgetOutput">200€</span></span>
         </div>
         <div class="slider-container">
           <input type="range" id="minBudget" name="minBudget" min="0" max="500" value="0" step="5" oninput="updateDoubleRange()">

@@ -673,54 +673,72 @@ header .nav-item.active .nav-link {
   margin-bottom: 0;
 }
 
-/* ✅ Nouvelle disposition alignée à gauche et remontée */
+/* Disposition circulaire fluide pour les profils */
 .profile-circle-layout {
   position: relative;
-  width: 300px;
-  height: 300px;
-  margin-top: 0; /* Remonté */
-  margin-left: 0; /* Aligne à gauche */
-  margin-bottom: 30px;
+  width: 350px;
+  height: 350px;
+  margin: 0 0 2rem 0; /* Aligne à gauche */
 }
 
-.profile-circle-layout .profile-card {
+/* Cartes circulaires */
+.profile-card {
   position: absolute;
   width: 80px;
   height: 80px;
   border-radius: 50%;
   background-color: white;
-  border: 2px solid #ccc;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
+  border: 2px solid #007BFF;
   text-align: center;
-  font-size: 0.8rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transform: rotate(calc(45deg * var(--i))) translate(140px) rotate(calc(-45deg * var(--i)));
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.profile-circle-layout .profile-card:hover {
-  transform: scale(1.1) rotate(3deg);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+/* Icône au centre */
+.profile-card i {
+  font-size: 20px;
+  color: #007BFF;
+  display: block;
+  margin-bottom: 4px;
+  transition: color 0.3s ease;
 }
 
-/* ✅ Responsive : passe en grille sur petit écran */
-@media (max-width: 768px) {
+/* Texte sous icône */
+.profile-card span {
+  font-size: 13px;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+/* Animation survol */
+.profile-card:hover {
+  background-color: #007BFF;
+  box-shadow: 0 0 12px rgba(0, 123, 255, 0.6);
+  transform: rotate(calc(45deg * var(--i))) translate(140px) rotate(calc(-45deg * var(--i))) scale(1.1);
+}
+
+.profile-card:hover i,
+.profile-card:hover span {
+  color: white;
+}
+
+/* Responsive mobile : passe en grille */
+@media screen and (max-width: 600px) {
   .profile-circle-layout {
-    width: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    width: 100%;
     height: auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 20px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 1rem 0;
   }
 
-  .profile-circle-layout .profile-card {
-    position: static;
+  .profile-card {
+    position: relative;
     transform: none !important;
+    margin: auto;
   }
 }

@@ -726,3 +726,29 @@ header .nav-item.active .nav-link {
   color: #3498db;
   font-weight: bold;
 }
+/* ✅ Animation au survol */
+.profile-circle-layout .profile-card {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.profile-circle-layout .profile-card:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* ✅ Responsive mobile : passe en grille */
+@media (max-width: 768px) {
+  .profile-circle-layout {
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .profile-circle-layout .profile-card {
+    position: static;
+    transform: none !important;
+  }
+}

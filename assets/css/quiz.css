@@ -681,7 +681,7 @@ header .nav-item.active .nav-link {
   margin-bottom: 50px;
 
   /* centrage horizontal alternatif */
-  left: 30%;
+  left: 40%;
   transform: translateX(-50%);
 
   animation: fadeIn 1s ease;

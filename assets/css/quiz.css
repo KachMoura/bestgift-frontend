@@ -677,7 +677,7 @@ header .nav-item.active .nav-link {
   position: relative;
   width: 350px;
   height: 350px;
-  margin: 120px auto 30px 40px; /* top | right | bottom | left */
+  margin: 0px auto 30px 40px; /* top | right | bottom | left */
   animation: fadeIn 1s ease;
 }
 

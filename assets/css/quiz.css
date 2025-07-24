@@ -676,8 +676,9 @@ header .nav-item.active .nav-link {
 .profile-circle-layout {
   position: relative;
   width: 350px;
-  height: 300px;
-  margin: 40px auto;
+  height: 350px;
+  margin: 10px auto 30px 40px; /* top | right | bottom | left */
+  animation: fadeIn 1s ease;
 }
 
 .profile-circle-layout .profile-card {
